@@ -1,9 +1,11 @@
 --
 -- This file will contain Table structure for `"__wsaonepage`
 --
+DROP TABLE IF EXISTS `#__helloworld`;
 DROP TABLE IF EXISTS `#__wsaonepage`;
 
-CREATE TABLE `#__helloworld` (
+
+CREATE TABLE `#__wsaonepage` (
 	`id`       INT(11)     NOT NULL AUTO_INCREMENT,
 	`greeting` VARCHAR(25) NOT NULL,
 	`published` tinyint(4) NOT NULL DEFAULT '1',
