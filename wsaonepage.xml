@@ -2,7 +2,7 @@
 <extension type="component" version="3.0" method="upgrade">
   <compatibility>
     <include>
-      <versions from="3.9.18" to="3.99.99" />
+      <versions from="3.9.0" to="3.99.99" />
       <!--  versions from="4.0.0" to="4.99.99" / -->
     </include>
   </compatibility>
@@ -14,7 +14,7 @@
 	<authorUrl>https://www.waasdorpsoekhan.nl</authorUrl>
 	<copyright>AHC Waasdorp, Amsterdam 2020 - 2020</copyright>
 	<!--  The version string is recorded in the components table -->
-	<version>0.0.8</version>
+	<version>0.0.10</version>
 	<!-- The description is optional and defaults to the name -->
 	<description>COM_WSAONEPAGE_DESCRIPTION</description>
 
@@ -49,10 +49,15 @@
 	<languages folder="site/language">
 		<language tag="en-GB">en-GB/en-GB.com_wsaonepage.ini</language>
 	</languages>
+	<media destination="com_wsaonepage" folder="media">
+		<filename>index.html</filename>
+		<folder>images</folder>
+	</media>
+
 
 	<administration>
 		<!-- Administration Menu Section -->
-		<menu link='index.php?option=com_wsaonepage'>COM_WSAONEPAGE_MENU</menu>
+		<menu link='index.php?option=com_wsaonepage' img="../media/com_wsaonepage/images/Tux-16x16.png">COM_WSAONEPAGE_MENU</menu>
 		<!-- Administration Main File Copy Section -->
 		<!-- Note the folder attribute: This attribute describes the folder
 			to copy FROM in the package to install therefore files copied
@@ -62,8 +67,9 @@
 			<filename>controller.php</filename>
 			<filename>index.html</filename>
 			<filename>wsaonepage.php</filename>
+			<!-- controllers files section -->
+			<folder>controllers</folder>
 			<!-- SQL files section -->
-			<folder>language</folder>
 			<folder>sql</folder>
 			<!-- tables files section -->
 			<folder>tables</folder>
