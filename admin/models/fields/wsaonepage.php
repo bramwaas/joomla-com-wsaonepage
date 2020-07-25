@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Joomla.Administrator
- * @subpackage  com_helloworld
+ * @subpackage  com_wsaonepage
  *
  * @copyright   Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -13,18 +13,18 @@ defined('_JEXEC') or die('Restricted access');
 JFormHelper::loadFieldClass('list');
 
 /**
- * HelloWorld Form Field class for the HelloWorld component
+ * WsaOnePage Form Field class for the WsaOnePage component
  *
  * @since  0.0.1
  */
-class JFormFieldHelloWorld extends JFormFieldList
+class JFormFieldWsaOnePage extends JFormFieldList
 {
 	/**
 	 * The field type.
 	 *
 	 * @var         string
 	 */
-	protected $type = 'HelloWorld';
+	protected $type = 'WsaOnePage';
 
 	/**
 	 * Method to get a list of options for a list input.
@@ -36,7 +36,7 @@ class JFormFieldHelloWorld extends JFormFieldList
 		$db    = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('id,greeting');
-		$query->from('#__helloworld');
+		$query->from('#__wsaonepage');
 		$db->setQuery((string) $query);
 		$messages = $db->loadObjectList();
 		$options  = array();
