@@ -34,7 +34,7 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	 *
 	 * @since   1.6
 	 */
-	public function getTable($type = 'HelloWorld', $prefix = 'HelloWorldTable', $config = array())
+	public function getTable($type = 'WsaOnePage', $prefix = 'WsaOnePageTable', $config = array())
 	{
 	    return JTable::getInstance($type, $prefix, $config);
 	}
