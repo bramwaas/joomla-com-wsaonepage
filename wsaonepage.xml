@@ -65,8 +65,8 @@
 			-->
 			<menu link='option=com_wsaonepage' img="class:contact"
 				alt="WsaOnePage/WsaOnePage">COM_WSAONEPAGE_MENU zonder index.php</menu>
-			<menu link='index.php?option=com_wsaonepage' img="class:contact"
-				alt="WsaOnePage/WsaOnePage2">COM_WSAONEPAGE_MENU met index.php</menu>	
+			<menu link="option=com_categories&amp;extension=com_contact"
+				view="categories" img="class:contact-cat" alt="Contacts/Categories">COM_CONTACT_CATEGORIES</menu>
 		</submenu>
 		<!-- Administration Main File Copy Section -->
 		<!-- Note the folder attribute: This attribute describes the folder
