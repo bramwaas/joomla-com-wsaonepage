@@ -57,7 +57,7 @@
 
 	<administration>
 		<!-- Administration Menu Section -->
-		<menu   img="../media/com_wsaonepage/images/Tux-16x16.png">COM_WSAONEPAGE_MENU</menu>
+		<menu   img="class:onepage">COM_WSAONEPAGE_MENU</menu>
 		<submenu>
 			<!-- added after seeeing com contacts to remove default option and removed index.php? from link
 				Note that all & must be escaped to &amp; for the file to be valid
