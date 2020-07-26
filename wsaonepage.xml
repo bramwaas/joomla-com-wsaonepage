@@ -63,7 +63,7 @@
 				Note that all & must be escaped to &amp; for the file to be valid
 				XML and be parsed by the installer
 			-->
-			<menu link='option=com_wsaonepage'img="class:contact"
+			<menu link='option=com_wsaonepage' img="class:contact"
 				alt="WsaOnePage/WsaOnePage">COM_WSAONEPAGE_MENU zonder index.php</menu>
 			<menu link='index.php?option=com_wsaonepage' img="class:contact"
 				alt="WsaOnePage/WsaOnePage2">COM_WSAONEPAGE_MENU met index.php</menu>	
