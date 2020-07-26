@@ -50,23 +50,21 @@
 		<language tag="en-GB">en-GB/en-GB.com_wsaonepage.ini</language>
 	</languages>
 	<media destination="com_wsaonepage" folder="media">
-		<filename>index.html</filename>
 		<folder>images</folder>
 	</media>
 
 
 	<administration>
-		<!-- Administration Menu Section -->
+		<!-- Administration Component Menu Section -->
 		<menu   img="../media/com_wsaonepage/images/Tux-16x16.png">COM_WSAONEPAGE_MENU</menu>
 		<submenu>
-			<!-- added after seeeing com contacts to remove default option and removed index.php? from link
-				Note that all & must be escaped to &amp; for the file to be valid
+			<!-- Note that all & must be escaped to &amp; for the file to be valid
 				XML and be parsed by the installer
 			-->
-			<menu link='option=com_wsaonepage' img="class:contact"
-				alt="WsaOnePage/WsaOnePage">Juiste menu</menu>
-			<menu view='edit' img="class:contact"
-				alt="WsaOnePage/WsaOnePage">Edit</menu>
+			<menu link='option=com_wsaonepage' img="class:content"
+				alt="WsaOnePage/WsaOnePage">COM_WSAONEPAGE_MENU</menu>
+			<menu view='wsaonepage' img="class:contact"
+				alt="WsaOnePage/WsaOnePage">met view</menu>
 		</submenu>
 		<!-- Administration Main File Copy Section -->
 		<!-- Note the folder attribute: This attribute describes the folder
