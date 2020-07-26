@@ -4,16 +4,15 @@
 		<message>COM_WSAONEPAGE_WSAONEPAGE_VIEW_DEFAULT_DESC</message>
 	</layout>
 	<fields name="request"
-				addfieldpath="/administrator/components/com_helloworld/models/fields"
+				addfieldpath="/administrator/components/com_wsaonepage/models/fields"
 	>
 		<fieldset name="request">
 			<field
 					name="id"
-					type="list"
+					type="wsaonepage"
 					label="COM_WSAONEPAGE_WSAONEPAGE_FIELD_GREETING_LABEL"
 					description="COM_WSAONEPAGE_WSAONEPAGE_FIELD_GREETING_DESC"
 					/>
-                        </field>
 		</fieldset>
 	</fields>
 	

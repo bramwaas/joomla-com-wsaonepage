@@ -13,7 +13,7 @@ defined('_JEXEC') or die('Restricted access');
 JFormHelper::loadFieldClass('list');
 
 /**
- * WsaOnePage Form Field class for the WsaOnePage component
+ * wsaonepage Form Field class for the WsaOnePage component
  *
  * @since  0.0.1
  */
