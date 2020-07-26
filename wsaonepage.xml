@@ -57,7 +57,17 @@
 
 	<administration>
 		<!-- Administration Menu Section -->
-		<menu /* link='index.php?option=com_wsaonepage' */  img="../media/com_wsaonepage/images/Tux-16x16.png">COM_WSAONEPAGE_MENU</menu>
+		<menu   img="../media/com_wsaonepage/images/Tux-16x16.png">COM_WSAONEPAGE_MENU</menu>
+		<submenu>
+			<!-- added after seeeing com contacts to remove default option and removed index.php? from link
+				Note that all & must be escaped to &amp; for the file to be valid
+				XML and be parsed by the installer
+			-->
+			<menu link='option=com_wsaonepage'img="class:contact"
+				alt="WsaOnePage/WsaOnePage">COM_WSAONEPAGE_MENU zonder index.php</menu>
+			<menu link='index.php?option=com_wsaonepage' img="class:contact"
+				alt="WsaOnePage/WsaOnePage2">COM_WSAONEPAGE_MENU met index.php</menu>	
+		</submenu>
 		<!-- Administration Main File Copy Section -->
 		<!-- Note the folder attribute: This attribute describes the folder
 			to copy FROM in the package to install therefore files copied
