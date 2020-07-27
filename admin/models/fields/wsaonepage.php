@@ -43,7 +43,7 @@ class JFormFieldWsaOnePage extends JFormFieldList
 		$menutypes = $db->loadObjectList();
 		$options  = array();
  
-	    if ($menuitems)
+		if ($menutypes)
 		{
 		    foreach ($menutypes as $menutype)
 			{
