@@ -6,7 +6,7 @@
 				type="hidden"
 				/>
 		<field
-				name="greeting"
+				name="menutype"
 				type="text"
 				label="COM_WSAONEPAGE_WSAONEPAGE_GREETING_LABEL"
 				description="COM_WSAONEPAGE_WSAONEPAGE_GREETING_DESC"
