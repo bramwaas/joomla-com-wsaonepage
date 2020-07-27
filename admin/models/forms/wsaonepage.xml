@@ -8,9 +8,9 @@
 		<field
 				name="menutype"
 				type="text"
-				label="COM_WSAONEPAGE_WSAONEPAGE_GREETING_LABEL"
-				description="COM_WSAONEPAGE_WSAONEPAGE_GREETING_DESC"
-				size="40"
+				label="COM_WSAONEPAGE_WSAONEPAGE_MENUTYPE_LABEL"
+				description="COM_WSAONEPAGE_WSAONEPAGE_MENUTYPE_DESC"
+				size="80"
 				class="inputbox"
 				default=""
 				/>

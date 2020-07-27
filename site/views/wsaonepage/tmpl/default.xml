@@ -10,8 +10,8 @@
 			<field
 					name="id"
 					type="wsaonepage"
-					label="COM_WSAONEPAGE_WSAONEPAGE_FIELD_GREETING_LABEL"
-					description="COM_WSAONEPAGE_WSAONEPAGE_FIELD_GREETING_DESC"
+					label="COM_WSAONEPAGE_WSAONEPAGE_FIELD_MENUTYPE_LABEL"
+					description="COM_WSAONEPAGE_WSAONEPAGE_FIELD_MENUTYPE_DESC"
 					/>
 		</fieldset>
 	</fields>
