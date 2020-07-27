@@ -22,7 +22,11 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	 * @var string message
 	 */
 	protected $message;
-
+	/**
+	 * @var string menutype
+	 */
+	protected $menutype;
+	
 	/**
 	 * Method to get a table object, load it if necessary.
 	 *
@@ -37,6 +41,32 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	public function getTable($type = 'WsaOnePage', $prefix = 'WsaOnePageTable', $config = array())
 	{
 	    return JTable::getInstance($type, $prefix, $config);
+	}
+	/**
+	 * Get the Menutype
+	 *
+	 * @return  string  The message to be displayed to the user
+	 */
+	public function getMenutype()
+	{
+	    if (!isset($this->menutype))
+	    {
+	        $jinput = JFactory::getApplication()->input;
+	        $id     = $jinput->get('id', 1, 'INT');
+	        
+	        switch ($id)
+	        {
+	            case 2:
+	                $this->menutype = 'Good bye World!';
+	                break;
+	            default:
+	            case 1:
+	                $this->menutype = 'Hello World!';
+	                break;
+	        }
+	    }
+	    
+	    return $this->menutype;
 	}
 	
 	/**

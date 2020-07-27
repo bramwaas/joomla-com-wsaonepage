@@ -9,6 +9,8 @@
 
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
+use Joomla\CMS\Factory;
+use Joomla\Utilities\ArrayHelper;
 
 JFormHelper::loadFieldClass('list');
 
@@ -33,19 +35,19 @@ class JFormFieldWsaOnePage extends JFormFieldList
 	 */
 	protected function getOptions()
 	{
-		$db    = JFactory::getDBO();
+ 		$db    = JFactory::getDBO();
 		$query = $db->getQuery(true);
-		$query->select('id,greeting');
-		$query->from('#__wsaonepage');
+		$query->select('id,menutype,title,description');
+		$query->from('#__menu_types');
 		$db->setQuery((string) $query);
-		$messages = $db->loadObjectList();
+		$menutypes = $db->loadObjectList();
 		$options  = array();
-
-		if ($messages)
+ 
+	    if ($menuitems)
 		{
-			foreach ($messages as $message)
+		    foreach ($menutypes as $menutype)
 			{
-				$options[] = JHtml::_('select.option', $message->id, $message->greeting);
+			    $options[] = JHtml::_('select.option', $menutype->menutype, $menutype->menutype . ' :' . $menutype->title . ' ' . $menutype->description );
 			}
 		}
 

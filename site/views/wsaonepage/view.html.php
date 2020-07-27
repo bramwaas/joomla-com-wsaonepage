@@ -29,7 +29,7 @@ class WsaOnePageViewWsaOnePage extends HtmlView
 	function display($tpl = null)
 	{
 		// Assign data to the view
-	    $this->msg = $this->get('Msg');
+	    $this->menutype = $this->get('Menutype');
 	    
 	    // Check for errors.
 	    if (count($errors = $this->get('Errors')))
