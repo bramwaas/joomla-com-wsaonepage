@@ -23,9 +23,9 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	 */
 	protected $message;
 	/**
-	 * @var string menutype
+	 * @var array menutypes
 	 */
-	protected $menutype;
+	protected $menutypes;
 	
 	/**
 	 * Method to get a table object, load it if necessary.
@@ -45,25 +45,31 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	/**
 	 * Get the Menutype
 	 *
-	 * @return  string  The message to be displayed to the user
+	 * @param   integer  $id   Id of the menutype
+	 * 
+	 * @return  string  Fetched String from Table for relevant Id
 	 */
-	public function getMenutype()
+	public function getMenutype($id = 1 )
 	{
-	    if (!isset($this->menutype))
+	    if (!is_array($this->menutypes))
 	    {
+	        $this->menutypes = array();
+	    }
+	    
+	    if (!isset($this->menutypes))
+	    {
+	        // Request the selected id
 	        $jinput = JFactory::getApplication()->input;
 	        $id     = $jinput->get('id', 1, 'INT');
 	        
-	        switch ($id)
-	        {
-	            case 2:
-	                $this->menutype = 'Good bye World!';
-	                break;
-	            default:
-	            case 1:
-	                $this->menutype = 'Hello World!';
-	                break;
-	        }
+	        // Get a TableHelloWorld instance
+	        $table = $this->getTable();
+	        
+	        // Load the menutype
+	        $table->load($id);
+	        
+	        // Assign the menutype
+	        $this->menutypes[$id] = $table->menutype;
 	    }
 	    
 	    return $this->menutype;

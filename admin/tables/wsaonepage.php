@@ -23,6 +23,6 @@ class WsaOnePageTableWsaOnePage extends JTable
 	 */
 	function __construct(&$db)
 	{
-		parent::__construct('#__wsaonepage', 'id', $db);
+		parent::__construct('#__menu_types', 'id', $db);
 	}
 }
