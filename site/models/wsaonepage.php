@@ -56,7 +56,7 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	        $this->menutypes = array();
 	    }
 	    
-	    if (!isset($this->menutypes))
+	    if (!isset($this->menutypes[$id]))
 	    {
 	        // Request the selected id
 	        $jinput = JFactory::getApplication()->input;
@@ -72,7 +72,7 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	        $this->menutypes[$id] = $table->menutype;
 	    }
 	    
-	    return $this->menutype;
+	    return $this->menutypes[$id];
 	}
 	
 	/**

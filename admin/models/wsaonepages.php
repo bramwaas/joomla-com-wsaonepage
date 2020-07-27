@@ -30,7 +30,7 @@ class WsaOnePageModelWsaOnePages extends JModelList
         {
             $config['filter_fields'] = array(
                 'id',
-                'greeting',
+                'menutype',
                 'published'
             );
         }
@@ -51,7 +51,7 @@ class WsaOnePageModelWsaOnePages extends JModelList
 
 		// Create the base select statement.
 		$query->select('*')
-                ->from($db->quoteName('#__wsaonepage'));
+                ->from($db->quoteName('#__menu_types'));
 
                 // Filter: like / search
                 $search = $this->getState('filter.search');
@@ -59,7 +59,7 @@ class WsaOnePageModelWsaOnePages extends JModelList
                 if (!empty($search))
                 {
                     $like = $db->quote('%' . $search . '%');
-                    $query->where('greeting LIKE ' . $like);
+                    $query->where('menutype LIKE ' . $like);
                 }
                 
                 // Filter by published state
@@ -75,7 +75,7 @@ class WsaOnePageModelWsaOnePages extends JModelList
                 }
                 
                 // Add the list ordering clause.
-                $orderCol	= $this->state->get('list.ordering', 'greeting');
+                $orderCol	= $this->state->get('list.ordering', 'menutype');
                 $orderDirn 	= $this->state->get('list.direction', 'asc');
                 
                 $query->order($db->escape($orderCol) . ' ' . $db->escape($orderDirn));
