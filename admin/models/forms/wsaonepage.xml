@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
-	<fieldset>
+	<fieldset addfieldpath="/administrator/components/com_wsaonepage/models/fields">
 		<field
 				name="id"
 				type="hidden"
@@ -10,7 +10,16 @@
 				type="text"
 				label="COM_WSAONEPAGE_WSAONEPAGE_MENUTYPE_LABEL"
 				description="COM_WSAONEPAGE_WSAONEPAGE_MENUTYPE_DESC"
-				size="80"
+				size="40"
+				class="inputbox"
+				default=""
+				/>
+		<field
+				name="title"
+				type="text"
+				label="COM_WSAONEPAGE_WSAONEPAGE_MENUTYPE_LABEL"
+				description="COM_WSAONEPAGE_WSAONEPAGE_MENUTYPE_DESC"
+				size="40"
 				class="inputbox"
 				default=""
 				/>
@@ -19,7 +28,7 @@
 				type="text"
 				label="COM_WSAONEPAGE_WSAONEPAGE_DESCRIPTION_LABEL"
 				description="COM_WSAONEPAGE_WSAONEPAGE_DESCRIPTION_DESC"
-				size="80"
+				size="256"
 				class="inputbox"
 				default=""
 				/>		

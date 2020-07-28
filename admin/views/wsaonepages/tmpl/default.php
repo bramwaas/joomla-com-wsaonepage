@@ -34,7 +34,10 @@ $listDirn      = $this->escape($this->filter_order_Dir);
 			<th width="2%">
 				<?php echo JHtml::_('grid.checkall'); ?>
 			</th>
-			<th width="90%">
+			<th width="45%">
+				<?php echo JHtml::_('grid.sort', 'COM_WSAONEPAGE_TITLES_NAME', 'title', $listDirn, $listOrder); ?>
+			</th>
+			<th width="45%">
 				<?php echo JHtml::_('grid.sort', 'COM_WSAONEPAGE_WSAONEPAGES_NAME', 'menutype', $listDirn, $listOrder); ?>
 			</th>
 			<th width="5%">
@@ -64,6 +67,11 @@ $listDirn      = $this->escape($this->filter_order_Dir);
 						</td>
 						<td>
 							<?php echo JHtml::_('grid.id', $i, $row->id); ?>
+						</td>
+						<td>
+							<a href="<?php echo $link; ?>" title="<?php echo JText::_('COM_WSAONEPAGE_EDIT_WSAONEPAGE'); ?>">
+							<?php echo $row->title; ?>
+							</a>
 						</td>
 						<td>
 							<a href="<?php echo $link; ?>" title="<?php echo JText::_('COM_WSAONEPAGE_EDIT_WSAONEPAGE'); ?>">

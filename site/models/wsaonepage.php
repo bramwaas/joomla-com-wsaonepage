@@ -62,7 +62,7 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	        $jinput = JFactory::getApplication()->input;
 	        $id     = $jinput->get('id', 1, 'INT');
 	        
-	        // Get a TableHelloWorld instance
+	        // Get a WsaOnePage instance
 	        $table = $this->getTable();
 	        
 	        // Load the menutype

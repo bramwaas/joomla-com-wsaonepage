@@ -15,7 +15,7 @@ use Joomla\Utilities\ArrayHelper;
 JFormHelper::loadFieldClass('list');
 
 /**
- * wsaonepage Form Field class for the WsaOnePage component
+ * wsaMenutype Form Field class for the WsaOnePage component
  *
  * @since  0.0.1
  */
