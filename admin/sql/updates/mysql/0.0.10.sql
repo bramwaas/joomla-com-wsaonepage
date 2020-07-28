@@ -3,7 +3,6 @@
 --
 DROP TABLE IF EXISTS `#__wsaonepage`;
 
-
 CREATE TABLE `#__wsaonepage` (
 	`id`       INT(10)     NOT NULL AUTO_INCREMENT,
 	`title` VARCHAR(48) NOT NULL,
@@ -13,7 +12,7 @@ CREATE TABLE `#__wsaonepage` (
 	PRIMARY KEY (`id`)
 )
 	ENGINE =MyISAM
---	ENGINE =InnoDB
+--	ENGINE=InnoDB
 	AUTO_INCREMENT =0
 --	DEFAULT CHARSET =utf8;
 	DEFAULT CHARSET =utf8mb4_unicode_ci

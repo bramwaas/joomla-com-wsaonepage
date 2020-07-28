@@ -19,14 +19,14 @@ JFormHelper::loadFieldClass('list');
  *
  * @since  0.0.1
  */
-class JFormFieldWsaOnePage extends JFormFieldList
+class JFormFieldWsaMenutype extends JFormFieldList
 {
 	/**
 	 * The field type.
 	 *
 	 * @var         string
 	 */
-	protected $type = 'WsaOnePage';
+	protected $type = 'WsaMenutype';
 
 	/**
 	 * Method to get a list of options for a list input.
@@ -38,16 +38,16 @@ class JFormFieldWsaOnePage extends JFormFieldList
  		$db    = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('id,menutype,title,description');
-		$query->from('#__wsaonepage');
+		$query->from('#__menu_types');
 		$db->setQuery((string) $query);
-		$wsaonepages = $db->loadObjectList();
+		$menutypes = $db->loadObjectList();
 		$options  = array();
  
-		if ($wsaonepages)
+		if ($menutypes)
 		{
-		    foreach ($wsaonepages as $wsaonepage)
+		    foreach ($menutypes as $menutype)
 			{
-			    $options[] = JHtml::_('select.option', $wsaonepage->id,  $wsaonepage->title . ':' . $wsaonepage->description );
+			    $options[] = JHtml::_('select.option', $menutype->id, $menutype->menutype . ' :' . $menutype->title . ' ' . $menutype->description );
 			}
 		}
 
