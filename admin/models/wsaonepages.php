@@ -51,7 +51,7 @@ class WsaOnePageModelWsaOnePages extends JModelList
 
 		// Create the base select statement.
 		$query->select('*')
-                ->from($db->quoteName('#__menu_types'));
+                ->from($db->quoteName('#__wsaonepage'));
 
                 // Filter: like / search
                 $search = $this->getState('filter.search');

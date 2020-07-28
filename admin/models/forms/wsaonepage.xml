@@ -14,5 +14,14 @@
 				class="inputbox"
 				default=""
 				/>
+		<field
+				name="description"
+				type="text"
+				label="COM_WSAONEPAGE_WSAONEPAGE_DESCRIPTION_LABEL"
+				description="COM_WSAONEPAGE_WSAONEPAGE_DESCRIPTION_DESC"
+				size="80"
+				class="inputbox"
+				default=""
+				/>		
 	</fieldset>
 </form>
