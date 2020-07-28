@@ -15,5 +15,5 @@ CREATE TABLE `#__wsaonepage` (
 --	ENGINE=InnoDB
 	AUTO_INCREMENT =0
 --	DEFAULT CHARSET =utf8;
-	DEFAULT CHARSET =utf8mb4_unicode_ci
+	DEFAULT CHARSET =utf8mb4;
 
