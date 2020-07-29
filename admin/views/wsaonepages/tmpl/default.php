@@ -40,10 +40,10 @@ $listDirn      = $this->escape($this->filter_order_Dir);
 			<th width="2%">
 				<?php echo JHtml::_('grid.checkall'); ?>
 			</th>
-			<th width="45%">
+			<th width="30%">
 				<?php echo JHtml::_('searchtools.sort', 'COM_WSAONEPAGE_WSAONEPAGE_TITLE', 'title', $listDirn, $listOrder); ?>
 			</th>
-			<th width="30%">
+			<th width="auto">
 				<?php echo JHtml::_('searchtools.sort', 'COM_WSAONEPAGE_WSAONEPAGES_MENUTYPE', 'menutype', $listDirn, $listOrder); ?>
 			</th>
                 <th width="15%">

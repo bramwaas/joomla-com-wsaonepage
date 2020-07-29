@@ -99,7 +99,7 @@ class WsaOnePageModelWsaOnePages extends ListModel
                 }
                 
                 // Add the list ordering clause.
-                $orderCol	= $this->state->get('list.ordering', 'title');
+                $orderCol	= $this->state->get('list.ordering', 'a.title');
                 $orderDirn 	= $this->state->get('list.direction', 'asc');
                 
                 $query->order($db->escape($orderCol) . ' ' . $db->escape($orderDirn));
