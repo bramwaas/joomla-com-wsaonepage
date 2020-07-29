@@ -18,9 +18,10 @@
 				class="inputbox"
 				default=""
 				/>
+<!--				type="wsamenutype" -->
 		<field
 				name="menutype"
-				type="wsamenutype"
+				type="text"
 				label="COM_WSAONEPAGE_WSAONEPAGE_MENUTYPE_LABEL"
 				description="COM_WSAONEPAGE_WSAONEPAGE_MENUTYPE_DESC"
 				size="40"
