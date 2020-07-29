@@ -3,13 +3,16 @@
  * @package     Joomla.Administrator
  * @subpackage  com_wsaonepage
  *
- * @copyright   Copyright (C) 2005 - 2020 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2020 - 2020 AHC Waasdorp. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;  // JModelLegacy
 // use Joomla\CMS\MVC\Model\ItemModel; //JModelItem
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
+
+JLoader::register('WsaOnePageHelperRoute', JPATH_ROOT . '/components/com_wsaonepage/helpers/route.php');
+
 
 /**
  * One Page Model
@@ -18,7 +21,11 @@ defined('_JEXEC') or die('Restricted access');
  */
 class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 {
-	/**
+    /**
+     * @var object item
+     */
+    protected $item;
+    /**
 	 * @var string message
 	 */
 	protected $message;
@@ -26,6 +33,72 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	 * @var array menutypes
 	 */
 	protected $menutypes;
+	/**
+	 * Method to auto-populate the model state.
+	 *
+	 * This method should only be called once per instantiation and is designed
+	 * to be called on the first call to the getState() method unless the model
+	 * configuration flag to ignore the request is set.
+	 *
+	 * Note. Calling getState in this method will result in recursion.
+	 *
+	 * @return	void
+	 * @since	2.5
+	 */
+	protected function populateState()
+	{
+	    // Get the message id
+	    $jinput = JFactory::getApplication()->input;
+	    $this->setState('wsaonepage.id', $jinput->get('id', 1, 'INT'));  
+	    
+	    // Load the parameters.
+	    $this->setState('params', JFactory::getApplication()->getParams());
+	    parent::populateState();
+	}
+	/**
+	 * Get the wsaonepage Item
+	 * @return object The message to be displayed to the user
+	 */
+	public function getItem()
+	{
+	    if (!isset($this->item))
+	    {
+	        $id    = $this->getState('wsaonepage.id');
+	        $db    = JFactory::getDbo();
+	        $query = $db->getQuery(true);
+	        $query->select('h.title, h.menutype, h.params, c.title as category')
+	        ->from('#__wsaonepage as h')
+	        ->leftJoin('#__categories as c ON h.catid=c.id')
+	        ->where('h.id=' . (int)$id);
+	        
+	        if (JLanguageMultilang::isEnabled())
+	        {
+	            $lang = JFactory::getLanguage()->getTag();
+	            $query->where('h.language IN ("*","' . $lang . '")');
+	        }
+	        
+	        $db->setQuery((string)$query);
+	        
+	        if ($this->item = $db->loadObject())
+	        {
+	            // Load the JSON string
+	            $params = new JRegistry;
+	            $params->loadString($this->item->params, 'JSON');
+	            $this->item->params = $params;
+	            
+	            // Merge global params with item params
+	            $params = clone $this->getState('params');
+	            $params->merge($this->item->params);
+	            $this->item->params = $params;
+	            
+	        }
+	        else
+	        {
+	            throw new Exception('WsaOnePage id not found', 404);
+	        }
+	    }
+	    return $this->item;
+	}
 	
 	/**
 	 * Method to get a table object, load it if necessary.
