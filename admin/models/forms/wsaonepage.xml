@@ -4,7 +4,7 @@
 	<fields name="details" 
 	label="COM_WSAONEPAGE_WSAONEPAGE_DETAILS"
 	addfieldpath="/administrator/components/com_wsaonepage/models/fields"
-	
+	>
 	<fieldset 
 	name="details"
 	label="COM_WSAONEPAGE_WSAONEPAGE_DETAILS"
@@ -22,15 +22,10 @@
 				class="inputbox"
 				default=""
 				/>
-<!--				type="wsamenutype" -->
 		<field
 				name="menutype"
-				type="text"
+				type="wsamenutype"
 				label="COM_WSAONEPAGE_WSAONEPAGE_MENUTYPE_LABEL"
-				description="COM_WSAONEPAGE_WSAONEPAGE_MENUTYPE_DESC"
-				size="40"
-				class="inputbox"
-				default=""
 				/>
 		<field
 				name="description"
