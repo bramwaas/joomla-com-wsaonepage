@@ -54,7 +54,8 @@ class WsaOnePageModelWsaOnePages extends ListModel
 		$query = $db->getQuery(true);
 
 		// Create the base select statement.
-		$query->select('*')
+		$query->select('a.id as id, a.title as title, a.menutype as menutype, a.description as description,
+                         a.published as published, a.created as created, a.alias as alias, a.language as language')
                 ->from($db->quoteName('#__wsaonepage', 'a'));
 
 /*                 // Join over the categories.
@@ -85,11 +86,11 @@ class WsaOnePageModelWsaOnePages extends ListModel
                 
                 if (is_numeric($published))
                 {
-                    $query->where('published = ' . (int) $published);
+                    $query->where('a.published = ' . (int) $published);
                 }
                 elseif ($published === '')
                 {
-                    $query->where('(published IN (0, 1))');
+                    $query->where('(a.published IN (0, 1))');
                 }
                 // Filter by language, if the user has set that in the filter field
                 $language = $this->getState('filter.language');
