@@ -47,7 +47,7 @@ class JFormFieldWsaMenutype extends JFormFieldList
 		{
 		    foreach ($menutypes as $menutype)
 			{
-			    $options[] = JHtml::_('select.option', $menutype->id, $menutype->menutype . ' :' . $menutype->title . ' ' . $menutype->description );
+			    $options[] = JHtml::_('select.option', $menutype->menutype, $menutype->menutype . ' :' . $menutype->title . ' ' . $menutype->description );
 			}
 		}
 
