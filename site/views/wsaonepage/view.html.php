@@ -39,8 +39,9 @@ class WsaOnePageViewWsaOnePage extends HtmlView
 	    print_r($item);
 	    echo PHP_EOL, '-->'; 
 	    $app=Factory::getApplication();
-	    $menuItems = $app->getMenu()->getItems(array('menutype', 'language'),array($item->menutype, array('*', $item->language)) );
-		    
+//	    $menuItems = $app->getMenu()->getItems(array('menutype', 'language'),array($item->menutype, array('*', $item->language)) );
+	    $menuItems = $app->getMenu()->getItems('menutype',$item->menutype);
+	    
 
 		
 	    
