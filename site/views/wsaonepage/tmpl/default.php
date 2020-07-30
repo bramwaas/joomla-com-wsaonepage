@@ -11,3 +11,9 @@
 defined('_JEXEC') or die('Restricted access');
 ?>
 <h1><?php echo $this->menutype; ?></h1>
+<?php 
+foreach ($menuitems as $menuitem)
+{
+	echo "<p>Itemid: {$menuitem->id} title: {$menuitem->title} route: $menuitem->route link $menuitem->link</p>";
+}
+?>

@@ -3,11 +3,12 @@
  * @package     Joomla.Administrator
  * @subpackage  com_helloworld
  *
- * @copyright   Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2020 - 2020 AHC Waasdorp. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\Factory;
 
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
@@ -29,7 +30,15 @@ class WsaOnePageViewWsaOnePage extends HtmlView
 	function display($tpl = null)
 	{
 		// Assign data to the view
-	    $this->menutype = $this->get('Menutype');
+
+//	    $this->menutype = $this->get('Menutype');
+	    $this->getItem();
+	    // Get the menuitems
+	    $app=Factory::getApplication();
+	    $menuItems = $app->getMenu()->getItems(array('menutype', 'language'),array($item->menutype, array('*', $item->language)) );
+		    
+
+		
 	    
 	    // Check for errors.
 	    if (count($errors = $this->get('Errors')))
