@@ -32,7 +32,7 @@ class WsaOnePageViewWsaOnePage extends HtmlView
 		// Assign data to the view
 
 //	    $this->menutype = $this->get('Menutype');
-	    $this->getItem();
+	    $this->get('Item');
 	    // Get the menuitems
 	    $app=Factory::getApplication();
 	    $menuItems = $app->getMenu()->getItems(array('menutype', 'language'),array($item->menutype, array('*', $item->language)) );
