@@ -10,4 +10,10 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 ?>
-<h1><?php echo $this->msg; ?></h1>
+<h1><?php echo $this->menutype; ?></h1>
+<?php 
+foreach ($this->menuItems as $menuitem)
+{
+	echo "<p>Itemid: {$menuitem->id} title: {$menuitem->title} route: $menuitem->route link $menuitem->link</p>";
+}
+?>

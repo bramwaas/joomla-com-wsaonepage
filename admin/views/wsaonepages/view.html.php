@@ -35,8 +35,6 @@ class WsaOnePageViewWsaOnePages extends JViewLegacy
 		$this->items		= $this->get('Items');
 		$this->pagination	= $this->get('Pagination');
 		$this->state			= $this->get('State');
-		$this->filter_order 	= $app->getUserStateFromRequest($context.'filter_order', 'filter_order', 'greeting', 'cmd');
-		$this->filter_order_Dir = $app->getUserStateFromRequest($context.'filter_order_Dir', 'filter_order_Dir', 'asc', 'cmd');
 		$this->filterForm    	= $this->get('FilterForm');
 		$this->activeFilters 	= $this->get('ActiveFilters');
 		
@@ -83,7 +81,28 @@ class WsaOnePageViewWsaOnePages extends JViewLegacy
 	 *
 	 * @return void
 	 */
-	protected function setDocument()
+	/**
+	 * Returns an array of fields the table can be sorted by
+	 *
+	 * @return  array  Array containing the field name to sort by as the key and display text as value
+	 *
+	 * @since   3.0
+	 */
+	protected function getSortFields()
+	{
+	    return array(
+	        'a.ordering'     => JText::_('JGRID_HEADING_ORDERING'),
+//	        'a.state'        => JText::_('JSTATUS'),
+	        'a.title'        => JText::_('JGLOBAL_TITLE'),
+//	        'category_title' => JText::_('JCATEGORY'),
+//	        'access_level'   => JText::_('JGRID_HEADING_ACCESS'),
+//	        'a.created_by'   => JText::_('JAUTHOR'),
+	        'language'       => JText::_('JGRID_HEADING_LANGUAGE'),
+//	        'a.created'      => JText::_('JDATE'),
+	        'a.id'           => JText::_('JGRID_HEADING_ID'),
+//	        'a.featured'     => JText::_('JFEATURED')
+	    );
+	}protected function setDocument()
 	{
 	    $document = JFactory::getDocument();
 	    $document->setTitle(JText::_('COM_WSAONEPAGE_ADMINISTRATION'));

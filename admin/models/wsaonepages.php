@@ -3,18 +3,19 @@
  * @package     Joomla.Administrator
  * @subpackage  com_wsaonepage
  *
- * @copyright   Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2020 - 2020 AHC Waasdorp. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
+use \Joomla\CMS\MVC\Model\ListModel;
 
 /**
  * WsaOnePageList Model
  *
  * @since  0.0.1
  */
-class WsaOnePageModelWsaOnePages extends JModelList
+class WsaOnePageModelWsaOnePages extends ListModel
 {
     /**
      * Constructor.
@@ -30,7 +31,10 @@ class WsaOnePageModelWsaOnePages extends JModelList
         {
             $config['filter_fields'] = array(
                 'id',
-                'greeting',
+                'menutype',
+                'title',
+                'created',
+                'language',
                 'published'
             );
         }
@@ -50,16 +54,31 @@ class WsaOnePageModelWsaOnePages extends JModelList
 		$query = $db->getQuery(true);
 
 		// Create the base select statement.
-		$query->select('*')
-                ->from($db->quoteName('#__wsaonepage'));
+		$query->select('a.id as id, a.title as title, a.menutype as menutype, a.description as description,
+                         a.published as published, a.created as created, a.alias as alias, a.language as language')
+                ->from($db->quoteName('#__wsaonepage', 'a'));
 
+/*                 // Join over the categories.
+                $query->select($db->quoteName('c.title', 'category_title'))
+                ->join('LEFT', $db->quoteName('#__categories', 'c') . ' ON c.id = a.catid');
+                
+                // Join with users table to get the username of the author
+                $query->select($db->quoteName('u.username', 'author'))
+                ->join('LEFT', $db->quoteName('#__users', 'u') . ' ON u.id = a.created_by');
+ */                
+                // Join with languages table to get the language title and image to display
+                // Put these into fields called language_title and language_image so that
+                // we can use the little com_content layout to display the map symbol
+                $query->select($db->quoteName('l.title', 'language_title') . "," .$db->quoteName('l.image', 'language_image'))
+                ->join('LEFT', $db->quoteName('#__languages', 'l') . ' ON l.lang_code = a.language');
+                
                 // Filter: like / search
                 $search = $this->getState('filter.search');
                 
                 if (!empty($search))
                 {
                     $like = $db->quote('%' . $search . '%');
-                    $query->where('greeting LIKE ' . $like);
+                    $query->where('menutype LIKE ' . $like);
                 }
                 
                 // Filter by published state
@@ -67,15 +86,21 @@ class WsaOnePageModelWsaOnePages extends JModelList
                 
                 if (is_numeric($published))
                 {
-                    $query->where('published = ' . (int) $published);
+                    $query->where('a.published = ' . (int) $published);
                 }
                 elseif ($published === '')
                 {
-                    $query->where('(published IN (0, 1))');
+                    $query->where('(a.published IN (0, 1))');
+                }
+                // Filter by language, if the user has set that in the filter field
+                $language = $this->getState('filter.language');
+                if ($language)
+                {
+                    $query->where('a.language = ' . $db->quote($language));
                 }
                 
                 // Add the list ordering clause.
-                $orderCol	= $this->state->get('list.ordering', 'greeting');
+                $orderCol	= $this->state->get('list.ordering', 'a.title');
                 $orderDirn 	= $this->state->get('list.direction', 'asc');
                 
                 $query->order($db->escape($orderCol) . ' ' . $db->escape($orderDirn));

@@ -3,12 +3,14 @@
  * @package     Joomla.Administrator
  * @subpackage  com_wsaonepage
  *
- * @copyright   Copyright (C) 2005 - 2020 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2020 - 2020 AHC Waasdorp. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 // No direct access to this file
 defined('_JEXEC') or die('Restricted Access');
+
+use Joomla\Registry\Registry;
 
 JHtml::_('formbehavior.chosen', 'select');
 
@@ -16,6 +18,10 @@ $listOrder     = $this->escape($this->filter_order);
 $listDirn      = $this->escape($this->filter_order_Dir);
 ?>
 <form action="index.php?option=com_wsaonepage&view=wsaonepages" method="post" id="adminForm" name="adminForm">
+	<div id="j-sidebar-container" class="span2">
+		<?php echo JHtmlSidebar::render(); ?>
+	</div>
+	<div id="j-main-container" class="span10">
 	<div class="row-fluid">
 		<div class="span6">
 			<?php echo JText::_('COM_WSAONEPAGE_WSAONEPAGES_FILTER'); ?>
@@ -34,14 +40,20 @@ $listDirn      = $this->escape($this->filter_order_Dir);
 			<th width="2%">
 				<?php echo JHtml::_('grid.checkall'); ?>
 			</th>
-			<th width="90%">
-				<?php echo JHtml::_('grid.sort', 'COM_WSAONEPAGE_WSAONEPAGES_NAME', 'greeting', $listDirn, $listOrder); ?>
+			<th width="30%">
+				<?php echo JHtml::_('searchtools.sort', 'COM_WSAONEPAGE_WSAONEPAGE_TITLE', 'title', $listDirn, $listOrder); ?>
 			</th>
+			<th width="auto">
+				<?php echo JHtml::_('searchtools.sort', 'COM_WSAONEPAGE_WSAONEPAGE_MENUTYPE', 'menutype', $listDirn, $listOrder); ?>
+			</th>
+                <th width="15%">
+                    <?php echo JHtml::_('searchtools.sort', 'COM_WSAONEPAGE_LANGUAGE', 'language', $listDirn, $listOrder); ?>
+                </th>
 			<th width="5%">
-				<?php echo JHtml::_('grid.sort', 'COM_WSAONEPAGE_PUBLISHED', 'published', $listDirn, $listOrder); ?>
+				<?php echo JHtml::_('searchtools.sort', 'COM_WSAONEPAGE_PUBLISHED', 'published', $listDirn, $listOrder); ?>
 			</th>
 			<th width="2%">
-				<?php echo JHtml::_('grid.sort', 'COM_WSAONEPAGE_ID', 'id', $listDirn, $listOrder); ?>
+				<?php echo JHtml::_('searchtools.sort', 'COM_WSAONEPAGE_ID', 'id', $listDirn, $listOrder); ?>
 			</th>
 		</tr>
 		</thead>
@@ -67,9 +79,15 @@ $listDirn      = $this->escape($this->filter_order_Dir);
 						</td>
 						<td>
 							<a href="<?php echo $link; ?>" title="<?php echo JText::_('COM_WSAONEPAGE_EDIT_WSAONEPAGE'); ?>">
-							<?php echo $row->greeting; ?>
+							<?php echo $row->title; ?>
 							</a>
 						</td>
+						<td>
+							<?php echo $row->menutype; ?>
+						</td>
+                            <td align="center">
+                                <?php echo JLayoutHelper::render('joomla.content.language', $row); ?>
+                            </td>
 						<td align="center">
 							<?php echo JHtml::_('jgrid.published', $row->published, $i, 'wsaonepages.', true, 'cb'); ?>
 						</td>
@@ -83,7 +101,6 @@ $listDirn      = $this->escape($this->filter_order_Dir);
 	</table>
 	<input type="hidden" name="task" value=""/>
 	<input type="hidden" name="boxchecked" value="0"/>
-	<input type="hidden" name="filter_order" value="<?php echo $listOrder; ?>"/>
-	<input type="hidden" name="filter_order_Dir" value="<?php echo $listDirn; ?>"/>
 	<?php echo JHtml::_('form.token'); ?>
+	</div>
 </form>

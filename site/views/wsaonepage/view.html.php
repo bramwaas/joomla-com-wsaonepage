@@ -3,11 +3,12 @@
  * @package     Joomla.Administrator
  * @subpackage  com_helloworld
  *
- * @copyright   Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2020 - 2020 AHC Waasdorp. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\Factory;
 
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
@@ -19,6 +20,29 @@ defined('_JEXEC') or die('Restricted access');
  */
 class WsaOnePageViewWsaOnePage extends HtmlView
 {
+    /*
+     * this wsaonepage item
+     */
+    protected $item;
+    /*
+     * the array of menuitems to display
+     */
+    protected $menuItems;
+    /*
+     * array of params
+     */
+    protected $params;
+    
+    protected $print;
+    /*
+     * state object
+     */
+    protected $state;
+    /*
+     * current user
+     */
+    protected $user;
+    
 	/**
 	 * Display the One Page view
 	 *
@@ -29,7 +53,30 @@ class WsaOnePageViewWsaOnePage extends HtmlView
 	function display($tpl = null)
 	{
 		// Assign data to the view
-	    $this->msg = $this->get('Msg');
+	    $app=Factory::getApplication();
+	    $user       = Factory::getUser();
+//	    $this->menutype = $this->get('Menutype');
+	    $item  = $this->get('Item');
+	    $this->item  = $item;
+//	    $this->print = $app->input->getBool('print');
+	    $this->state = $this->get('State');
+	    $this->user  = $user;
+	    
+	    $this->menutype = $item->menutype;
+	    // Get the menuitems
+	    echo '<!-- view.html.php $item:', PHP_EOL;
+	    print_r($item);
+	    echo PHP_EOL, '-->'; 
+	    $sitemenu = $app->getMenu();
+	    $menuItems = $sitemenu->getItems(array('menutype', 'language'),array($item->menutype, array('*', $item->language)) );
+//	    $menuItems = $sitemenu->getItems('menutype',$item->menutype);
+//	    $menuItems = $sitemenu->getItems('menutype', 'mainmenu');
+	    $this->menuItems = $menuItems;
+	    echo '<!-- view.html.php $menuItems:', PHP_EOL;
+	    print_r($menuItems);
+	    echo PHP_EOL, '-->';
+	    
+		
 	    
 	    // Check for errors.
 	    if (count($errors = $this->get('Errors')))

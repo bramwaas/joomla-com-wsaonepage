@@ -3,18 +3,18 @@
  * @package     Joomla.Administrator
  * @subpackage  com_wsaonepage
  *
- * @copyright   Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2020 - 2020 AHC Waasdorp. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 // No direct access
 defined('_JEXEC') or die('Restricted access');
-
+use Joomla\CMS\Table\Table;
 /**
  * Hello Table class
  *
  * @since  0.0.1
  */
-class WsaOnePageTableWsaOnePage extends JTable
+class WsaOnePageTableWsaOnePage extends Table
 {
 	/**
 	 * Constructor
