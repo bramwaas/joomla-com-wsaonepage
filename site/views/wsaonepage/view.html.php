@@ -20,6 +20,29 @@ defined('_JEXEC') or die('Restricted access');
  */
 class WsaOnePageViewWsaOnePage extends HtmlView
 {
+    /*
+     * this wsaonepage item
+     */
+    protected $item;
+    /*
+     * the array of menuitems to display
+     */
+    protected $menuItems;
+    /*
+     * array of params
+     */
+    protected $params;
+    
+    protected $print;
+    /*
+     * state object
+     */
+    protected $state;
+    /*
+     * current user
+     */
+    protected $user;
+    
 	/**
 	 * Display the One Page view
 	 *
@@ -30,20 +53,25 @@ class WsaOnePageViewWsaOnePage extends HtmlView
 	function display($tpl = null)
 	{
 		// Assign data to the view
-
+	    $app=Factory::getApplication();
+	    $user       = Factory::getUser();
 //	    $this->menutype = $this->get('Menutype');
-	    $item=$this->get('Item');
+	    $item  = $this->get('Item');
+	    $this->item  = $item;
+//	    $this->print = $app->input->getBool('print');
+	    $this->state = $this->get('State');
+	    $this->user  = $user;
+	    
 	    $this->menutype = $item->menutype;
 	    // Get the menuitems
 	    echo '<!-- view.html.php $item:', PHP_EOL;
 	    print_r($item);
 	    echo PHP_EOL, '-->'; 
-	    $app=Factory::getApplication();
 	    $sitemenu = $app->getMenu();
-//	    $menuItems = $app->getMenu()->getItems(array('menutype', 'language'),array($item->menutype, array('*', $item->language)) );
-//	    $menuItems = $app->getMenu()->getItems('menutype',$item->menutype);
-	    
-	    $menuItems = $sitemenu->getItems('menutype', 'mainmenu');
+	    $menuItems = $sitemenu->getItems(array('menutype', 'language'),array($item->menutype, array('*', $item->language)) );
+//	    $menuItems = $sitemenu->getItems('menutype',$item->menutype);
+//	    $menuItems = $sitemenu->getItems('menutype', 'mainmenu');
+	    $this->menuItems = $menuItems;
 	    echo '<!-- view.html.php $menuItems:', PHP_EOL;
 	    print_r($menuItems);
 	    echo PHP_EOL, '-->';
