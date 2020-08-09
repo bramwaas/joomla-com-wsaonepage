@@ -21,6 +21,7 @@ use Joomla\CMS\Language\Text;
 
 use Joomla\CMS\Component\ComponentHelper;  //tbv algemene renderComponent
 use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\HTML\HTMLHelper;
 
 
 ?>
@@ -116,6 +117,10 @@ if ($controller = BaseController::getInstance(substr($wsaOrgActiveMenuItem->quer
                 Factory::getLanguage()->load($mItm->query['option']);
                 // add file include path for this component.
 //                BaseDatabaseModel::addIncludePath($wsaJPATH_COMPONENT . '/models', $wsaComponent . 'Model'); // TODO
+//                JHtml::addIncludePath(JPATH_COMPONENT . '/helpers');  // uit default article
+                if ($mItm->query['option'] == 'com_content') {
+                    HTMLHelper::addIncludePath($wsaJPATH_COMPONENT . '/helpers');
+                }
                 // instantiate controller, propbably that of page component because it will only be instanciated once, but methods are available this way.
                 $controller = BaseController::getInstance($wsaComponent);
                 //
