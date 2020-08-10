@@ -113,8 +113,8 @@ echo '<!-- onepage Component Sections from menu -->' . PHP_EOL;
                     $app->getParams()->remove($tmpKey);
                 }
                 $app->getParams()->merge($wsaComponentParams);
-                echo '<!-- Start with menuid =', $mItm->id, ' option :', $mItm->query['option'];
-                // // print_r($mItm);
+                echo '<!-- Start with menuid =', $mItm->id, ' option :', $mItm->query['option'], ' bookmark :' ,$mItm->bookmark;
+                print_r($mItm);
                 echo ' -->', PHP_EOL;
                 //
                 /*
