@@ -120,7 +120,7 @@ echo '<!-- onepage Component Sections from menu -->' . PHP_EOL;
                  /*
                  * section header html for each item
                  */
-                echo '<section id="', $mItm->bookmark, '" class="container" >', PHP_EOL;
+                echo '<section id="', $mItm->bookmark, '" class="container-fluid" >', PHP_EOL;
                 // end section header html
                 // add helper file include path for this component. from default article
                 if ($mItm->query['option'] == 'com_content') {
