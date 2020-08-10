@@ -1,4 +1,7 @@
 # joomla-com-wsaonepage
+<<<<<<< HEAD
+Joomla component to display several components on one page
+=======
 Admin component for com-wsaonepage 
 
 ## Component Features
@@ -24,3 +27,4 @@ This project is licensed under the [GNU GPL], version 3 or later.
 
 
 
+>>>>>>> refs/heads/develop
