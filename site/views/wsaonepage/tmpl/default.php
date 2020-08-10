@@ -38,6 +38,7 @@ $wsaOrgActiveMenuItem = $app->getMenu()->getActive();
 $wsaOrgDocumentViewType = $document->getType(); // = html is always ok
 $wsaSiteRouter = $app->getRouter('site');
 $wsaOrgRouterVars = $wsaSiteRouter->getVars();
+$params  = $this->item->params;
 
 if ($controller = BaseController::getInstance(substr($wsaOrgActiveMenuItem->query['option'], 4))) {
     $wsaOrgControllerVars = $controller->getProperties(FALSE);
@@ -46,7 +47,7 @@ if ($controller = BaseController::getInstance(substr($wsaOrgActiveMenuItem->quer
     // [view] => article
     // [id] => 143
 /*
- * Title for yhis component
+ * Title for this component
  */    
 if ($params->get('show_title') || $params->get('show_author')) : ?>
 	<div class="page-header">
