@@ -79,6 +79,11 @@ echo '<!-- onepage Component Sections from menu -->' . PHP_EOL;
         try {
             // TODO juiste selectie voor menuitems
             if (stripos($mItm->note, '#op#') !== false) { // new code for one page when #op# is in $mItm-note
+                if ($mItm->type === 'alias')
+                {
+                    $aliasToId = $mItm->params->get('aliasoptions');
+                    $mItm = $app->getMenu()->getItem($aliasToId);
+                }
                 /*
                  * actions for all kind of components (option) / views (view)
                  * start with overwrite app values with values of this menu option.
