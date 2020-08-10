@@ -6,7 +6,8 @@
  * @copyright   Copyright (C) 2020 - 2020 AHC Waasdorp. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  *  Modifications:
- * 20200803: first use of MenuItems to display components in component area. Copied from  menuoverride wsaonepagebs4.php in template wsaonepage (working theeir only correct in a content component here also not working correct yet. 
+ * 20200803: first use of MenuItems to display components in component area. Copied from  menuoverride wsaonepagebs4.php in template wsaonepage (working theeir only correct in a content component here also not working correct yet.
+ * 20200810: works als with com_content after adding addIncludePath for helpers
  */
  
 // No direct access to this file
@@ -105,24 +106,21 @@ if ($controller = BaseController::getInstance(substr($wsaOrgActiveMenuItem->quer
                 echo '<section id="', $mItm->bookmark, '" class="container" >', PHP_EOL;
                 echo '<div class="container"><div class="row"><div class="col-lg-8 mx-auto">', PHP_EOL;
                 // end section header html
-                // overgenomen uit newsfeeds.php
-                JLoader::register($wsaComponent . 'HelperRoute', $wsaJPATH_COMPONENT . '/helpers/route.php');
-                JTable::addIncludePath($wsaJPATH_COMPONENT_ADMINISTRATOR . '/tables');
-                // einde overgenomen uit newsfeeds.php
-                // uit content.php
+                // add helper file include path for this component. from default article
+                if ($mItm->query['option'] == 'com_content') {
+                    HTMLHelper::addIncludePath($wsaJPATH_COMPONENT . '/helpers'); 
+                }
+                // from content.php
                 JLoader::register($wsaComponent . 'HelperQuery', $wsaJPATH_COMPONENT . '/helpers/query.php');
                 JLoader::register($wsaComponent . 'HelperAssociation', $wsaJPATH_COMPONENT . '/helpers/association.php');
-                // einde overgenomen uit content.php
+                // ende from content.php
+                // from newsfeeds.php
+                JLoader::register($wsaComponent . 'HelperRoute', $wsaJPATH_COMPONENT . '/helpers/route.php');
+                JTable::addIncludePath($wsaJPATH_COMPONENT_ADMINISTRATOR . '/tables');
                 // load default language file for this component to translate labels of form but maybe also other labes
                 Factory::getLanguage()->load($mItm->query['option']);
-                // add file include path for this component.
-//                BaseDatabaseModel::addIncludePath($wsaJPATH_COMPONENT . '/models', $wsaComponent . 'Model'); // TODO
-//                JHtml::addIncludePath(JPATH_COMPONENT . '/helpers');  // uit default article
-                if ($mItm->query['option'] == 'com_content') {
-                    HTMLHelper::addIncludePath($wsaJPATH_COMPONENT . '/helpers');
-                }
                 // instantiate controller, propbably that of page component because it will only be instanciated once, but methods are available this way.
-                $controller = BaseController::getInstance($wsaComponent);
+//                $controller = BaseController::getInstance($wsaComponent);
                 //
                 if ($mItm->query['option'] == 'com_contact') {
                     // add formpaths relative to varible active component path
@@ -149,7 +147,6 @@ if ($controller = BaseController::getInstance(substr($wsaOrgActiveMenuItem->quer
                     $wsaJPATH_COMPONENT . '/views/' . $mItm->query['view'] . '/tmpl/',
                     JPATH_THEMES . '/' . $app->getTemplate() . '/html/' . $wsaOption . '/' . $mItm->query['view']
                 ));
-                // TODO mabe we can use the controllers dispaly method if we have sufficient paths an properties set to values of this component/ menu-item.
                 $controller->display();
                 
 /*
