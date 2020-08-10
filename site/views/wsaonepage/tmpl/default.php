@@ -23,14 +23,14 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Component\ComponentHelper;  //tbv algemene renderComponent
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\HTML\HTMLHelper;
-
+use Joomla\CMS\Table\Table;
 /*
  * secure variables of app page and page component
  */
 $app = Factory::getApplication();
 $document = Factory::getDocument();
 $sitename = $app->get('sitename');  // TODO nodig?
-$itemid   = $app->input->getCmd('Itemid', ''); // TODO nodig?
+//$itemid   = $app->input->getCmd('Itemid', ''); // TODO nodig?
 $input = $app->input;
 $wsaOrgAppParams = clone $app->getParams();
 $wsaOrgInput = clone $input;
@@ -42,10 +42,6 @@ $params  = $this->item->params;
 
 if ($controller = BaseController::getInstance(substr($wsaOrgActiveMenuItem->query['option'], 4))) {
     $wsaOrgControllerVars = $controller->getProperties(FALSE);
-    // [Itemid] => 299
-    // [option] => com_content
-    // [view] => article
-    // [id] => 143
 /*
  * Title for this component
  */    
@@ -129,31 +125,27 @@ echo '<!-- onepage Component Sections from menu -->' . PHP_EOL;
                 if ($mItm->query['option'] == 'com_content') {
                     HTMLHelper::addIncludePath($wsaJPATH_COMPONENT . '/helpers'); 
                 }
+                if ($mItm->query['option'] == 'com_contact') {
+                    // add formpaths relative to variable active component path
+                    Form::addFormPath($wsaJPATH_COMPONENT . '/models/forms');
+                    Form::addFieldPath($wsaJPATH_COMPONENT . '/models/fields');
+                    Form::addFormPath($wsaJPATH_COMPONENT . '/model/form');
+                    Form::addFieldPath($wsaJPATH_COMPONENT . '/model/field');
+                }
+                // from newsfeeds.php
+                Table::addIncludePath($wsaJPATH_COMPONENT_ADMINISTRATOR . '/tables');
                 // from content.php
                 JLoader::register($wsaComponent . 'HelperQuery', $wsaJPATH_COMPONENT . '/helpers/query.php');
                 JLoader::register($wsaComponent . 'HelperAssociation', $wsaJPATH_COMPONENT . '/helpers/association.php');
                 // ende from content.php
                 // from newsfeeds.php
                 JLoader::register($wsaComponent . 'HelperRoute', $wsaJPATH_COMPONENT . '/helpers/route.php');
-                JTable::addIncludePath($wsaJPATH_COMPONENT_ADMINISTRATOR . '/tables');
                 // load default language file for this component to translate labels of form but maybe also other labes
                 Factory::getLanguage()->load($mItm->query['option']);
-                // instantiate controller, propbably that of page component because it will only be instanciated once, but methods are available this way.
-//                $controller = BaseController::getInstance($wsaComponent);
-                //
-                if ($mItm->query['option'] == 'com_contact') {
-                    // add formpaths relative to varible active component path
-                    Form::addFormPath($wsaJPATH_COMPONENT . '/models/forms');
-                    Form::addFieldPath($wsaJPATH_COMPONENT . '/models/fields');
-                    Form::addFormPath($wsaJPATH_COMPONENT . '/model/form');
-                    Form::addFieldPath($wsaJPATH_COMPONENT . '/model/field');
-                }
-                // extra om foute instellingen te overschrijven.
+                // replace wrong settings in Controller
                 $controller->set('name', $wsaComponent);
                 $controller->set('basePath', $wsaJPATH_COMPONENT);
-                $controller->set('paths', array(
-                    'view' => $wsaJPATH_COMPONENT . '/views/'
-                ));
+                $controller->set('paths', array('view' => $wsaJPATH_COMPONENT . '/views/' ));
                 $controller->set('model_prefix', $wsaComponent . 'Model');
                 $controller->addModelPath($wsaJPATH_COMPONENT . '/models', $wsaComponent . 'Model');
                 // get the view before display to overwrite the layout value of the previous iteration and the override paths for the lay-out file
