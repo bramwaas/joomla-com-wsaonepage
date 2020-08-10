@@ -82,8 +82,8 @@ echo '<!-- onepage Component Sections from menu -->' . PHP_EOL;
                  * actions for all kind of components (option) / views (view)
                  * start with overwrite app values with values of this menu option.
                  */
-//              create bookmark in accordance with template wsaonepage mod_menu wsaonepagebs4_component
-                $mItm->bookmark = ($mItm->flink == '/') ? 'home' : ltrim(str_ireplace(array('/', '\\', '.html'), array('-', '-', ''), $mItm->flink), '-#') ;
+//              create bookmark from route in accordance with template wsaonepage mod_menu wsaonepagebs4_component
+                $mItm->bookmark = ($mItm->route == '/') ? 'home' : ltrim(str_ireplace(array('/', '\\', '.html'), array('-', '-', ''), $mItm->route), '-#') ;
                 // modified version of componentpath and the like in variables instead of constants
                 $wsaOption = preg_replace('/[^A-Z0-9_\.-]/i', '', $mItm->query['option']);
                 $wsaComponent = ucfirst(substr($wsaOption, 4));
@@ -113,11 +113,10 @@ echo '<!-- onepage Component Sections from menu -->' . PHP_EOL;
                     $app->getParams()->remove($tmpKey);
                 }
                 $app->getParams()->merge($wsaComponentParams);
-                echo '<!-- Start with menuid =', $mItm->id, ' option :', $mItm->query['option'], ' bookmark :' ,$mItm->bookmark;
-                print_r($mItm);
+                echo '<!-- Start with menuid =', $mItm->id, ' option :', $mItm->query['option'];
+  //              print_r($mItm);
                 echo ' -->', PHP_EOL;
-                //
-                /*
+                 /*
                  * section header html for each item
                  */
                 echo '<section id="', $mItm->bookmark, '" class="container" >', PHP_EOL;
