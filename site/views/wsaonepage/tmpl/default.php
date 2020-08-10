@@ -82,12 +82,15 @@ echo '<!-- onepage Component Sections from menu -->' . PHP_EOL;
                  * actions for all kind of components (option) / views (view)
                  * start with overwrite app values with values of this menu option.
                  */
-                // aangepaste versie van componentpath ed in variabelen in plaats van constantes.
+//              create bookmark in accordance with template wsaonepage mod_menu wsaonepagebs4_component
+                $item->bookmark = ($item->flink == '/') ? 'home' : ltrim(str_ireplace(array('/', '\\', '.html'), array('-', '-', ''), $item->flink), '-#') ;
+                // modified version of componentpath and the like in variables instead of constants
                 $wsaOption = preg_replace('/[^A-Z0-9_\.-]/i', '', $mItm->query['option']);
                 $wsaComponent = ucfirst(substr($wsaOption, 4));
                 $wsaJPATH_COMPONENT = JPATH_BASE . '/components/' . $wsaOption;
                 $wsaJPATH_COMPONENT_SITE = JPATH_SITE . '/components/' . $wsaOption;
                 $wsaJPATH_COMPONENT_ADMINISTRATOR = JPATH_ADMINISTRATOR . '/components/' . $wsaOption;
+                // replace input values by values from menuitem query
                 foreach ($wsaOrgActiveMenuItem->query as $tmpKey => $tmpVal) {
                     $app->input->set($tmpKey, NULL);
                 }
@@ -100,18 +103,17 @@ echo '<!-- onepage Component Sections from menu -->' . PHP_EOL;
                     'Itemid' => $mItm->id,
                     'option' => $mItm->query['option']
                 ));
-                // zoek component params
+                // find component params
                 $wsaComponentParams = $app->getParams($mItm->query['option']);
-                // zoek menuparams en voeg ze samen met componentparams (menu overschrijft component)
+                // find menu params and merge with component params (menu params overwrite component params if both are available) and replace app params
                 $wsaMenuParams = new Registry($mItm->params);
                 $wsaComponentParams->merge($wsaMenuParams);
-                // zet samengestelde component menu parameters in app params.
                 $tmp = $app->getParams()->flatten();
                 foreach ($tmp as $tmpKey => $tmpVal) {
                     $app->getParams()->remove($tmpKey);
                 }
                 $app->getParams()->merge($wsaComponentParams);
-                echo '<!-- Start with menuid $mItm->id=', $mItm->id, ' $app->getMenu()->getActive()->id :', $app->getMenu()->getActive()->id, PHP_EOL;
+                echo '<!-- Start with menuid =', $mItm->id, ' option :', $mItm->query['option'];
                 // // print_r($mItm);
                 echo ' -->', PHP_EOL;
                 //
