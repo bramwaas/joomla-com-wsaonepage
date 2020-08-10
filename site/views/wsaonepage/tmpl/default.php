@@ -24,22 +24,9 @@ use Joomla\CMS\Component\ComponentHelper;  //tbv algemene renderComponent
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\HTML\HTMLHelper;
 
-
-?>
-<h1><?php echo $this->menutype; ?></h1>
-<?php 
-
 /*
- * List of sections with a component for each menu-item on this page.
- *
- * By default, joomla only has one component per page, so a component often stores and uses general variables.
- * We sometimes have to override those in the list of menu components,
- * so first secure the variables of the component page and restore them after processing the component list.
+ * secure variables of app page and page component
  */
-echo '<!-- onepage Component Sections from menu -->' . PHP_EOL;
-/*
-  * secure variables of app page and page component
-  */
 $app = Factory::getApplication();
 $document = Factory::getDocument();
 $sitename = $app->get('sitename');  // TODO nodig?
@@ -58,6 +45,37 @@ if ($controller = BaseController::getInstance(substr($wsaOrgActiveMenuItem->quer
     // [option] => com_content
     // [view] => article
     // [id] => 143
+/*
+ * Title for yhis component
+ */    
+if ($params->get('show_title') || $params->get('show_author')) : ?>
+	<div class="page-header">
+		<?php if ($params->get('show_title')) : ?>
+			<h2 itemprop="headline">
+				<?php echo $this->escape($this->item->title); ?>
+			</h2>
+		<?php endif; ?>
+		<?php if ($this->item->state == 0) : ?>
+			<span class="label label-warning"><?php echo JText::_('JUNPUBLISHED'); ?></span>
+		<?php endif; ?>
+		<?php if (strtotime($this->item->publish_up) > strtotime(JFactory::getDate())) : ?>
+			<span class="label label-warning"><?php echo JText::_('JNOTPUBLISHEDYET'); ?></span>
+		<?php endif; ?>
+		<?php if ((strtotime($this->item->publish_down) < strtotime(JFactory::getDate())) && $this->item->publish_down != JFactory::getDbo()->getNullDate()) : ?>
+			<span class="label label-warning"><?php echo JText::_('JEXPIRED'); ?></span>
+		<?php endif; ?>
+	</div>
+	<?php endif; ?>
+
+<?php 
+/*
+ * List of sections with a component for each menu-item on this page.
+ *
+ * By default, joomla only has one component per page, so a component often stores and uses general variables.
+ * We sometimes have to override those in the list of menu components,
+ * so first secure the variables of the component page and restore them after processing the component list.
+ */
+echo '<!-- onepage Component Sections from menu -->' . PHP_EOL;
     
     foreach ($this->menuItems as $i => &$mItm) {
         try {
