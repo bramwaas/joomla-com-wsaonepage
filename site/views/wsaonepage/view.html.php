@@ -5,6 +5,7 @@
  *
  * @copyright   Copyright (C) 2020 - 2020 AHC Waasdorp. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * 20200810
  */
 
 use Joomla\CMS\MVC\View\HtmlView;
@@ -55,8 +56,7 @@ class WsaOnePageViewWsaOnePage extends HtmlView
 		// Assign data to the view
 	    $app=Factory::getApplication();
 	    $user       = Factory::getUser();
-//	    $this->menutype = $this->get('Menutype');
-	    $item  = $this->get('Item');
+        $item  = $this->get('Item');
 	    $this->item  = $item;
 //	    $this->print = $app->input->getBool('print');
 	    $this->state = $this->get('State');
@@ -64,19 +64,9 @@ class WsaOnePageViewWsaOnePage extends HtmlView
 	    
 	    $this->menutype = $item->menutype;
 	    // Get the menuitems
-	    echo '<!-- view.html.php $item:', PHP_EOL;
-	    print_r($item);
-	    echo PHP_EOL, '-->'; 
 	    $sitemenu = $app->getMenu();
 	    $menuItems = $sitemenu->getItems(array('menutype', 'language'),array($item->menutype, array('*', $item->language)) );
-//	    $menuItems = $sitemenu->getItems('menutype',$item->menutype);
-//	    $menuItems = $sitemenu->getItems('menutype', 'mainmenu');
 	    $this->menuItems = $menuItems;
-	    echo '<!-- view.html.php $menuItems:', PHP_EOL;
-	    print_r($menuItems);
-	    echo PHP_EOL, '-->';
-	    
-		
 	    
 	    // Check for errors.
 	    if (count($errors = $this->get('Errors')))
@@ -85,7 +75,6 @@ class WsaOnePageViewWsaOnePage extends HtmlView
 	        
 	        return false;
 	    }
-	    
 	    
 		// Display the view
 		parent::display($tpl);
