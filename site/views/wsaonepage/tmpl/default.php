@@ -83,7 +83,7 @@ echo '<!-- onepage Component Sections from menu -->' . PHP_EOL;
                  * start with overwrite app values with values of this menu option.
                  */
 //              create bookmark in accordance with template wsaonepage mod_menu wsaonepagebs4_component
-                $item->bookmark = ($item->flink == '/') ? 'home' : ltrim(str_ireplace(array('/', '\\', '.html'), array('-', '-', ''), $item->flink), '-#') ;
+                $mItm->bookmark = ($mItm->flink == '/') ? 'home' : ltrim(str_ireplace(array('/', '\\', '.html'), array('-', '-', ''), $mItm->flink), '-#') ;
                 // modified version of componentpath and the like in variables instead of constants
                 $wsaOption = preg_replace('/[^A-Z0-9_\.-]/i', '', $mItm->query['option']);
                 $wsaComponent = ucfirst(substr($wsaOption, 4));
