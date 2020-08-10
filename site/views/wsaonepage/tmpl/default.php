@@ -8,6 +8,7 @@
  *  Modifications:
  * 20200803: first use of MenuItems to display components in component area. Copied from  menuoverride wsaonepagebs4.php in template wsaonepage (working theeir only correct in a content component here also not working correct yet.
  * 20200810: works als with com_content after adding addIncludePath for helpers
+ * 20200810 create bookmark from route in accordance with template wsaonepage mod_menu wsaonepagebs4_component
  */
  
 // No direct access to this file
