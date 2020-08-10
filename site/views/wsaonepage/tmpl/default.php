@@ -8,7 +8,7 @@
  *  Modifications:
  * 20200803: first use of MenuItems to display components in component area. Copied from  menuoverride wsaonepagebs4.php in template wsaonepage (working theeir only correct in a content component here also not working correct yet.
  * 20200810: works als with com_content after adding addIncludePath for helpers
- * 20200810 create bookmark from route in accordance with template wsaonepage mod_menu wsaonepagebs4_component
+ * 20200810 create bookmark from route in accordance with template wsaonepage mod_menu wsaonepagebs4_component, removed unnecessary divs
  */
  
 // No direct access to this file
@@ -121,7 +121,6 @@ echo '<!-- onepage Component Sections from menu -->' . PHP_EOL;
                  * section header html for each item
                  */
                 echo '<section id="', $mItm->bookmark, '" class="container" >', PHP_EOL;
-                echo '<div class="container"><div class="row"><div class="col-lg-8 mx-auto">', PHP_EOL;
                 // end section header html
                 // add helper file include path for this component. from default article
                 if ($mItm->query['option'] == 'com_content') {
@@ -165,7 +164,6 @@ echo '<!-- onepage Component Sections from menu -->' . PHP_EOL;
 /*
  * closing html (section) for this menuitem
  */
-                echo '</div></div></div>', PHP_EOL;
                 echo '</section>', PHP_EOL;
                 // end closing html
                 // restore input
