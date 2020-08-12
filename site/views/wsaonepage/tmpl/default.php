@@ -9,6 +9,7 @@
  * 20200803: first use of MenuItems to display components in component area. Copied from  menuoverride wsaonepagebs4.php in template wsaonepage (working theeir only correct in a content component here also not working correct yet.
  * 20200810: works als with com_content after adding addIncludePath for helpers
  * 20200810 create bookmark from route in accordance with template wsaonepage mod_menu wsaonepagebs4_component, removed unnecessary divs
+ * 20200812 create bookmark before processing alias
  */
  
 // No direct access to this file
@@ -79,6 +80,8 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
         try {
             // TODO juiste selectie voor menuitems
             if (stripos($mItm->note, '#op#') !== false) { // new code for one page when #op# is in $mItm-note
+                //  create bookmark from route before processing alias in accordance with template wsaonepage mod_menu wsaonepagebs4_component
+                $mItm->bookmark = ($mItm->route == '/') ? 'home' : ltrim(str_ireplace(array('/', '\\', '.html'), array('-', '-', ''), $mItm->route), '-#') ;
                 if ($mItm->type === 'alias')
                 {
                     $aliasToId = $mItm->params->get('aliasoptions');
@@ -88,8 +91,6 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                  * actions for all kind of components (option) / views (view)
                  * start with overwrite app values with values of this menu option.
                  */
-//              create bookmark from route in accordance with template wsaonepage mod_menu wsaonepagebs4_component
-                $mItm->bookmark = ($mItm->route == '/') ? 'home' : ltrim(str_ireplace(array('/', '\\', '.html'), array('-', '-', ''), $mItm->route), '-#') ;
                 // modified version of componentpath and the like in variables instead of constants
                 $wsaOption = preg_replace('/[^A-Z0-9_\.-]/i', '', $mItm->query['option']);
                 $wsaComponent = ucfirst(substr($wsaOption, 4));
