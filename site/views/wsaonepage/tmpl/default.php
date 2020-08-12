@@ -75,7 +75,7 @@ if ($params->get('show_title') || $params->get('show_author')) : ?>
  */
 echo '<!-- onepage Component Sections from menu -->' . PHP_EOL;
     
-    foreach ($this->menuItems as $i => &$mItm) {
+foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that changes in $mItm like adding bookmark are available in modules
         try {
             // TODO juiste selectie voor menuitems
             if (stripos($mItm->note, '#op#') !== false) { // new code for one page when #op# is in $mItm-note
@@ -186,6 +186,7 @@ echo '<!-- onepage Component Sections from menu -->' . PHP_EOL;
             Factory::getApplication()->enqueueMessage(Text::_('Caught exception: ' . $e->getMessage()), 'warning');
         }
     } // end foreach
+    unset($mItm);
     /*
      * end list of sections.
      */
