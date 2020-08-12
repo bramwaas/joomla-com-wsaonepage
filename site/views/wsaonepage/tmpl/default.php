@@ -84,13 +84,16 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 $mItm->bookmark = ($mItm->route == '/') ? 'home' : ltrim(str_ireplace(array('/', '\\', '.html'), array('-', '-', ''), $mItm->route), '-#') ;
                 if ($mItm->type === 'alias')
                 {
+                    $tmp =$mItm->bookmark;
                     $aliasToId = $mItm->params->get('aliasoptions');
                     $mItm = $app->getMenu()->getItem($aliasToId);
+                    $mItm->bookmark = $tmp; 
                 }
                 /*
                  * actions for all kind of components (option) / views (view)
                  * start with overwrite app values with values of this menu option.
                  */
+
                 // modified version of componentpath and the like in variables instead of constants
                 $wsaOption = preg_replace('/[^A-Z0-9_\.-]/i', '', $mItm->query['option']);
                 $wsaComponent = ucfirst(substr($wsaOption, 4));
