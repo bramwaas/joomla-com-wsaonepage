@@ -40,6 +40,8 @@ $wsaOrgActiveMenuItem = $app->getMenu()->getActive();
 $wsaOrgDocumentViewType = $document->getType(); // = html is always ok
 $wsaSiteRouter = $app->getRouter('site');
 $wsaOrgRouterVars = $wsaSiteRouter->getVars();
+$wsaIsAlias = FALSE;
+$wsaAliasBookmark = NULL;
 $params  = $this->item->params;
 
 if ($controller = BaseController::getInstance(substr($wsaOrgActiveMenuItem->query['option'], 4))) {
@@ -84,9 +86,11 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 $mItm->bookmark = ($mItm->route == '/') ? 'home' : ltrim(str_ireplace(array('/', '\\', '.html'), array('-', '-', ''), $mItm->route), '-#') ;
                 if ($mItm->type === 'alias')
                 {
+                    $wsaIsAlias = TRUE;
                     $tmp =$mItm->bookmark;
                     $aliasToId = $mItm->params->get('aliasoptions');
                     $mItm = $app->getMenu()->getItem($aliasToId);
+                    $wsaAliasBookmark = (isset($mItm->bookmark)) ? $mItm->bookmark : NULL;
                     $mItm->bookmark = $tmp; 
                 }
                 /*
@@ -175,6 +179,11 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
  */
                 echo '</section>', PHP_EOL;
                 // end closing html
+                if ($wsaIsAlias)
+                {
+                    $wsaIsAlias = FALSE;
+                    $mItm->bookmark  = (isset($wsaAliasBookmark)) ? $wsaAliasBookmark : NULL;
+                }
                 // restore input
                 foreach ($mItm->query as $tmpKey => $tmpVal) {
                     $app->input->set($tmpKey, NULL);
