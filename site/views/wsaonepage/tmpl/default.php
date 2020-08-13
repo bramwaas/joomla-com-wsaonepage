@@ -8,7 +8,8 @@
  *  Modifications:
  * 20200803: first use of MenuItems to display components in component area. Copied from  menuoverride wsaonepagebs4.php in template wsaonepage (working theeir only correct in a content component here also not working correct yet.
  * 20200810: works als with com_content after adding addIncludePath for helpers
- * 20200810 create bookmark from route in accordance with template wsaonepage mod_menu wsaonepagebs4_component
+ * 20200810 create bookmark from route in accordance with template wsaonepage mod_menu wsaonepagebs4_component, removed unnecessary divs
+ * 20200812 create bookmark before processing alias
  */
  
 // No direct access to this file
@@ -39,6 +40,8 @@ $wsaOrgActiveMenuItem = $app->getMenu()->getActive();
 $wsaOrgDocumentViewType = $document->getType(); // = html is always ok
 $wsaSiteRouter = $app->getRouter('site');
 $wsaOrgRouterVars = $wsaSiteRouter->getVars();
+$wsaIsAlias = FALSE;
+$wsaAliasBookmark = NULL;
 $params  = $this->item->params;
 
 if ($controller = BaseController::getInstance(substr($wsaOrgActiveMenuItem->query['option'], 4))) {
@@ -75,16 +78,26 @@ if ($params->get('show_title') || $params->get('show_author')) : ?>
  */
 echo '<!-- onepage Component Sections from menu -->' . PHP_EOL;
     
-    foreach ($this->menuItems as $i => &$mItm) {
+foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that changes in $mItm like adding bookmark are available in modules
         try {
             // TODO juiste selectie voor menuitems
             if (stripos($mItm->note, '#op#') !== false) { // new code for one page when #op# is in $mItm-note
+                //  create bookmark from route before processing alias in accordance with template wsaonepage mod_menu wsaonepagebs4_component
+                $mItm->bookmark = ($mItm->route == '/') ? 'home' : ltrim(str_ireplace(array('/', '\\', '.html'), array('-', '-', ''), $mItm->route), '-#') ;
+                if ($mItm->type === 'alias')
+                {
+                    $wsaIsAlias = TRUE;
+                    $tmp =$mItm->bookmark;
+                    $aliasToId = $mItm->params->get('aliasoptions');
+                    $mItm = $app->getMenu()->getItem($aliasToId);
+                    $wsaAliasBookmark = (isset($mItm->bookmark)) ? $mItm->bookmark : NULL;
+                    $mItm->bookmark = $tmp; 
+                }
                 /*
                  * actions for all kind of components (option) / views (view)
                  * start with overwrite app values with values of this menu option.
                  */
-//              create bookmark from route in accordance with template wsaonepage mod_menu wsaonepagebs4_component
-                $mItm->bookmark = ($mItm->route == '/') ? 'home' : ltrim(str_ireplace(array('/', '\\', '.html'), array('-', '-', ''), $mItm->route), '-#') ;
+
                 // modified version of componentpath and the like in variables instead of constants
                 $wsaOption = preg_replace('/[^A-Z0-9_\.-]/i', '', $mItm->query['option']);
                 $wsaComponent = ucfirst(substr($wsaOption, 4));
@@ -120,8 +133,7 @@ echo '<!-- onepage Component Sections from menu -->' . PHP_EOL;
                  /*
                  * section header html for each item
                  */
-                echo '<section id="', $mItm->bookmark, '" class="container" >', PHP_EOL;
-                echo '<div class="container"><div class="row"><div class="col-lg-8 mx-auto">', PHP_EOL;
+                echo '<section id="', $mItm->bookmark, '" class="container-fluid" >', PHP_EOL;
                 // end section header html
                 // add helper file include path for this component. from default article
                 if ($mItm->query['option'] == 'com_content') {
@@ -165,9 +177,13 @@ echo '<!-- onepage Component Sections from menu -->' . PHP_EOL;
 /*
  * closing html (section) for this menuitem
  */
-                echo '</div></div></div>', PHP_EOL;
                 echo '</section>', PHP_EOL;
                 // end closing html
+                if ($wsaIsAlias)
+                {
+                    $wsaIsAlias = FALSE;
+                    $mItm->bookmark  = (isset($wsaAliasBookmark)) ? $wsaAliasBookmark : NULL;
+                }
                 // restore input
                 foreach ($mItm->query as $tmpKey => $tmpVal) {
                     $app->input->set($tmpKey, NULL);
@@ -183,6 +199,7 @@ echo '<!-- onepage Component Sections from menu -->' . PHP_EOL;
             Factory::getApplication()->enqueueMessage(Text::_('Caught exception: ' . $e->getMessage()), 'warning');
         }
     } // end foreach
+    unset($mItm);
     /*
      * end list of sections.
      */
