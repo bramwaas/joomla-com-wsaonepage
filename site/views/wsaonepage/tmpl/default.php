@@ -129,13 +129,7 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 $app->getParams()->merge($wsaComponentParams);
                 echo '<!-- Start with menuid =', $mItm->id, ' option :', $mItm->query['option'];
   //              print_r($mItm);
-                echo ' -->', PHP_EOL;
-                 /*
-                 * section header html for each item
-                 */
-                echo '<section id="', $mItm->bookmark, '" class="container-fluid" >', PHP_EOL;
-                // end section header html
-                // add helper file include path for this component. from default article
+                 // add helper file include path for this component. from default article
                 if ($mItm->query['option'] == 'com_content') {
                     HTMLHelper::addIncludePath($wsaJPATH_COMPONENT . '/helpers'); 
                 }
@@ -172,6 +166,12 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                     $wsaJPATH_COMPONENT . '/views/' . $mItm->query['view'] . '/tmpl/',
                     JPATH_THEMES . '/' . $app->getTemplate() . '/html/' . $wsaOption . '/' . $mItm->query['view']
                 ));
+                echo ' -->', PHP_EOL;
+                /*
+                 * section header html for each item
+                 */
+                echo '<section id="', $mItm->bookmark, '" class="section component "', strtolower($wsaComponent), ' >', PHP_EOL;
+                // end section header html
                 $controller->display();
                 
 /*
