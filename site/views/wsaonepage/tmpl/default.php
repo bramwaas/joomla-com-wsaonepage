@@ -10,6 +10,7 @@
  * 20200810: works als with com_content after adding addIncludePath for helpers
  * 20200810 create bookmark from route in accordance with template wsaonepage mod_menu wsaonepagebs4_component, removed unnecessary divs
  * 20200812 create bookmark before processing alias
+ * 20200816 restore documentdata like title
  */
  
 // No direct access to this file
@@ -46,6 +47,11 @@ $params  = $this->item->params;
 
 if ($controller = BaseController::getInstance(substr($wsaOrgActiveMenuItem->query['option'], 4))) {
     $wsaOrgControllerVars = $controller->getProperties(FALSE);
+    $wsaOrgDocumentVars['title'] = $document->getTitle();
+    $wsaOrgDocumentVars['description'] = $document->getDescription();
+    $wsaOrgDocumentMetaName['title'] = $document->getMetaData('title') ?: $wsaOrgDocumentVars['title'] ;
+    $wsaOrgDocumentMetaName['keywords'] = $document->getMetaData('keywords');
+    
 /*
  * Title for this component
  */    
@@ -214,6 +220,12 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
     $controller->set('paths', $wsaOrgControllerVars['paths']);
     $controller->set('name', $wsaOrgControllerVars['name']);
     $controller->set('model_prefix', $wsaOrgControllerVars['model_prefix']);
+    // restore Document
+    $document->setTitle($wsaOrgDocumentVars['title']);
+    $document->setDescription($wsaOrgDocumentVars['description']);
+    $document->setMetaData('title', $wsaOrgDocumentMetaName['title']);
+    $document->setMetaData('keywords', $wsaOrgDocumentMetaName['keywords']);
+    //	$document->setMetaData('og:title', $wsaOrgDocumentVars['title'], 'property');
     // restore active menu
     if ($wsaOrgActiveMenuItem->id > 0) {
         $app->getMenu()->setActive($wsaOrgActiveMenuItem->id);
