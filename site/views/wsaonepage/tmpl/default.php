@@ -233,8 +233,8 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
     $wsaSiteRouter->setVars($wsaOrgRouterVars);
     // restore pathway (breadcrumb)
     $pathway->setPathway($wsaOrgPathway);
-    // set defaults fore some open graph  meta properties 
-    $document->setMetaData('og:url', JPATH_BASE, 'property');
+    // set defaults fore some open graph  meta properties TODO maybe not the best place
+    $document->setMetaData('og:url', JUri::base(), 'property');
     $document->setMetaData('og:title', $wsaOrgDocumentVars['title'], 'property');
     $document->setMetaData('og:description', $wsaOrgDocumentVars['description'], 'property'); 
     $document->setMetaData('og:site_name', $sitename, 'property');
