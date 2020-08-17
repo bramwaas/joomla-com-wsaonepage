@@ -32,8 +32,7 @@ use Joomla\CMS\Table\Table;
  */
 $app = Factory::getApplication();
 $document = Factory::getDocument();
-$sitename = $app->get('sitename');  // TODO nodig?
-//$itemid   = $app->input->getCmd('Itemid', ''); // TODO nodig?
+$sitename = $app->get('sitename'); 
 $input = $app->input;
 $wsaOrgAppParams = clone $app->getParams();
 $wsaOrgInput = clone $input;
@@ -51,6 +50,9 @@ if ($controller = BaseController::getInstance(substr($wsaOrgActiveMenuItem->quer
     $wsaOrgDocumentVars['description'] = $document->getDescription();
     $wsaOrgDocumentMetaName['title'] = $document->getMetaData('title') ?: $wsaOrgDocumentVars['title'] ;
     $wsaOrgDocumentMetaName['keywords'] = $document->getMetaData('keywords');
+    $wsaOrgPathway = $app->getPathway()->getPathway();
+    $pathway = $app->getPathway();
+    $wsaOrgPathway = $pathway->getPathway();
     
 /*
  * Title for this component
@@ -215,24 +217,28 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
         $app->getParams()->remove($tmpKey);
     }
     $app->getParams()->merge($wsaOrgAppParams);
-    // restor controller vars
-    $controller->set('basePath', $wsaOrgControllerVars['basePath']);
-    $controller->set('paths', $wsaOrgControllerVars['paths']);
-    $controller->set('name', $wsaOrgControllerVars['name']);
-    $controller->set('model_prefix', $wsaOrgControllerVars['model_prefix']);
+    // restore controller vars
+    $controller->setProperties( $wsaOrgControllerVars);
     // restore Document
     $document->setTitle($wsaOrgDocumentVars['title']);
     $document->setDescription($wsaOrgDocumentVars['description']);
     $document->setMetaData('title', $wsaOrgDocumentMetaName['title']);
     $document->setMetaData('keywords', $wsaOrgDocumentMetaName['keywords']);
-    //	$document->setMetaData('og:title', $wsaOrgDocumentVars['title'], 'property');
-    // restore active menu
+   // restore active menu
     if ($wsaOrgActiveMenuItem->id > 0) {
         $app->getMenu()->setActive($wsaOrgActiveMenuItem->id);
         echo '<!-- herstelde actief menu id :', $app->getMenu()->getActive()->id, ' -->';
     }
     // restore Router vars
     $wsaSiteRouter->setVars($wsaOrgRouterVars);
+    // restore pathway (breadcrumb)
+    $pathway->setPathway($wsaOrgPathway);
+    // set defaults fore some open graph  meta properties 
+    $document->setMetaData('og:url', JPATH_BASE, 'property');
+    $document->setMetaData('og:title', $wsaOrgDocumentVars['title'], 'property');
+    $document->setMetaData('og:description', $wsaOrgDocumentVars['description'], 'property'); 
+    $document->setMetaData('og:site_name', $sitename, 'property');
+    
 } else {
     echo '<!-- ' . PHP_EOL;
     echo 'Controller not instanciated:', substr($wsaOrgActiveMenuItem->query['option'], 4), PHP_EOL;
