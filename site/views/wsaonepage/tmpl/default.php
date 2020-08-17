@@ -11,6 +11,7 @@
  * 20200810 create bookmark from route in accordance with template wsaonepage mod_menu wsaonepagebs4_component, removed unnecessary divs
  * 20200812 create bookmark before processing alias
  * 20200816 restore documentdata like title
+ * 20200817 restore pathway and (maybe temporary) defaylts for open graph front end ready for the time being so a new version 0.1
  */
  
 // No direct access to this file
