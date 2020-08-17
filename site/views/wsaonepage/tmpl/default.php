@@ -10,6 +10,8 @@
  * 20200810: works als with com_content after adding addIncludePath for helpers
  * 20200810 create bookmark from route in accordance with template wsaonepage mod_menu wsaonepagebs4_component, removed unnecessary divs
  * 20200812 create bookmark before processing alias
+ * 20200816 restore documentdata like title
+ * 20200817 restore pathway and (maybe temporary) defaylts for open graph front end ready for the time being so a new version 0.1
  */
  
 // No direct access to this file
@@ -31,8 +33,7 @@ use Joomla\CMS\Table\Table;
  */
 $app = Factory::getApplication();
 $document = Factory::getDocument();
-$sitename = $app->get('sitename');  // TODO nodig?
-//$itemid   = $app->input->getCmd('Itemid', ''); // TODO nodig?
+$sitename = $app->get('sitename'); 
 $input = $app->input;
 $wsaOrgAppParams = clone $app->getParams();
 $wsaOrgInput = clone $input;
@@ -46,6 +47,14 @@ $params  = $this->item->params;
 
 if ($controller = BaseController::getInstance(substr($wsaOrgActiveMenuItem->query['option'], 4))) {
     $wsaOrgControllerVars = $controller->getProperties(FALSE);
+    $wsaOrgDocumentVars['title'] = $document->getTitle();
+    $wsaOrgDocumentVars['description'] = $document->getDescription();
+    $wsaOrgDocumentMetaName['title'] = $document->getMetaData('title') ?: $wsaOrgDocumentVars['title'] ;
+    $wsaOrgDocumentMetaName['keywords'] = $document->getMetaData('keywords');
+    $wsaOrgPathway = $app->getPathway()->getPathway();
+    $pathway = $app->getPathway();
+    $wsaOrgPathway = $pathway->getPathway();
+    
 /*
  * Title for this component
  */    
@@ -129,13 +138,7 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 $app->getParams()->merge($wsaComponentParams);
                 echo '<!-- Start with menuid =', $mItm->id, ' option :', $mItm->query['option'];
   //              print_r($mItm);
-                echo ' -->', PHP_EOL;
-                 /*
-                 * section header html for each item
-                 */
-                echo '<section id="', $mItm->bookmark, '" class="container-fluid" >', PHP_EOL;
-                // end section header html
-                // add helper file include path for this component. from default article
+                 // add helper file include path for this component. from default article
                 if ($mItm->query['option'] == 'com_content') {
                     HTMLHelper::addIncludePath($wsaJPATH_COMPONENT . '/helpers'); 
                 }
@@ -172,6 +175,12 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                     $wsaJPATH_COMPONENT . '/views/' . $mItm->query['view'] . '/tmpl/',
                     JPATH_THEMES . '/' . $app->getTemplate() . '/html/' . $wsaOption . '/' . $mItm->query['view']
                 ));
+                echo ' -->', PHP_EOL;
+                /*
+                 * section header html for each item
+                 */
+                echo '<section id="', $mItm->bookmark, '" class="section component "', strtolower($wsaComponent), ' >', PHP_EOL;
+                // end section header html
                 $controller->display();
                 
 /*
@@ -209,18 +218,28 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
         $app->getParams()->remove($tmpKey);
     }
     $app->getParams()->merge($wsaOrgAppParams);
-    // restor controller vars
-    $controller->set('basePath', $wsaOrgControllerVars['basePath']);
-    $controller->set('paths', $wsaOrgControllerVars['paths']);
-    $controller->set('name', $wsaOrgControllerVars['name']);
-    $controller->set('model_prefix', $wsaOrgControllerVars['model_prefix']);
-    // restore active menu
+    // restore controller vars
+    $controller->setProperties( $wsaOrgControllerVars);
+    // restore Document
+    $document->setTitle($wsaOrgDocumentVars['title']);
+    $document->setDescription($wsaOrgDocumentVars['description']);
+    $document->setMetaData('title', $wsaOrgDocumentMetaName['title']);
+    $document->setMetaData('keywords', $wsaOrgDocumentMetaName['keywords']);
+   // restore active menu
     if ($wsaOrgActiveMenuItem->id > 0) {
         $app->getMenu()->setActive($wsaOrgActiveMenuItem->id);
         echo '<!-- herstelde actief menu id :', $app->getMenu()->getActive()->id, ' -->';
     }
     // restore Router vars
     $wsaSiteRouter->setVars($wsaOrgRouterVars);
+    // restore pathway (breadcrumb)
+    $pathway->setPathway($wsaOrgPathway);
+    // set defaults fore some open graph  meta properties TODO maybe not the best place
+    $document->setMetaData('og:url', JUri::base(), 'property');
+    $document->setMetaData('og:title', $wsaOrgDocumentVars['title'], 'property');
+    $document->setMetaData('og:description', $wsaOrgDocumentVars['description'], 'property'); 
+    $document->setMetaData('og:site_name', $sitename, 'property');
+    
 } else {
     echo '<!-- ' . PHP_EOL;
     echo 'Controller not instanciated:', substr($wsaOrgActiveMenuItem->query['option'], 4), PHP_EOL;
