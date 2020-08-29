@@ -129,15 +129,15 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                     'Itemid' => $mItm->id,
                     'option' => $mItm->query['option']
                 ));
-                // Find modules Aside and Adjusting content width according to that 
-                $this-> wsaLoadModules('position-7');
-                $this-> wsaLoadModules('position-8');
-                if (self::$countModules['position-7'] && self::$countModules['position-8'])
+                // Find $this-> Aside and Adjusting content width according to that 
+                $this->wsaLoadModules('position-7');
+                $this->wsaLoadModules('position-8');
+                if ($this->countModules['position-7'] && $this->countModules['position-8'])
                 {
                     $spanc = "col-md-6 " ;
                     $spans = "col-12 col-md";
                 }
-                elseif (!self::$countModules['position-7'] && !self::$countModules['position-8'])
+                elseif (!$this->countModules['position-7'] && !$this->countModules['position-8'])
                 
                 {
                     $spanc = "";
@@ -201,10 +201,10 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                  * section header html for each item
                  */
                 echo '<section id="', $mItm->bookmark, '" class="row section component " >', PHP_EOL;
-                if (self::$countModules['position-8'])
+                if ($this->countModules['position-8'])
                 {
                     echo '<aside class="col-12 col-md">', PHP_EOL;
-                    echo self::$modules['position-8'];
+                    echo $this->modules['position-8'];
                     echo '</aside>', PHP_EOL;
                 }
                 echo '<div class="col-12 ', $spanc, '" >', PHP_EOL;
@@ -215,10 +215,10 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                  * closing html (section) for this menuitem
                  */
                 echo '</div>', PHP_EOL;
-                if (self::$countModules['position-7'])
+                if ($this->countModules['position-7'])
                 {
                     echo '<aside class="col-12 col-md">', PHP_EOL;
-                    echo self::$modules['position-7'];
+                    echo $this->modules['position-7'];
                     echo '</aside>', PHP_EOL;
                 }
                 echo '</section>', PHP_EOL;

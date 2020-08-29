@@ -34,11 +34,11 @@ class WsaOnePageViewWsaOnePage extends HtmlView
     /*
      * the array of modules on a position to display
      */
-    protected static $modules = array();
+    protected $modules = array();
     /*
      * array of counts of modules on a position
      */
-    protected static $countModules = array();
+    protected $countModules = array();
     /*
      * array of params
      */
@@ -102,22 +102,22 @@ class WsaOnePageViewWsaOnePage extends HtmlView
 	function wsaLoadModules($position, $style = 'none')
 	{
 	    
-	    self::$modules[$position] = '';
+	    $this->modules[$position] = '';
 	    $document = Factory::getDocument();
 	    $renderer = $document->loadRenderer('module');
-	    $modules  = ModuleHelper::getModules($position);
-	    self::$countModules[$position] = count($modules);
+	    $wsaModules  = ModuleHelper::getModules($position);
+	    $this->countModules[$position] = count($wsaModules);
 	    $params   = array('style' => $style);
 	    ob_start();
 	    
-	    foreach ($modules as $module)
+	    foreach ($wsaModules as $module)
 	    {
 	        echo $renderer->render($module, $params);
 	    }
 	    
-	    self::$modules[$position] = ob_get_clean();
+	    $this->modules[$position] = ob_get_clean();
 	    
-	    return $modules[$position];
+	    return $this->modules[$position];
 	    
 	}
 	
