@@ -10,6 +10,8 @@
 
 use Joomla\CMS\MVC\View\HtmlView;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Helper\ModuleHelper;
+
 
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
@@ -29,6 +31,10 @@ class WsaOnePageViewWsaOnePage extends HtmlView
      * the array of menuitems to display
      */
     protected $menuItems;
+    /*
+     * the array of modules on a position to display
+     */
+    protected static $modules = array();
     /*
      * array of params
      */
@@ -79,4 +85,35 @@ class WsaOnePageViewWsaOnePage extends HtmlView
 		// Display the view
 		parent::display($tpl);
 	}
+	/**
+	 * Loads and renders the module
+	 *
+	 * @param   string  $position  The position assigned to the module
+	 * @param   string  $style     The style assigned to the module
+	 *
+	 * @return  mixed
+	 *
+	 * copied from plugins\content\loadmodule
+	 */
+	function wsaLoadModules($position, $style = 'none')
+	{
+	    
+	    self::$modules[$position] = '';
+	    $document = Factory::getDocument();
+	    $renderer = $document->loadRenderer('module');
+	    $modules  = ModuleHelper::getModules($position);
+	    $params   = array('style' => $style);
+	    ob_start();
+	    
+	    foreach ($modules as $module)
+	    {
+	        echo $renderer->render($module, $params);
+	    }
+	    
+	    self::$modules[$position] = ob_get_clean();
+	    
+	    return $modules[$position];
+	    
+	}
+	
 }
