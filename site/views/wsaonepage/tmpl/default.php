@@ -44,6 +44,9 @@ $wsaOrgRouterVars = $wsaSiteRouter->getVars();
 $wsaIsAlias = FALSE;
 $wsaAliasBookmark = NULL;
 $params  = $this->item->params;
+echo '<!-- Start default.php  <![CDATA[';
+//           print_r($document);
+echo ' ]]> -->', PHP_EOL;
 
 if ($controller = BaseController::getInstance(substr($wsaOrgActiveMenuItem->query['option'], 4))) {
     $wsaOrgControllerVars = $controller->getProperties(FALSE);
