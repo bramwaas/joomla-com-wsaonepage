@@ -123,6 +123,7 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 foreach ($mItm->query as $tmpKey => $tmpVal) {
                     $app->input->set($tmpKey, $tmpVal);
                 }
+                $app->input->set('Itemid', $mItm->id );
                 $app->getMenu()->setActive($mItm->id > 0 ? $mItm->id : $wsaOrgActiveMenuItem->id);
                 // set Router vars to values of this menuitem
                 $wsaSiteRouter->setVars(array(
@@ -232,6 +233,7 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 foreach ($mItm->query as $tmpKey => $tmpVal) {
                     $app->input->set($tmpKey, NULL);
                 }
+                $app->input->set('Itemid', $wsaOrgInput->get('Itemid', NULL) );
                 foreach ($wsaOrgActiveMenuItem->query as $tmpKey => $tmpVal) {
                     $app->input->set($tmpKey, $tmpVal);
                 }
