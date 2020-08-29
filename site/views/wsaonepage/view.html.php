@@ -36,6 +36,10 @@ class WsaOnePageViewWsaOnePage extends HtmlView
      */
     protected static $modules = array();
     /*
+     * array of counts of modules on a position
+     */
+    protected static $countModules = array();
+    /*
      * array of params
      */
     protected $params;
@@ -86,7 +90,7 @@ class WsaOnePageViewWsaOnePage extends HtmlView
 		parent::display($tpl);
 	}
 	/**
-	 * Loads and renders the module
+	 * Loads counts and renders the modules on a position
 	 *
 	 * @param   string  $position  The position assigned to the module
 	 * @param   string  $style     The style assigned to the module
@@ -102,6 +106,7 @@ class WsaOnePageViewWsaOnePage extends HtmlView
 	    $document = Factory::getDocument();
 	    $renderer = $document->loadRenderer('module');
 	    $modules  = ModuleHelper::getModules($position);
+	    self::$countModules[$position] = count($modules);
 	    $params   = array('style' => $style);
 	    ob_start();
 	    

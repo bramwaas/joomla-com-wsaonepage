@@ -129,6 +129,24 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                     'Itemid' => $mItm->id,
                     'option' => $mItm->query['option']
                 ));
+                // Find modules Aside and Adjusting content width according to that 
+                $this-> wsaLoadModules('position-7');
+                $this-> wsaLoadModules('position-8');
+                if (self::$countModules['position-7'] && self::$countModules['position-8'])
+                {
+                    $spanc = "col-md-6 " ;
+                    $spans = "col-12 col-md";
+                }
+                elseif (!self::$countModules['position-7'] && !self::$countModules['position-8'])
+                
+                {
+                    $spanc = "";
+                }
+                else
+                {
+                    $spanc = "col-md-8 ";
+                    $spans = "col-12  col-md";
+                }
                 // find component params
                 $wsaComponentParams = $app->getParams($mItm->query['option']);
                 // find menu params and merge with component params (menu params overwrite component params if both are available) and replace app params
@@ -182,13 +200,27 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 /*
                  * section header html for each item
                  */
-                echo '<section id="', $mItm->bookmark, '" class="section component "', strtolower($wsaComponent), ' >', PHP_EOL;
+                echo '<section id="', $mItm->bookmark, '" class="row section component " >', PHP_EOL;
+                if (self::$countModules['position-8'])
+                {
+                    echo '<aside class="col-12 col-md">', PHP_EOL;
+                    echo self::$modules['position-8'];
+                    echo '</aside>', PHP_EOL;
+                }
+                echo '<div class="col-12 ', $spanc, '" >', PHP_EOL;
                 // end section header html
                 $controller->display();
                 
-/*
- * closing html (section) for this menuitem
- */
+                /*
+                 * closing html (section) for this menuitem
+                 */
+                echo '</div>', PHP_EOL;
+                if (self::$countModules['position-7'])
+                {
+                    echo '<aside class="col-12 col-md">', PHP_EOL;
+                    echo self::$modules['position-7'];
+                    echo '</aside>', PHP_EOL;
+                }
                 echo '</section>', PHP_EOL;
                 // end closing html
                 if ($wsaIsAlias)
