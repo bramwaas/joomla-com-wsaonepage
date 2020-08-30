@@ -147,6 +147,130 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	    
 	    return $this->menutypes[$id];
 	}
+	/**
+	 * Module list
+	 *
+	 * @return  array
+	 * from ModuleHelper getModuleList but with selection on list of Itemid's
+	 */
+	public function getModulelist()
+	{
+	    $app = \JFactory::getApplication();
+	    $Itemid = $app->input->getInt('Itemid', 0);
+	    $groups = implode(',', \JFactory::getUser()->getAuthorisedViewLevels());
+	    $lang = \JFactory::getLanguage()->getTag();
+	    $clientId = (int) $app->getClientId();
+	    
+	    // Build a cache ID for the resulting data object
+	    $cacheId = $groups . $clientId . $Itemid;
+	    
+	    $db = \JFactory::getDbo();
+	    
+	    $query = $db->getQuery(true)
+	    ->select('m.id, m.title, m.module, m.position, m.content, m.showtitle, m.params, mm.menuid')
+	    ->from('#__modules AS m')
+	    ->join('LEFT', '#__modules_menu AS mm ON mm.moduleid = m.id')
+	    ->where('m.published = 1')
+	    ->join('LEFT', '#__extensions AS e ON e.element = m.module AND e.client_id = m.client_id')
+	    ->where('e.enabled = 1');
+	    
+	    $date = \JFactory::getDate();
+	    $now = $date->toSql();
+	    $nullDate = $db->getNullDate();
+	    $query->where('(m.publish_up = ' . $db->quote($nullDate) . ' OR m.publish_up <= ' . $db->quote($now) . ')')
+	    ->where('(m.publish_down = ' . $db->quote($nullDate) . ' OR m.publish_down >= ' . $db->quote($now) . ')')
+	    ->where('m.access IN (' . $groups . ')')
+	    ->where('m.client_id = ' . $clientId)
+	    ->where('(mm.menuid = ' . $Itemid . ' OR mm.menuid <= 0)');
+	    
+	    // Filter by language
+	    if ($app->isClient('site') && $app->getLanguageFilter())
+	    {
+	        $query->where('m.language IN (' . $db->quote($lang) . ',' . $db->quote('*') . ')');
+	        $cacheId .= $lang . '*';
+	    }
+	    
+	    if ($app->isClient('administrator') && static::isAdminMultilang())
+	    {
+	        $query->where('m.language IN (' . $db->quote($lang) . ',' . $db->quote('*') . ')');
+	        $cacheId .= $lang . '*';
+	    }
+	    
+	    $query->order('m.position, m.ordering');
+	    
+	    // Set the query
+	    $db->setQuery($query);
+	    
+	    try
+	    {
+	        /** @var \JCacheControllerCallback $cache */
+	        $cache = \JFactory::getCache('com_modules', 'callback');
+	        
+	        $modules = $cache->get(array($db, 'loadObjectList'), array(), md5($cacheId), false);
+	    }
+	    catch (\RuntimeException $e)
+	    {
+	        \JLog::add(\JText::sprintf('JLIB_APPLICATION_ERROR_MODULE_LOAD', $e->getMessage()), \JLog::WARNING, 'jerror');
+	        
+	        return array();
+	    }
+	    
+	    return $modules;
+	}
+	
+	/**
+	 * Clean the module list
+	 *
+	 * @param   array  $modules  Array with module objects
+	 *
+	 * @return  array
+	 * from ModuleHelper cleanModuleList but with selection on list of Itemid's
+	 */
+	public function cleanModuleList($modules)
+	{
+	    // Apply negative selections and eliminate duplicates
+	    $Itemid = \JFactory::getApplication()->input->getInt('Itemid');
+	    $negId = $Itemid ? -(int) $Itemid : false;
+	    $clean = array();
+	    $dupes = array();
+	    
+	    foreach ($modules as $i => $module)
+	    {
+	        // The module is excluded if there is an explicit prohibition
+	        $negHit = ($negId === (int) $module->menuid);
+	        
+	        if (isset($dupes[$module->id]))
+	        {
+	            // If this item has been excluded, keep the duplicate flag set,
+	            // but remove any item from the modules array.
+	            if ($negHit)
+	            {
+	                unset($clean[$module->id]);
+	            }
+	            
+	            continue;
+	        }
+	        
+	        $dupes[$module->id] = true;
+	        
+	        // Only accept modules without explicit exclusions.
+	        if ($negHit)
+	        {
+	            continue;
+	        }
+	        
+	        $module->name = substr($module->module, 4);
+	        $module->style = null;
+	        $module->position = strtolower($module->position);
+	        
+	        $clean[$module->id] = $module;
+	    }
+	    
+	    unset($dupes);
+	    
+	    // Return to simple indexing that matches the query order.
+	    return array_values($clean);
+	}
 	
 	/**
 	 * Get the message
