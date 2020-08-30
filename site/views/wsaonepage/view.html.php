@@ -80,7 +80,7 @@ class WsaOnePageViewWsaOnePage extends HtmlView
 	    $menuIds = array_column ($menuItems, 'id');
 	    echo '<!-- view.html.php $menuIds:', PHP_EOL;
 	    print_r($menuIds);
-	    echo  PHP_EOL, 'implode:', implode(',' , $menuIds), PHP_EOL;
+	    echo  PHP_EOL, 'implode:', implode(',' , $menuIds) . ',0,-' . implode(',-' , $menuIds), PHP_EOL;
 	    echo '--> ', PHP_EOL;
 	    
 	    // Check for errors.
