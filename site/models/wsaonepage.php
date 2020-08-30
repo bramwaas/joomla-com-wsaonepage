@@ -152,9 +152,15 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	 *
 	 * @return  array
 	 * from ModuleHelper getModuleList but with selection on list of Itemid's
+	 * positive menuid include, negative menuid exclude, 0 for all menuid's
 	 */
-	public function getModulelist()
+	public function getModulelist($menuIds = array())
 	{
+	    if ($menuIds = array()) 
+	    {
+	        return array();
+	    }
+	    $idlist = implode(',' , $menuIds) . ',0,-' . implode(',-' , $menuIds);
 	    $app = \JFactory::getApplication();
 	    $Itemid = $app->input->getInt('Itemid', 0);
 	    $groups = implode(',', \JFactory::getUser()->getAuthorisedViewLevels());
@@ -181,7 +187,7 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	    ->where('(m.publish_down = ' . $db->quote($nullDate) . ' OR m.publish_down >= ' . $db->quote($now) . ')')
 	    ->where('m.access IN (' . $groups . ')')
 	    ->where('m.client_id = ' . $clientId)
-	    ->where('(mm.menuid = ' . $Itemid . ' OR mm.menuid <= 0)');
+	    ->where('(mm.menuid IN ' . $idlist );
 	    
 	    // Filter by language
 	    if ($app->isClient('site') && $app->getLanguageFilter())

@@ -77,10 +77,10 @@ class WsaOnePageViewWsaOnePage extends HtmlView
 	    $sitemenu = $app->getMenu();
 	    $menuItems = $sitemenu->getItems(array('menutype', 'language'),array($item->menutype, array('*', $item->language)) );
 	    $this->menuItems = $menuItems;
-	    $menuIds = array_column ($menuItems, 'id');
-	    echo '<!-- view.html.php $menuIds:', PHP_EOL;
-	    print_r($menuIds);
-	    echo  PHP_EOL, 'implode:', implode(',' , $menuIds) . ',0,-' . implode(',-' , $menuIds), PHP_EOL;
+	   
+	    $this->modules = $this->get('Modulelist', array_column($menuItems, 'id') );
+	    echo '<!-- view.html.php this->modules:', PHP_EOL;
+	    print_r( $this->modules);
 	    echo '--> ', PHP_EOL;
 	    
 	    // Check for errors.
