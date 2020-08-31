@@ -128,6 +128,7 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	 *
 	 * @return  array
 	 * from ModuleHelper getModuleList but with selection on array of menuid's
+	 * and only position-7 and position-8
 	 * positive menuid include, negative menuid exclude, 0 for all menuid's
 	 * getMenuitems should be executed before this method to fill the menuitems.
 	 * 
@@ -168,6 +169,7 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	    ->where('(m.publish_down = ' . $db->quote($nullDate) . ' OR m.publish_down >= ' . $db->quote($now) . ')')
 	    ->where('m.access IN (' . $groups . ')')
 	    ->where('m.client_id = ' . $clientId)
+	    ->where("m.position IN ('position-7','position-8')")
 	    ->where('(mm.menuid IN (' . $idlist . ') OR mm.menuid <= 0)');
 	    
 	    // Filter by language
