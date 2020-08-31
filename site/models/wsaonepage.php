@@ -104,79 +104,45 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	    }
 	    return $this->item;
 	}
-	
 	/**
-	 * Method to get a table object, load it if necessary.
+	 * Get the menuitems
 	 *
-	 * @param   string  $type    The table name. Optional.
-	 * @param   string  $prefix  The class prefix. Optional.
-	 * @param   array   $config  Configuration array for model. Optional.
-	 *
-	 * @return  JTable  A JTable object
-	 *
-	 * @since   1.6
+	 * @return  array of menuitems  
 	 */
-	public function getTable($type = 'WsaOnePage', $prefix = 'WsaOnePageTable', $config = array())
+	public function getMenuitems()
 	{
-	    return JTable::getInstance($type, $prefix, $config);
-	}
-	/**
-	 * Get the Menutype
-	 *
-	 * @param   integer  $id   Id of the menutype
-	 * 
-	 * @return  string  Fetched String from Table for relevant Id
-	 */
-	public function getMenutype($id = 1 )
-	{
-	    if (!is_array($this->menutypes))
+	    if (!isset($this->menuitems))
 	    {
-	        $this->menutypes = array();
+	        // Get the menuitems
+	        $app = Factory::getApplication();
+	        $sitemenu = $app->getMenu();
+	        $menuItems = $sitemenu->getItems(array('menutype', 'language'),array($this->item->menutype, array('*', $item->language)) );
+	        $this->menuitems = $menuItems;
 	    }
 	    
-	    if (!isset($this->menutypes[$id]))
-	    {
-	        // Request the selected id
-	        $jinput = JFactory::getApplication()->input;
-	        $id     = $jinput->get('id', 1, 'INT');
-	        
-	        // Get a WsaOnePage instance
-	        $table = $this->getTable();
-	        
-	        // Load the menutype
-	        $table->load($id);
-	        
-	        // Assign the menutype
-	        $this->menutypes[$id] = $table->menutype;
-	    }
-	    echo '<!-- getMenutype Table (menutype):', PHP_EOL;
-	    print_r($table);
-	    echo '-->', PHP_EOL;
-	    return $this->menutypes[$id];
+	    return $this->menuitems;
 	}
+	
 	/**
 	 * Module list
 	 *
 	 * @return  array
-	 * from ModuleHelper getModuleList but with selection on array of Itemid's
+	 * from ModuleHelper getModuleList but with selection on array of menuid's
 	 * positive menuid include, negative menuid exclude, 0 for all menuid's
+	 * getMenuitems should be executed before this method to fill the menuitems.
+	 * 
 	 */
 	public function getModulelist()
 	{
 	    
-	    // Get the menuitems
-	    $app = Factory::getApplication();
-	    $sitemenu = $app->getMenu();
-	    $menuItems = $sitemenu->getItems(array('menutype', 'language'),array($item->menutype, array('*', $item->language)) );
-	    $this->menuitems = $menuItems;
 	    $menuIds = array_column($this->menuitems, 'id');
     
-	    if ($menuIds = array()) 
+	    if ($menuIds == array()) 
 	    {
 	        return array();
 	    }
-//	    $idlist = implode(',' , $menuIds) . ',0,-' . implode(',-' , $menuIds);
-	    $idlist = implode(', ' , $menuIds) . ', 0';
+	    $idlist = implode(',' , $menuIds) . ',0,-' . implode(',-' , $menuIds);
+	    $app = Factory::getApplication();
 	    $Itemid = $app->input->getInt('Itemid', 0);
 	    $groups = implode(',', \JFactory::getUser()->getAuthorisedViewLevels());
 	    $lang = \JFactory::getLanguage()->getTag();
@@ -294,30 +260,4 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	    return array_values($clean);
 	}
 	
-	/**
-	 * Get the message
-         *
-	 * @return  string  The message to be displayed to the user
-	 */
-	public function getMsg()
-	{
-		if (!isset($this->message))
-		{
-		    $jinput = JFactory::getApplication()->input;
-		    $id     = $jinput->get('id', 1, 'INT');
-		    
-		    switch ($id)
-		    {
-		        case 2:
-		            $this->message = 'Good bye World!';
-		            break;
-		        default:
-		        case 1:
-		            $this->message = 'Hello World!';
-		            break;
-		    }
-		}
-
-		return $this->message;
-	}
 }
