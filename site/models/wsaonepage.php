@@ -168,7 +168,7 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	    ->where('(m.publish_down = ' . $db->quote($nullDate) . ' OR m.publish_down >= ' . $db->quote($now) . ')')
 	    ->where('m.access IN (' . $groups . ')')
 	    ->where('m.client_id = ' . $clientId)
-	    ->where('(mm.menuid IN ' . $idlist . ')');
+	    ->where('(mm.menuid IN (' . $idlist . '))');
 	    
 	    // Filter by language
 	    if ($app->isClient('site') && $app->getLanguageFilter())
