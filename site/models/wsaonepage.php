@@ -141,17 +141,17 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	    {
 	        return array();
 	    }
-	    $idlist = implode(',' , $menuIds) . ',0,-' . implode(',-' , $menuIds);
+	    $idlist = implode(',' , $menuIds);
 	    $app = Factory::getApplication();
-	    $Itemid = $app->input->getInt('Itemid', 0);
-	    $groups = implode(',', \JFactory::getUser()->getAuthorisedViewLevels());
-	    $lang = \JFactory::getLanguage()->getTag();
+//	    $Itemid = $app->input->getInt('Itemid', 0);
+	    $groups = implode(',', Factory::getUser()->getAuthorisedViewLevels());
+	    $lang = Factory::getLanguage()->getTag();
 	    $clientId = (int) $app->getClientId();
 	    
 	    // Build a cache ID for the resulting data object
-	    $cacheId = $groups . $clientId . $Itemid;
+	    $cacheId = $groups . $clientId . $idlist;
 	    
-	    $db = \JFactory::getDbo();
+	    $db = Factory::getDbo();
 	    
 	    $query = $db->getQuery(true)
 	    ->select('m.id, m.title, m.module, m.position, m.content, m.showtitle, m.params, mm.menuid')
@@ -161,14 +161,14 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	    ->join('LEFT', '#__extensions AS e ON e.element = m.module AND e.client_id = m.client_id')
 	    ->where('e.enabled = 1');
 	    
-	    $date = \JFactory::getDate();
+	    $date = Factory::getDate();
 	    $now = $date->toSql();
 	    $nullDate = $db->getNullDate();
 	    $query->where('(m.publish_up = ' . $db->quote($nullDate) . ' OR m.publish_up <= ' . $db->quote($now) . ')')
 	    ->where('(m.publish_down = ' . $db->quote($nullDate) . ' OR m.publish_down >= ' . $db->quote($now) . ')')
 	    ->where('m.access IN (' . $groups . ')')
 	    ->where('m.client_id = ' . $clientId)
-	    ->where('(mm.menuid IN (' . $idlist . '))');
+	    ->where('(mm.menuid IN (' . $idlist . ') OR mm.menuid <= 0)');
 	    
 	    // Filter by language
 	    if ($app->isClient('site') && $app->getLanguageFilter())
@@ -191,7 +191,7 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	    try
 	    {
 	        /** @var \JCacheControllerCallback $cache */
-	        $cache = \JFactory::getCache('com_modules', 'callback');
+	        $cache = Factory::getCache('com_modules', 'callback');
 	        
 	        $modules = $cache->get(array($db, 'loadObjectList'), array(), md5($cacheId), false);
 	    }
@@ -202,7 +202,8 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	        return array();
 	    }
 	    
-	    return $modules;
+//	    return $modules;
+	    return $this->cleanModuleList($modules, $menuIds);
 	}
 	
 	/**
@@ -215,49 +216,51 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	 */
 	public function cleanModuleList($modules, $menuIds = array())
 	{
-	    foreach ($menuIds as $Itemid)
-	    {
 	    // Apply negative selections and eliminate duplicates
-	    $negId = $Itemid ? -(int) $Itemid : false;
+//	    $negId = $Itemid ? -(int) $Itemid : false;
 	    $clean = array();
 	    $dupes = array();
 	    
 	    foreach ($modules as $i => $module)
 	    {
-	        // The module is excluded if there is an explicit prohibition
-	        $negHit = ($negId === (int) $module->menuid);
-	        
-	        if (isset($dupes[$module->id]))
-	        {
-	            // If this item has been excluded, keep the duplicate flag set,
-	            // but remove any item from the modules array.
-	            if ($negHit)
-	            {
-	                unset($clean[$Itemid][$module->id]);
-	            }
-	            
-	            continue;
-	        }
-	        
-	        $dupes[$module->id] = true;
-	        
-	        // Only accept modules without explicit exclusions.
-	        if ($negHit)
-	        {
-	            continue;
-	        }
-	        
+	        $module->position = strtolower($module->position);
 	        $module->name = substr($module->module, 4);
 	        $module->style = null;
-	        $module->position = strtolower($module->position);
+
+	        if ($module->menuid > 0)
+	        {
+	            if (!isset($dupes[$module->menuid][$module->position][$module->id]))
+	            {
+	                $clean[$module->menuid][$module->position][$module->id] = $module;
+	                $dupes[$module->menuid][$module->position][$module->id] = true;
+	            }
+	        }
+	        else // ($module->menuid <= 0)
+	        {
+	            foreach ($menuIds as $menuId)
+	            {
+	                if (-(int) $module->menuid != $menuId)
+	                {
+	                    if (!isset($dupes[$menuId][$module->position][$module->id]))
+	                   {
+	                       $clean[$menuId][$module->position][$module->id] = $module;
+	                       $dupes[$menuId][$module->position][$module->id] = true;
+	                   }
+	                } else 
+	                {
+	                    unset($clean[$menuId][$module->position][$module->id]);
+	                    $dupes[$menuId][$module->position][$module->id] = true;
+	                }
+	                
+	            } // end foreach ($menuIds
+	        }
 	        
-	        $clean[$Itemid][$module->id] = $module;
 	    } // end end foreach ($modules
 	    
 	    unset($dupes);
-	    } // end foreach ($menuIds
 	    // Return to simple indexing that matches the query order.
-	    return array_values($clean);
+//	    return array_values($clean);
+        return $clean;
 	}
 	
 }
