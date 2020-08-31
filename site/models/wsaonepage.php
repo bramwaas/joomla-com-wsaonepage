@@ -6,6 +6,7 @@
  * @copyright   Copyright (C) 2020 - 2020 AHC Waasdorp. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
+use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;  // JModelLegacy
 // use Joomla\CMS\MVC\Model\ItemModel; //JModelItem
 // No direct access to this file
@@ -30,10 +31,14 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	 */
 	protected $message;
 	/**
+	 * @var array menuitems
+	 */
+	protected $menuitems;
+		/**
 	 * @var array menutypes
 	 */
 	protected $menutypes;
-	/**
+/**
 	 * Method to auto-populate the model state.
 	 *
 	 * This method should only be called once per instantiation and is designed
@@ -97,6 +102,9 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	            throw new Exception('WsaOnePage id not found', 404);
 	        }
 	    }
+	    echo '<!-- getItem  (menutype):', PHP_EOL;
+	    print_r($this->item);
+	    echo '-->', PHP_EOL;
 	    return $this->item;
 	}
 	
@@ -144,24 +152,33 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	        // Assign the menutype
 	        $this->menutypes[$id] = $table->menutype;
 	    }
-	    
+	    echo '<!-- getMenutype Table (menutype):', PHP_EOL;
+	    print_r($table);
+	    echo '-->', PHP_EOL;
 	    return $this->menutypes[$id];
 	}
 	/**
 	 * Module list
 	 *
 	 * @return  array
-	 * from ModuleHelper getModuleList but with selection on list of Itemid's
+	 * from ModuleHelper getModuleList but with selection on array of Itemid's
 	 * positive menuid include, negative menuid exclude, 0 for all menuid's
 	 */
-	public function getModulelist($menuIds = array())
+	public function getModulelist()
 	{
+	    
+	    // Get the menuitems
+	    $app = Factory::getApplication();
+	    $sitemenu = $app->getMenu();
+	    $menuItems = $sitemenu->getItems(array('menutype', 'language'),array($item->menutype, array('*', $item->language)) );
+	    $this->menuitems = $menuItems;
+	    $menuIds = array_column($this->menuitems, 'id');
+    
 	    if ($menuIds = array()) 
 	    {
 	        return array();
 	    }
 	    $idlist = implode(',' , $menuIds) . ',0,-' . implode(',-' , $menuIds);
-	    $app = \JFactory::getApplication();
 	    $Itemid = $app->input->getInt('Itemid', 0);
 	    $groups = implode(',', \JFactory::getUser()->getAuthorisedViewLevels());
 	    $lang = \JFactory::getLanguage()->getTag();
@@ -229,13 +246,14 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	 *
 	 * @param   array  $modules  Array with module objects
 	 *
-	 * @return  array
-	 * from ModuleHelper cleanModuleList but with selection on list of Itemid's
+	 * @return  array without duplicates or excluded modules
+	 * from ModuleHelper cleanModuleList but with selection on array of Itemid's
 	 */
-	public function cleanModuleList($modules)
+	public function cleanModuleList($modules, $menuIds = array())
 	{
+	    foreach ($menuIds as $Itemid)
+	    {
 	    // Apply negative selections and eliminate duplicates
-	    $Itemid = \JFactory::getApplication()->input->getInt('Itemid');
 	    $negId = $Itemid ? -(int) $Itemid : false;
 	    $clean = array();
 	    $dupes = array();
@@ -251,7 +269,7 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	            // but remove any item from the modules array.
 	            if ($negHit)
 	            {
-	                unset($clean[$module->id]);
+	                unset($clean[$Itemid][$module->id]);
 	            }
 	            
 	            continue;
@@ -269,11 +287,11 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	        $module->style = null;
 	        $module->position = strtolower($module->position);
 	        
-	        $clean[$module->id] = $module;
-	    }
+	        $clean[$Itemid][$module->id] = $module;
+	    } // end end foreach ($modules
 	    
 	    unset($dupes);
-	    
+	    } // end foreach ($menuIds
 	    // Return to simple indexing that matches the query order.
 	    return array_values($clean);
 	}

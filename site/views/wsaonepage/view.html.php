@@ -78,7 +78,7 @@ class WsaOnePageViewWsaOnePage extends HtmlView
 	    $menuItems = $sitemenu->getItems(array('menutype', 'language'),array($item->menutype, array('*', $item->language)) );
 	    $this->menuItems = $menuItems;
 	   
-	    $this->modules = $this->get('Modulelist', array_column($menuItems, 'id') );
+	    $this->modules = $this->get('Modulelist');
 	    echo '<!-- view.html.php this->modules:', PHP_EOL;
 	    print_r( $this->modules);
 	    echo '--> ', PHP_EOL;
