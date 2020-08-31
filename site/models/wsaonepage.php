@@ -102,9 +102,6 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	            throw new Exception('WsaOnePage id not found', 404);
 	        }
 	    }
-	    echo '<!-- getItem  (menutype):', PHP_EOL;
-	    print_r($this->item);
-	    echo '-->', PHP_EOL;
 	    return $this->item;
 	}
 	
@@ -204,7 +201,7 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	    ->where('(m.publish_down = ' . $db->quote($nullDate) . ' OR m.publish_down >= ' . $db->quote($now) . ')')
 	    ->where('m.access IN (' . $groups . ')')
 	    ->where('m.client_id = ' . $clientId)
-	    ->where('(mm.menuid IN ' . $idlist );
+	    ->where('(mm.menuid IN ' . $idlist . ')');
 	    
 	    // Filter by language
 	    if ($app->isClient('site') && $app->getLanguageFilter())
