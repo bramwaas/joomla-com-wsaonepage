@@ -176,7 +176,7 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	        return array();
 	    }
 //	    $idlist = implode(',' , $menuIds) . ',0,-' . implode(',-' , $menuIds);
-	    $idlist = implode(',' , $menuIds) . ',0';
+	    $idlist = implode(', ' , $menuIds) . ', 0';
 	    $Itemid = $app->input->getInt('Itemid', 0);
 	    $groups = implode(',', \JFactory::getUser()->getAuthorisedViewLevels());
 	    $lang = \JFactory::getLanguage()->getTag();
