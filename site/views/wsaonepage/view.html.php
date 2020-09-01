@@ -74,9 +74,9 @@ class WsaOnePageViewWsaOnePage extends HtmlView
 //	    $this->menutype = $item->menutype;
 	    $this->menuItems = $this->get('Menuitems');
 	    $this->modules = $this->get('Modulelist');
-	    echo '<!-- view.html.php this->modules: <![CDATA[', PHP_EOL;
-	    print_r( $this->modules);
-	    echo ' ]]>--> ', PHP_EOL;
+//	    echo '<!-- view.html.php this->modules: <![CDATA[', PHP_EOL;
+//	    print_r( $this->modules);
+//	    echo ' ]]>--> ', PHP_EOL;
 	    
 	    // Check for errors.
 	    if (count($errors = $this->get('Errors')))
