@@ -270,9 +270,17 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	    } // end end foreach ($modules
 	    
 	    unset($dupes);
-	    // Return to simple indexing that matches the query order.
-//	    return array_values($clean);
-        return $clean;
+	    // Return to simple indexing that matches the query order in stead of module->id's 
+	    foreach ($clean as &$mmids)
+	    {
+	        foreach ($mmids as &$mids)
+	        {
+	            $mids = array_values($mids);
+	        }
+	        unset($mids);
+	    }
+	    unset($mmids);
+	    return $clean;
 	}
 	
 }
