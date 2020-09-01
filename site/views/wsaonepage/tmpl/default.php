@@ -33,6 +33,7 @@ use Joomla\CMS\Table\Table;
  */
 $app = Factory::getApplication();
 $document = Factory::getDocument();
+$renderer = $document->loadRenderer('module');
 $sitename = $app->get('sitename'); 
 $input = $app->input;
 $wsaOrgAppParams = clone $app->getParams();
@@ -213,7 +214,10 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 if (count($this->modules[$mItm->id]['position-8']))
                 {
                     echo '<aside class="col-12 col-md">', PHP_EOL;
- //                   echo $this->modules['position-8'];
+                    foreach ($this->modules[$mItm->id]['position-8'] as $module)
+                    {
+                        echo $renderer->render($module, array('style' => 'none'));
+                    }
                     echo '</aside>', PHP_EOL;
                 }
                 echo '<div class="col-12 ', $spanc, '" >', PHP_EOL;
@@ -227,7 +231,10 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 if (count($this->modules[$mItm->id]['position-7']))
                 {
                     echo '<aside class="col-12 col-md">', PHP_EOL;
-//                    echo $this->modules['position-7'];
+                    foreach ($this->modules[$mItm->id]['position-7'] as $module)
+                    {
+                        echo $renderer->render($module, array('style' => 'none'));
+                    }
                     echo '</aside>', PHP_EOL;
                 }
                 echo '</section>', PHP_EOL;
