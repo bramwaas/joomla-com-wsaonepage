@@ -90,7 +90,7 @@ if ($params->get('show_title') || $params->get('show_author')) : ?>
  * so first secure the variables of the component page and restore them after processing the component list.
  */
 echo '<!-- onepage Component Sections from menu -->' . PHP_EOL;
-
+/*
 echo '<!-- default.php this->modules: <![CDATA[', PHP_EOL;
 print_r( $this->modules [616]['position-7'][0]);
 echo 'count616-7:', count($this->modules [616]['position-7']), PHP_EOL;
@@ -98,7 +98,7 @@ print_r( $this->modules [616]['position-8'][0]);
 echo 'count616-8:', count($this->modules [616]['position-8']), PHP_EOL;
 print_r( count($this->modules [616]['position-8']));
 echo ' ]]>--> ', PHP_EOL;
-
+*/
 
 foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that changes in $mItm like adding bookmark are available in modules
         try {
