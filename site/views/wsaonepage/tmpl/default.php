@@ -201,10 +201,10 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                  * section header html for each item
                  */
                 echo '<section id="', $mItm->bookmark, '" class="row section component " >', PHP_EOL;
-                if ($this->countModules['position-8'])
+                if (count($this->modules[$mItm->id]['position-8']))
                 {
                     echo '<aside class="col-12 col-md">', PHP_EOL;
-                    echo $this->modules['position-8'];
+ //                   echo $this->modules['position-8'];
                     echo '</aside>', PHP_EOL;
                 }
                 echo '<div class="col-12 ', $spanc, '" >', PHP_EOL;
@@ -215,10 +215,10 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                  * closing html (section) for this menuitem
                  */
                 echo '</div>', PHP_EOL;
-                if ($this->countModules['position-7'])
+                if (count($this->modules[$mItm->id]['position-8']))
                 {
                     echo '<aside class="col-12 col-md">', PHP_EOL;
-                    echo $this->modules['position-7'];
+//                    echo $this->modules['position-7'];
                     echo '</aside>', PHP_EOL;
                 }
                 echo '</section>', PHP_EOL;

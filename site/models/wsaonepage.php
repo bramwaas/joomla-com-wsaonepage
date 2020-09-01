@@ -5,6 +5,7 @@
  *
  * @copyright   Copyright (C) 2020 - 2020 AHC Waasdorp. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * 20200901 component modules at position-7 and 8 added
  */
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;  // JModelLegacy
@@ -35,9 +36,9 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	 */
 	protected $menuitems;
 		/**
-	 * @var array menutypes
+	 * @var array $positions
 	 */
-	protected $menutypes;
+	protected $positions = "'position-7','position-8'";
 /**
 	 * Method to auto-populate the model state.
 	 *
@@ -129,22 +130,31 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	 * @return  array
 	 * from ModuleHelper getModuleList but with selection on array of menuid's
 	 * and only position-7 and position-8
-	 * positive menuid include, negative menuid exclude, 0 for all menuid's
+	 * positive menuid include only this, negative menuid exclude this include all others, 0 include all menuid's
 	 * getMenuitems should be executed before this method to fill the menuitems.
+	 * only components and components refered to by an alias can have modules.
 	 * 
 	 */
 	public function getModulelist()
 	{
 	    
-	    $menuIds = array_column($this->menuitems, 'id');
-    
+	    $app = Factory::getApplication();
+	    $menuIds = array();
+	    foreach ($this->menuitems as $menuitem)
+	    {
+	        if ($menuitem->type == 'component') {$menuIds[] = $menuitem->id;}
+	        elseif ($menuitem->type == 'alias')
+	        {       $aliasToId = $menuitem->params->get('aliasoptions');
+	        $mItm = $app->getMenu()->getItem($aliasToId);
+	        $menuIds[] = $mItm->id;
+	        }
+	        
+	    }
 	    if ($menuIds == array()) 
 	    {
 	        return array();
 	    }
 	    $idlist = implode(',' , $menuIds);
-	    $app = Factory::getApplication();
-//	    $Itemid = $app->input->getInt('Itemid', 0);
 	    $groups = implode(',', Factory::getUser()->getAuthorisedViewLevels());
 	    $lang = Factory::getLanguage()->getTag();
 	    $clientId = (int) $app->getClientId();
@@ -169,7 +179,7 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	    ->where('(m.publish_down = ' . $db->quote($nullDate) . ' OR m.publish_down >= ' . $db->quote($now) . ')')
 	    ->where('m.access IN (' . $groups . ')')
 	    ->where('m.client_id = ' . $clientId)
-	    ->where("m.position IN ('position-7','position-8')")
+	    ->where('m.position IN (' . $this->positions . ')')
 	    ->where('(mm.menuid IN (' . $idlist . ') OR mm.menuid <= 0)');
 	    
 	    // Filter by language
