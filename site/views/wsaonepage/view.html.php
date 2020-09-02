@@ -5,11 +5,13 @@
  *
  * @copyright   Copyright (C) 2020 - 2020 AHC Waasdorp. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * 20200810
+ * 20200802
  */
 
 use Joomla\CMS\MVC\View\HtmlView;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Helper\ModuleHelper;
+
 
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
@@ -29,6 +31,10 @@ class WsaOnePageViewWsaOnePage extends HtmlView
      * the array of menuitems to display
      */
     protected $menuItems;
+    /*
+     * the array of modules on a position to display
+     */
+    protected $modules = array();
     /*
      * array of params
      */
@@ -61,12 +67,8 @@ class WsaOnePageViewWsaOnePage extends HtmlView
 //	    $this->print = $app->input->getBool('print');
 	    $this->state = $this->get('State');
 	    $this->user  = $user;
-	    
-	    $this->menutype = $item->menutype;
-	    // Get the menuitems
-	    $sitemenu = $app->getMenu();
-	    $menuItems = $sitemenu->getItems(array('menutype', 'language'),array($item->menutype, array('*', $item->language)) );
-	    $this->menuItems = $menuItems;
+	    $this->menuItems = $this->get('Menuitems');
+	    $this->modules = $this->get('Modulelist');
 	    
 	    // Check for errors.
 	    if (count($errors = $this->get('Errors')))
@@ -79,4 +81,5 @@ class WsaOnePageViewWsaOnePage extends HtmlView
 		// Display the view
 		parent::display($tpl);
 	}
+	
 }

@@ -5,9 +5,10 @@
  *
  * @copyright   Copyright (C) 2020 - 2020 AHC Waasdorp. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * 20200901 component modules at position-7 and 8 added
  */
+use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;  // JModelLegacy
-// use Joomla\CMS\MVC\Model\ItemModel; //JModelItem
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
@@ -30,10 +31,14 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	 */
 	protected $message;
 	/**
-	 * @var array menutypes
+	 * @var array menuitems
 	 */
-	protected $menutypes;
-	/**
+	protected $menuitems;
+		/**
+	 * @var array $positions
+	 */
+	protected $positions = "'position-7','position-8'";
+/**
 	 * Method to auto-populate the model state.
 	 *
 	 * This method should only be called once per instantiation and is designed
@@ -48,11 +53,11 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	protected function populateState()
 	{
 	    // Get the message id
-	    $jinput = JFactory::getApplication()->input;
+	    $jinput = Factory::getApplication()->input;
 	    $this->setState('wsaonepage.id', $jinput->get('id', 1, 'INT'));  
 	    
 	    // Load the parameters.
-	    $this->setState('params', JFactory::getApplication()->getParams());
+	    $this->setState('params', Factory::getApplication()->getParams());
 	    parent::populateState();
 	}
 	/**
@@ -64,7 +69,7 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	    if (!isset($this->item))
 	    {
 	        $id    = $this->getState('wsaonepage.id');
-	        $db    = JFactory::getDbo();
+	        $db    = Factory::getDbo();
 	        $query = $db->getQuery(true);
 	        $query->select('h.id, h.asset_id, h.created, h.created_by, h.title, h.alias, h.language, h.description, h.menutype, h.description, h.published, h.params, c.title as category')
 	        ->from('#__wsaonepage as h')
@@ -73,7 +78,7 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	        
 	        if (JLanguageMultilang::isEnabled())
 	        {
-	            $lang = JFactory::getLanguage()->getTag();
+	            $lang = Factory::getLanguage()->getTag();
 	            $query->where('h.language IN ("*","' . $lang . '")');
 	        }
 	        
@@ -99,79 +104,170 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	    }
 	    return $this->item;
 	}
+	/**
+	 * Get the menuitems
+	 *
+	 * @return  array of menuitems  
+	 */
+	public function getMenuitems()
+	{
+	    if (!isset($this->menuitems))
+	    {
+	        // Get the menuitems
+	        $app = Factory::getApplication();
+	        $sitemenu = $app->getMenu();
+	        $menuItems = $sitemenu->getItems(array('menutype', 'language'),array($this->item->menutype, array('*', $item->language)) );
+	        $this->menuitems = $menuItems;
+	    }
+	    
+	    return $this->menuitems;
+	}
 	
 	/**
-	 * Method to get a table object, load it if necessary.
+	 * Module list
 	 *
-	 * @param   string  $type    The table name. Optional.
-	 * @param   string  $prefix  The class prefix. Optional.
-	 * @param   array   $config  Configuration array for model. Optional.
-	 *
-	 * @return  JTable  A JTable object
-	 *
-	 * @since   1.6
-	 */
-	public function getTable($type = 'WsaOnePage', $prefix = 'WsaOnePageTable', $config = array())
-	{
-	    return JTable::getInstance($type, $prefix, $config);
-	}
-	/**
-	 * Get the Menutype
-	 *
-	 * @param   integer  $id   Id of the menutype
+	 * @return  array
+	 * from ModuleHelper getModuleList but with selection on array of menuid's
+	 * and only position-7 and position-8
+	 * positive menuid include only this, negative menuid exclude this include all others, 0 include all menuid's
+	 * getMenuitems should be executed before this method to fill the menuitems.
+	 * only components and components refered to by an alias can have modules.
 	 * 
-	 * @return  string  Fetched String from Table for relevant Id
 	 */
-	public function getMenutype($id = 1 )
+	public function getModulelist()
 	{
-	    if (!is_array($this->menutypes))
+	    
+	    $app = Factory::getApplication();
+	    $menuIds = array();
+	    foreach ($this->menuitems as $menuitem)
 	    {
-	        $this->menutypes = array();
+	        if ($menuitem->type == 'component') {$menuIds[] = $menuitem->id;}
+	        elseif ($menuitem->type == 'alias')
+	        {       $aliasToId = $menuitem->params->get('aliasoptions');
+	        $mItm = $app->getMenu()->getItem($aliasToId);
+	        $menuIds[] = $mItm->id;
+	        }
+	        
+	    }
+	    if ($menuIds == array()) 
+	    {
+	        return array();
+	    }
+	    $idlist = implode(',' , $menuIds);
+	    $groups = implode(',', Factory::getUser()->getAuthorisedViewLevels());
+	    $lang = Factory::getLanguage()->getTag();
+	    $clientId = (int) $app->getClientId();
+	    
+	    // Build a cache ID for the resulting data object
+	    $cacheId = $groups . $clientId . $idlist;
+	    
+	    $db = Factory::getDbo();
+	    
+	    $query = $db->getQuery(true)
+	    ->select('m.id, m.title, m.module, m.position, m.content, m.showtitle, m.params, mm.menuid')
+	    ->from('#__modules AS m')
+	    ->join('LEFT', '#__modules_menu AS mm ON mm.moduleid = m.id')
+	    ->where('m.published = 1')
+	    ->join('LEFT', '#__extensions AS e ON e.element = m.module AND e.client_id = m.client_id')
+	    ->where('e.enabled = 1');
+	    
+	    $date = Factory::getDate();
+	    $now = $date->toSql();
+	    $nullDate = $db->getNullDate();
+	    $query->where('(m.publish_up = ' . $db->quote($nullDate) . ' OR m.publish_up <= ' . $db->quote($now) . ')')
+	    ->where('(m.publish_down = ' . $db->quote($nullDate) . ' OR m.publish_down >= ' . $db->quote($now) . ')')
+	    ->where('m.access IN (' . $groups . ')')
+	    ->where('m.client_id = ' . $clientId)
+	    ->where('m.position IN (' . $this->positions . ')')
+	    ->where('(mm.menuid IN (' . $idlist . ') OR mm.menuid <= 0)');
+	    
+	    // Filter by language
+	    if ($app->isClient('site') && $app->getLanguageFilter())
+	    {
+	        $query->where('m.language IN (' . $db->quote($lang) . ',' . $db->quote('*') . ')');
+	        $cacheId .= $lang . '*';
 	    }
 	    
-	    if (!isset($this->menutypes[$id]))
+	    if ($app->isClient('administrator') && static::isAdminMultilang())
 	    {
-	        // Request the selected id
-	        $jinput = JFactory::getApplication()->input;
-	        $id     = $jinput->get('id', 1, 'INT');
-	        
-	        // Get a WsaOnePage instance
-	        $table = $this->getTable();
-	        
-	        // Load the menutype
-	        $table->load($id);
-	        
-	        // Assign the menutype
-	        $this->menutypes[$id] = $table->menutype;
+	        $query->where('m.language IN (' . $db->quote($lang) . ',' . $db->quote('*') . ')');
+	        $cacheId .= $lang . '*';
 	    }
 	    
-	    return $this->menutypes[$id];
+	    $query->order('m.position, m.ordering');
+	    
+	    // Set the query
+	    $db->setQuery($query);
+	    
+	    try
+	    {
+	        /** @var \JCacheControllerCallback $cache */
+	        $cache = Factory::getCache('com_modules', 'callback');
+	        
+	        $modules = $cache->get(array($db, 'loadObjectList'), array(), md5($cacheId), false);
+	    }
+	    catch (\RuntimeException $e)
+	    {
+	        \JLog::add(\JText::sprintf('JLIB_APPLICATION_ERROR_MODULE_LOAD', $e->getMessage()), \JLog::WARNING, 'jerror');
+	        
+	        return array();
+	    }
+	    
+	    return $this->cleanModuleList($modules, $menuIds);
 	}
 	
 	/**
-	 * Get the message
-         *
-	 * @return  string  The message to be displayed to the user
+	 * Clean the module list
+	 *
+	 * @param   array  $modules  Array with module objects
+	 *
+	 * @return  array without duplicates or excluded modules
+	 * from ModuleHelper cleanModuleList but with selection on array of Itemid's
 	 */
-	public function getMsg()
+	public function cleanModuleList($modules, $menuIds = array())
 	{
-		if (!isset($this->message))
-		{
-		    $jinput = JFactory::getApplication()->input;
-		    $id     = $jinput->get('id', 1, 'INT');
-		    
-		    switch ($id)
-		    {
-		        case 2:
-		            $this->message = 'Good bye World!';
-		            break;
-		        default:
-		        case 1:
-		            $this->message = 'Hello World!';
-		            break;
-		    }
-		}
+	    // Apply negative selections and eliminate duplicates
+	    $clean = array();
+	    $dupes = array();
+	    
+	    foreach ($modules as $i => $module)
+	    {
+	        $module->position = strtolower($module->position);
+	        $module->name = substr($module->module, 4);
+	        $module->style = null;
 
-		return $this->message;
+	        if ($module->menuid > 0)
+	        {
+	            if (!isset($dupes[$module->menuid][$module->position][$module->id]))
+	            {
+	                $clean[$module->menuid][$module->position][$module->id] = $module;
+	                $dupes[$module->menuid][$module->position][$module->id] = true;
+	            }
+	        }
+	        else // ($module->menuid <= 0)
+	        {
+	            foreach ($menuIds as $menuId)
+	            {
+	                if (-(int) $module->menuid != $menuId)
+	                {
+	                    if (!isset($dupes[$menuId][$module->position][$module->id]))
+	                   {
+	                       $clean[$menuId][$module->position][$module->id] = $module;
+	                       $dupes[$menuId][$module->position][$module->id] = true;
+	                   }
+	                } else 
+	                {
+	                    unset($clean[$menuId][$module->position][$module->id]);
+	                    $dupes[$menuId][$module->position][$module->id] = true;
+	                }
+	                
+	            } // end foreach ($menuIds
+	        }
+	        
+	    } // end end foreach ($modules
+	    
+	    unset($dupes);
+	    return $clean;
 	}
+	
 }

@@ -33,6 +33,7 @@ use Joomla\CMS\Table\Table;
  */
 $app = Factory::getApplication();
 $document = Factory::getDocument();
+$renderer = $document->loadRenderer('module');
 $sitename = $app->get('sitename'); 
 $input = $app->input;
 $wsaOrgAppParams = clone $app->getParams();
@@ -44,6 +45,9 @@ $wsaOrgRouterVars = $wsaSiteRouter->getVars();
 $wsaIsAlias = FALSE;
 $wsaAliasBookmark = NULL;
 $params  = $this->item->params;
+echo '<!-- Start default.php  <![CDATA[';
+//           print_r($document);
+echo ' ]]> -->', PHP_EOL;
 
 if ($controller = BaseController::getInstance(substr($wsaOrgActiveMenuItem->query['option'], 4))) {
     $wsaOrgControllerVars = $controller->getProperties(FALSE);
@@ -86,7 +90,7 @@ if ($params->get('show_title') || $params->get('show_author')) : ?>
  * so first secure the variables of the component page and restore them after processing the component list.
  */
 echo '<!-- onepage Component Sections from menu -->' . PHP_EOL;
-    
+
 foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that changes in $mItm like adding bookmark are available in modules
         try {
             // TODO juiste selectie voor menuitems
@@ -136,9 +140,10 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                     $app->getParams()->remove($tmpKey);
                 }
                 $app->getParams()->merge($wsaComponentParams);
-                echo '<!-- Start with menuid =', $mItm->id, ' option :', $mItm->query['option'];
-  //              print_r($mItm);
-                 // add helper file include path for this component. from default article
+                echo '<!-- Start with menuid =', $mItm->id, ' option :', $mItm->query['option'], ' <![CDATA[';
+                //              print_r(ModuleHelper::getModuleList());
+                echo ' ]]> -->', PHP_EOL;
+                // add helper file include path for this component. from default article
                 if ($mItm->query['option'] == 'com_content') {
                     HTMLHelper::addIncludePath($wsaJPATH_COMPONENT . '/helpers'); 
                 }
@@ -175,17 +180,50 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                     $wsaJPATH_COMPONENT . '/views/' . $mItm->query['view'] . '/tmpl/',
                     JPATH_THEMES . '/' . $app->getTemplate() . '/html/' . $wsaOption . '/' . $mItm->query['view']
                 ));
-                echo ' -->', PHP_EOL;
                 /*
                  * section header html for each item
                  */
-                echo '<section id="', $mItm->bookmark, '" class="section component "', strtolower($wsaComponent), ' >', PHP_EOL;
+                echo '<section id="', $mItm->bookmark, '" class="row section component " >', PHP_EOL;
+                // Find modules for Aside and Adjusting content width according to that
+                if (count($this->modules[$mItm->id]['position-7']) && count($this->modules[$mItm->id]['position-8']))
+                {
+                    $spanc = "col-md-6 " ;
+                }
+                elseif (!count($this->modules[$mItm->id]['position-7']) && !count($this->modules[$mItm->id]['position-8']))
+                
+                {
+                    $spanc = "";
+                }
+                else
+                {
+                    $spanc = "col-md-8 ";
+                }
+                if (count($this->modules[$mItm->id]['position-8']))
+                {
+                    echo '<aside class="col-12 col-md">', PHP_EOL;
+                    foreach ($this->modules[$mItm->id]['position-8'] as $module)
+                    {
+                        echo $renderer->render($module, array('style' => 'none'));
+                    }
+                    echo '</aside>', PHP_EOL;
+                }
+                echo '<div class="col-12 ', $spanc, '" >', PHP_EOL;
                 // end section header html
                 $controller->display();
                 
-/*
- * closing html (section) for this menuitem
- */
+                /*
+                 * closing html (section) for this menuitem
+                 */
+                echo '</div>', PHP_EOL;
+                if (count($this->modules[$mItm->id]['position-7']))
+                {
+                    echo '<aside class="col-12 col-md">', PHP_EOL;
+                    foreach ($this->modules[$mItm->id]['position-7'] as $module)
+                    {
+                        echo $renderer->render($module, array('style' => 'none'));
+                    }
+                    echo '</aside>', PHP_EOL;
+                }
                 echo '</section>', PHP_EOL;
                 // end closing html
                 if ($wsaIsAlias)
