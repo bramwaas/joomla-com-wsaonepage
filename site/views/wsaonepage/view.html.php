@@ -5,7 +5,7 @@
  *
  * @copyright   Copyright (C) 2020 - 2020 AHC Waasdorp. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * 20200810
+ * 20200802
  */
 
 use Joomla\CMS\MVC\View\HtmlView;
@@ -35,10 +35,6 @@ class WsaOnePageViewWsaOnePage extends HtmlView
      * the array of modules on a position to display
      */
     protected $modules = array();
-    /*
-     * array of counts of modules on a position
-     */
-    protected $countModules = array();
     /*
      * array of params
      */
@@ -71,12 +67,8 @@ class WsaOnePageViewWsaOnePage extends HtmlView
 //	    $this->print = $app->input->getBool('print');
 	    $this->state = $this->get('State');
 	    $this->user  = $user;
-//	    $this->menutype = $item->menutype;
 	    $this->menuItems = $this->get('Menuitems');
 	    $this->modules = $this->get('Modulelist');
-//	    echo '<!-- view.html.php this->modules: <![CDATA[', PHP_EOL;
-//	    print_r( $this->modules);
-//	    echo ' ]]>--> ', PHP_EOL;
 	    
 	    // Check for errors.
 	    if (count($errors = $this->get('Errors')))
@@ -88,37 +80,6 @@ class WsaOnePageViewWsaOnePage extends HtmlView
 	    
 		// Display the view
 		parent::display($tpl);
-	}
-	/**
-	 * Loads counts and renders the modules on a position
-	 *
-	 * @param   string  $position  The position assigned to the module
-	 * @param   string  $style     The style assigned to the module
-	 *
-	 * @return  mixed
-	 *
-	 * copied from plugins\content\loadmodule
-	 */
-	function wsaLoadModules($position, $style = 'none')
-	{
-	    
-	    $this->modules[$position] = '';
-	    $document = Factory::getDocument();
-	    $renderer = $document->loadRenderer('module');
-	    $wsaModules  = ModuleHelper::getModules($position);
-	    $this->countModules[$position] = count($wsaModules);
-	    $params   = array('style' => $style);
-	    ob_start();
-	    
-	    foreach ($wsaModules as $module)
-	    {
-	        echo $renderer->render($module, $params);
-	    }
-	    
-	    $this->modules[$position] = ob_get_clean();
-	    
-	    return $this->modules[$position];
-	    
 	}
 	
 }

@@ -9,7 +9,6 @@
  */
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;  // JModelLegacy
-// use Joomla\CMS\MVC\Model\ItemModel; //JModelItem
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
@@ -54,11 +53,11 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	protected function populateState()
 	{
 	    // Get the message id
-	    $jinput = JFactory::getApplication()->input;
+	    $jinput = Factory::getApplication()->input;
 	    $this->setState('wsaonepage.id', $jinput->get('id', 1, 'INT'));  
 	    
 	    // Load the parameters.
-	    $this->setState('params', JFactory::getApplication()->getParams());
+	    $this->setState('params', Factory::getApplication()->getParams());
 	    parent::populateState();
 	}
 	/**
@@ -70,7 +69,7 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	    if (!isset($this->item))
 	    {
 	        $id    = $this->getState('wsaonepage.id');
-	        $db    = JFactory::getDbo();
+	        $db    = Factory::getDbo();
 	        $query = $db->getQuery(true);
 	        $query->select('h.id, h.asset_id, h.created, h.created_by, h.title, h.alias, h.language, h.description, h.menutype, h.description, h.published, h.params, c.title as category')
 	        ->from('#__wsaonepage as h')
@@ -79,7 +78,7 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	        
 	        if (JLanguageMultilang::isEnabled())
 	        {
-	            $lang = JFactory::getLanguage()->getTag();
+	            $lang = Factory::getLanguage()->getTag();
 	            $query->where('h.language IN ("*","' . $lang . '")');
 	        }
 	        
@@ -214,7 +213,6 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	        return array();
 	    }
 	    
-//	    return $modules;
 	    return $this->cleanModuleList($modules, $menuIds);
 	}
 	
@@ -229,7 +227,6 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	public function cleanModuleList($modules, $menuIds = array())
 	{
 	    // Apply negative selections and eliminate duplicates
-//	    $negId = $Itemid ? -(int) $Itemid : false;
 	    $clean = array();
 	    $dupes = array();
 	    
@@ -270,16 +267,6 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	    } // end end foreach ($modules
 	    
 	    unset($dupes);
-	    // Return to simple indexing that matches the query order in stead of module->id's 
-	    foreach ($clean as &$mmids)
-	    {
-	        foreach ($mmids as &$mids)
-	        {
-	            $mids = array_values($mids);
-	        }
-	        unset($mids);
-	    }
-	    unset($mmids);
 	    return $clean;
 	}
 	

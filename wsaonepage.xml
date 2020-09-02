@@ -14,7 +14,7 @@
 	<authorUrl>https://www.waasdorpsoekhan.nl</authorUrl>
 	<copyright>AHC Waasdorp, Amsterdam 2020 - 2020</copyright>
 	<!--  The version string is recorded in the components table -->
-	<version>0.1.01</version>
+	<version>0.2.00</version>
 	<!-- The description is optional and defaults to the name -->
 	<description>COM_WSAONEPAGE_DESCRIPTION</description>
 
