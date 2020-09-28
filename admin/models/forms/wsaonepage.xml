@@ -3,10 +3,6 @@
 <!--  Form to update the component in Admin Component menu 
 changed 28-9-2020 after an example of banner.xml
 -->
-	<!-- fields name="details" 
-	label="COM_WSAONEPAGE_WSAONEPAGE_DETAILS"
-	addfieldpath="/administrator/components/com_wsaonepage/models/fields"
-	-->
 	<fieldset 
 	name="details"
 	addfieldpath="/administrator/components/com_wsaonepage/models/fields"
@@ -199,7 +195,7 @@ changed 28-9-2020 after an example of banner.xml
 			name="metakey"
 			type="textarea"
 			label="JFIELD_META_KEYWORDS_LABEL"
-			description="COM_BANNERS_FIELD_METAKEYWORDS_DESC"
+			description="COM_WSAONEPAGE_FIELD_METAKEYWORDS_DESC"
 			rows="3"
 			cols="30"
 		/>
@@ -207,8 +203,8 @@ changed 28-9-2020 after an example of banner.xml
 		<field
 			name="own_prefix"
 			type="radio"
-			label="COM_BANNERS_FIELD_BANNEROWNPREFIX_LABEL"
-			description="COM_BANNERS_FIELD_BANNEROWNPREFIX_DESC"
+			label="COM_WSAONEPAGE_FIELD_BANNEROWNPREFIX_LABEL"
+			description="COM_WSAONEPAGE_FIELD_BANNEROWNPREFIX_DESC"
 			class="btn-group btn-group-yesno"
 			default="0"
 			>
@@ -219,8 +215,8 @@ changed 28-9-2020 after an example of banner.xml
 		<field
 			name="metakey_prefix"
 			type="text"
-			label="COM_BANNERS_FIELD_METAKEYWORDPREFIX_LABEL"
-			description="COM_BANNERS_FIELD_METAKEYWORDPREFIX_DESC"
+			label="COM_WSAONEPAGE_FIELD_METAKEYWORDPREFIX_LABEL"
+			description="COM_WSAONEPAGE_FIELD_METAKEYWORDPREFIX_DESC"
 		/>
 	</fieldset>
 	<fields name="params">
@@ -262,8 +258,4 @@ changed 28-9-2020 after an example of banner.xml
 				section="message"
 				/>
     </fieldset>
-	
-	
-	<!-- /fields -->
-	
 </form>
