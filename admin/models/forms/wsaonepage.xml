@@ -203,8 +203,8 @@ changed 28-9-2020 after an example of banner.xml
 		<field
 			name="own_prefix"
 			type="radio"
-			label="COM_WSAONEPAGE_FIELD_BANNEROWNPREFIX_LABEL"
-			description="COM_WSAONEPAGE_FIELD_BANNEROWNPREFIX_DESC"
+			label="COM_WSAONEPAGE_FIELD_WSAONEPAGEOWNPREFIX_LABEL"
+			description="COM_WSAONEPAGE_FIELD_WSAONEPAGEOWNPREFIX_DESC"
 			class="btn-group btn-group-yesno"
 			default="0"
 			>
