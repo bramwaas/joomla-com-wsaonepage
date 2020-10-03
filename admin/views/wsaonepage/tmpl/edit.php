@@ -59,7 +59,7 @@ JFactory::getDocument()->addScriptDeclaration('
 		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'details', JText::_('COM_WSAONEPAGE_WSAONEPAGE_DETAILS')); ?>
             <div class="row-fluid">
                 <div class="span9">
-					<?php echo $this->form->renderFieldset('details'); ?>
+					<?php echo $this->form->renderFieldset('wsaonepagedetails'); ?>
                 </div>
 				<div class="span3">
 					<?php echo JLayoutHelper::render('joomla.edit.global', $this); ?>
