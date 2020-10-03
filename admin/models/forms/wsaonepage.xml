@@ -8,6 +8,55 @@ changed 28-9-2020 after an example of banner.xml
 	addfieldpath="/administrator/components/com_wsaonepage/models/fields"
 	label="COM_WSAONEPAGE_WSAONEPAGE_DETAILS"
 	>
+		<fieldset
+				name="wsaonepagedetails"
+				label="JGLOBAL_FIELDSET_DISPLAY_OPTIONS"
+		>
+		<field
+			name="id"
+			type="number"
+			label="JGLOBAL_FIELD_ID_LABEL"
+			description="JGLOBAL_FIELD_ID_DESC"
+			default="0"
+			readonly="true"
+			class="readonly"
+				/>
+		<field
+				name="title"
+				type="text"
+				label="COM_WSAONEPAGE_WSAONEPAGE_TITLE_LABEL"
+				description="COM_WSAONEPAGE_WSAONEPAGE_TITLE_DESC"
+				size="40"
+				class="inputbox"
+				default=""
+				/>
+<!--				type="wsamenutype" -->
+		<field
+				name="menutype"
+				type="wsamenutype"
+				label="COM_WSAONEPAGE_WSAONEPAGE_MENUTYPE_LABEL"
+				description="COM_WSAONEPAGE_WSAONEPAGE_MENUTYPE_DESC"
+				/>
+		<field
+				name="description"
+				type="text"
+				label="COM_WSAONEPAGE_WSAONEPAGE_DESCRIPTION_LABEL"
+				description="COM_WSAONEPAGE_WSAONEPAGE_DESCRIPTION_DESC"
+				size="256"
+				class="inputbox"
+				default=""
+				/>
+		<field 
+				name="alias" 
+				type="text" 
+				label="JFIELD_ALIAS_LABEL"
+				description="JFIELD_ALIAS_DESC"
+				hint="JFIELD_ALIAS_PLACEHOLDER"
+				size="40" 
+				/>
+		</fieldset>
+
+	
 		<field
 				name="catid"
 				type="category"
@@ -178,54 +227,6 @@ changed 28-9-2020 after an example of banner.xml
 		/>
 	</fieldset>
 	<fields name="params">
-		<fieldset
-				name="wsaonepagedetails"
-				label="JGLOBAL_FIELDSET_DISPLAY_OPTIONS"
-		>
-		<field
-			name="id"
-			type="number"
-			label="JGLOBAL_FIELD_ID_LABEL"
-			description="JGLOBAL_FIELD_ID_DESC"
-			default="0"
-			readonly="true"
-			class="readonly"
-				/>
-		<field
-				name="title"
-				type="text"
-				label="COM_WSAONEPAGE_WSAONEPAGE_TITLE_LABEL"
-				description="COM_WSAONEPAGE_WSAONEPAGE_TITLE_DESC"
-				size="40"
-				class="inputbox"
-				default=""
-				/>
-<!--				type="wsamenutype" -->
-		<field
-				name="menutype"
-				type="wsamenutype"
-				label="COM_WSAONEPAGE_WSAONEPAGE_MENUTYPE_LABEL"
-				description="COM_WSAONEPAGE_WSAONEPAGE_MENUTYPE_DESC"
-				/>
-		<field
-				name="description"
-				type="text"
-				label="COM_WSAONEPAGE_WSAONEPAGE_DESCRIPTION_LABEL"
-				description="COM_WSAONEPAGE_WSAONEPAGE_DESCRIPTION_DESC"
-				size="256"
-				class="inputbox"
-				default=""
-				/>
-		<field 
-				name="alias" 
-				type="text" 
-				label="JFIELD_ALIAS_LABEL"
-				description="JFIELD_ALIAS_DESC"
-				hint="JFIELD_ALIAS_PLACEHOLDER"
-				size="40" 
-				/>
-		</fieldset>
-
 		<fieldset
 				name="params"
 				label="JGLOBAL_FIELDSET_DISPLAY_OPTIONS"

@@ -71,9 +71,9 @@ JFactory::getDocument()->addScriptDeclaration('
 
 
 
-		<?php //echo JHtml::_('bootstrap.addTab', 'myTab', 'otherparams', JText::_('COM_WSAONEPAGE_GROUP_LABEL_WSAONEPAGE_DETAILS')); ?>
-		<?php //echo $this->form->renderFieldset('otherparams'); ?>
-		<?php //echo JHtml::_('bootstrap.endTab'); ?>
+		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'params', JText::_('COM_WSAONEPAGE_GROUP_LABEL_WSAONEPAGE_DETAILS')); ?>
+		<?php echo $this->form->renderFieldset('params'); ?>
+		<?php echo JHtml::_('bootstrap.endTab'); ?>
 		
 		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'publishing', JText::_('JGLOBAL_FIELDSET_PUBLISHING')); ?>
 		<div class="row-fluid form-horizontal-desktop">
