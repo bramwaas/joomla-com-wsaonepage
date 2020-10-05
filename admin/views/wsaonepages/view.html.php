@@ -65,6 +65,7 @@ class WsaOnePageViewWsaOnePages extends JViewLegacy
 	protected function addToolBar()
 	{
 	    $input = JFactory::getApplication()->input;
+// TODO	    $canDo = JHelperContent::getActions('com_content', 'category', $this->state->get('filter.category_id'));
 	    
 	    // Hide Joomla Administrator Main menu
 	    $input->set('hidemainmenu', true);
@@ -80,11 +81,13 @@ class WsaOnePageViewWsaOnePages extends JViewLegacy
 	    JToolBarHelper::title($title, 'wsaonepage');
 	    JToolBarHelper::addNew('wsaonepage.add');
 	    JToolBarHelper::editList('wsaonepage.edit');
+/* TODo werkt nog niet $cando
 	    if ($canDo->get('core.edit.state'))
 	    {
 	        JToolbarHelper::publish('wsaonepage.publish', 'JTOOLBAR_PUBLISH', true);
 	        JToolbarHelper::unpublish('wsaonepage.unpublish', 'JTOOLBAR_UNPUBLISH', true);
 	    }
+	    */
 	    JToolBarHelper::save('wsaonepages.save');
 	    JToolBarHelper::deleteList('', 'wsaonepages.delete');
 	    JToolbarHelper::cancel('wsaonepage.cancel',
