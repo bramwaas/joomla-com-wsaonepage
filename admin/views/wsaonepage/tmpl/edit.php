@@ -81,7 +81,7 @@ JFactory::getDocument()->addScriptDeclaration('
 				<?php echo JLayoutHelper::render('joomla.edit.publishingdata', $this); ?>
 			</div>
 			<div class="span6">
-				<?php echo $this->form->renderFieldset('metadata'); ?>
+				<?php echo JLayoutHelper::render('joomla.edit.metadata', $this); ?>
 			</div>
 		</div>
 		<?php echo JHtml::_('bootstrap.endTab'); ?>

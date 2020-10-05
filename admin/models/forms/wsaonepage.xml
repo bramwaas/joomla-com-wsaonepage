@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form addrulepath="/administrator/components/com_wsaonepage/models/rules">
 <!--  Form to update the component in Admin Component menu 
-changed 28-9-2020 after an example of banner.xml
+changed 4-10-2020 after an example of banner.xml
 -->
 	<fieldset 
 	name="details"
@@ -30,7 +30,6 @@ changed 28-9-2020 after an example of banner.xml
 				class="inputbox"
 				default=""
 				/>
-<!--				type="wsamenutype" -->
 		<field
 				name="menutype"
 				type="wsamenutype"
@@ -196,7 +195,47 @@ changed 28-9-2020 after an example of banner.xml
 			filter="user_utc"
 		/>
 	</fieldset>
-	<fieldset name="metadata" label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
+	<fields name="metadata" label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
+		<fieldset name="jmetadata" label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
+			<field 
+				name="robots"
+				type="list"
+				label="JFIELD_METADATA_ROBOTS_LABEL"
+				description="JFIELD_METADATA_ROBOTS_DESC"
+				>
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="index, follow">JGLOBAL_INDEX_FOLLOW</option>
+				<option value="noindex, follow">JGLOBAL_NOINDEX_FOLLOW</option>
+				<option value="index, nofollow">JGLOBAL_INDEX_NOFOLLOW</option>
+				<option value="noindex, nofollow">JGLOBAL_NOINDEX_NOFOLLOW</option>
+			</field>
+
+			<field 
+				name="author" 
+				type="text"
+				label="JAUTHOR"
+				description="JFIELD_METADATA_AUTHOR_DESC"
+				size="20" 
+			/>
+
+			<field 
+				name="rights" 
+				type="textarea" 
+				label="JFIELD_META_RIGHTS_LABEL"
+				description="JFIELD_META_RIGHTS_DESC" 
+				filter="string"
+				cols="30" 
+				rows="2" 
+			/>
+
+		<!-- TODO from article but probably not  applicable here
+			<field 
+				name="xreference" 
+				type="text"
+				label="COM_CONTENT_FIELD_XREFERENCE_LABEL"
+				description="COM_CONTENT_FIELD_XREFERENCE_DESC"
+				size="20" 
+			/> -->
 
 		<field
 			name="metakey"
@@ -206,7 +245,7 @@ changed 28-9-2020 after an example of banner.xml
 			rows="3"
 			cols="30"
 		/>
-
+<!-- TODO from banners but probably not  applicable here
 		<field
 			name="own_prefix"
 			type="radio"
@@ -225,7 +264,9 @@ changed 28-9-2020 after an example of banner.xml
 			label="COM_WSAONEPAGE_FIELD_METAKEYWORDPREFIX_LABEL"
 			description="COM_WSAONEPAGE_FIELD_METAKEYWORDPREFIX_DESC"
 		/>
+		-->
 	</fieldset>
+	</fields>
 	<fields name="params">
 		<fieldset
 				name="params"
