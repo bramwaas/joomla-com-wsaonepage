@@ -64,6 +64,12 @@ class WsaOnePageViewWsaOnePages extends JViewLegacy
 	 */
 	protected function addToolBar()
 	{
+	    $input = JFactory::getApplication()->input;
+	    
+	    // Hide Joomla Administrator Main menu
+	    $input->set('hidemainmenu', true);
+	    
+	    $isNew = ($this->item->id == 0);
 	    $title = JText::_('COM_WSAONEPAGE_MANAGER_WSAONEPAGES');
 	    
 	    if ($this->pagination->total)
@@ -72,9 +78,18 @@ class WsaOnePageViewWsaOnePages extends JViewLegacy
 	    }
 	    
 	    JToolBarHelper::title($title, 'wsaonepage');
-	    JToolBarHelper::deleteList('', 'wsaonepages.delete');
-	    JToolBarHelper::editList('wsaonepage.edit');
 	    JToolBarHelper::addNew('wsaonepage.add');
+	    JToolBarHelper::editList('wsaonepage.edit');
+	    if ($canDo->get('core.edit.state'))
+	    {
+	        JToolbarHelper::publish('wsaonepage.publish', 'JTOOLBAR_PUBLISH', true);
+	        JToolbarHelper::unpublish('wsaonepage.unpublish', 'JTOOLBAR_UNPUBLISH', true);
+	    }
+	    JToolBarHelper::save('wsaonepages.save');
+	    JToolBarHelper::deleteList('', 'wsaonepages.delete');
+	    JToolbarHelper::cancel('wsaonepage.cancel',
+	        $isNew ? 'JTOOLBAR_CANCEL' : 'JTOOLBAR_CLOSE');
+	        
 	}
 	/**
 	 * Method to set up the document properties
