@@ -90,7 +90,7 @@ class WsaOnePageViewWsaOnePages extends JViewLegacy
 	    */
 	    JToolBarHelper::deleteList('', 'wsaonepages.delete');
 	    JToolbarHelper::back('wsaonepage.back',
-	        'JTOOLBAR_BACK');
+	        '');
 	        
 	}
 	/**
