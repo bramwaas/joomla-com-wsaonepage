@@ -9,7 +9,6 @@ ALTER TABLE `#__wsaonepage` ADD COLUMN `modified` datetime NOT NULL DEFAULT '000
 ALTER TABLE `#__wsaonepage` ADD COLUMN `modified_by` int(10) unsigned NOT NULL DEFAULT 0;
 ALTER TABLE `#__wsaonepage` ADD COLUMN `checked_out` int(10) unsigned NOT NULL DEFAULT 0;
 ALTER TABLE `#__wsaonepage` ADD COLUMN `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00';
-ALTER TABLE `#__wsaonepage` ADD COLUMN `created_by` INT(10) UNSIGNED NOT NULL DEFAULT '0' AFTER `created`;
 ALTER TABLE `#__wsaonepage` ADD COLUMN `publish_up` datetime NOT NULL DEFAULT '0000-00-00 00:00:00';
 ALTER TABLE `#__wsaonepage` ADD COLUMN `publish_down` datetime NOT NULL DEFAULT '0000-00-00 00:00:00';
 ALTER TABLE `#__wsaonepage` ADD COLUMN `attribs` varchar(5120) NOT NULL DEFAULT '';
@@ -21,26 +20,21 @@ ALTER TABLE `#__wsaonepage` ADD COLUMN `access` int(10) unsigned NOT NULL DEFAUL
 ALTER TABLE `#__wsaonepage` ADD COLUMN `hits` int(10) unsigned NOT NULL DEFAULT 0;
 ALTER TABLE `#__wsaonepage` ADD COLUMN `metadata` text NOT NULL;
 ALTER TABLE `#__wsaonepage` ADD COLUMN `xreference` varchar(50) NOT NULL DEFAULT '' COMMENT 'A reference to enable linkages to external data sets.';
---ALTER TABLE `#__wsaonepage` ADD COLUMN `image` VARCHAR(1024) NOT NULL DEFAULT '';
-ALTER TABLE `#__wsaonepage` ADD KEY `idx_access` (`access`),
-  	ADD KEY `idx_checkout` (`checked_out`),
+CREATE  INDEX `idx_access` ON `#__wsaonepage` (`access`);
+CREATE  INDEX `idx_checkout` ON `#__wsaonepage` (`checked_out`);
 
-  	ADD KEY `idx_state` (`state`),
+CREATE  INDEX `idx_state` ON `#__wsaonepage` (`state`);
 
-  	ADD KEY `idx_catid` (`catid`),
+CREATE  INDEX `idx_catid` ON `#__wsaonepage` (`catid`);
 
-  	ADD KEY `idx_createdby` (`created_by`),
+CREATE  INDEX `idx_createdby` ON `#__wsaonepage` (`created_by`);
 
-  	ADD KEY `idx_language` (`language`),
+CREATE  INDEX `idx_language` ON `#__wsaonepage` (`language`);
 
-  	ADD KEY `idx_xreference` (`xreference`),
+CREATE  INDEX `idx_xreference` ON `#__wsaonepage` (`xreference`);
 
-  	ADD KEY `idx_alias` (`alias`(191))
+CREATE  INDEX `idx_alias` ON `#__wsaonepage` (`alias`(191))
 ;
+CREATE UNIQUE INDEX `aliasindex` ON `#__wsaonepage` (`alias`, `catid`); 
 
-UPDATE `#__wsaonepage` AS h1
-SET alias = (SELECT CONCAT('id-', ID) FROM (SELECT * FROM `#__wsaonepage`) AS h2 WHERE h1.id = h2.id);
-
---  DROP INDEX `aliasindex` on `#__wsaonepage`;   -- does not exist before this version
--- CREATE UNIQUE INDEX `aliasindex` ON `#__wsaonepage` (`alias`, `catid`); -- use after alias is filled ok
 
