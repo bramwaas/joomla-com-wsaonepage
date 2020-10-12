@@ -53,7 +53,7 @@ JFactory::getDocument()->addScriptDeclaration('
 
 ?>
 <form action="<?php echo JRoute::_('index.php?option=com_wsaonepage&layout=edit&id=' . (int) $this->item->id); ?>"
-    method="post" name="adminForm" id="wsaonepage-form" class="form-validate">
+    method="post" name="adminForm" id="adminForm" <!-- id="wsaonepage-form" --> class="form-validate">
     <div class="form-horizontal">
 		<?php echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'details')); ?>
 		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'details', JText::_('COM_WSAONEPAGE_WSAONEPAGE_DETAILS')); ?>

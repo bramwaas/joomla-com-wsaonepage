@@ -9,6 +9,7 @@
  */
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;  // JModelLegacy
+use Joomla\CMS\Table\Table;
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
@@ -59,6 +60,21 @@ class WsaOnePageModelWsaOnePage extends BaseDatabaseModel
 	    // Load the parameters.
 	    $this->setState('params', Factory::getApplication()->getParams());
 	    parent::populateState();
+	}
+	/**
+	 * Method to get a table object, load it if necessary.
+	 *
+	 * @param   string  $type    The table name. Optional.
+	 * @param   string  $prefix  The class prefix. Optional.
+	 * @param   array   $config  Configuration array for model. Optional.
+	 *
+	 * @return  JTable  A JTable object
+	 *
+	 * @since   1.6
+	 */
+	public function getTable($type = 'WsaOnePage', $prefix = 'WsaOnePageTable', $config = array())
+	{
+	    return Table::getInstance($type, $prefix, $config);
 	}
 	/**
 	 * Get the wsaonepage Item
