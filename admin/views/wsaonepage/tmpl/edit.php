@@ -3,9 +3,9 @@
  * @package     Joomla.Administrator
  * @subpackage  com_wsaonepage
  *
- * @copyright   Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2020 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * 28-9-2020
+ * 14-10-2020
  */
 
 // No direct access
@@ -53,7 +53,7 @@ JFactory::getDocument()->addScriptDeclaration('
 
 ?>
 <form action="<?php echo JRoute::_('index.php?option=com_wsaonepage&layout=edit&id=' . (int) $this->item->id); ?>"
-    method="post" name="adminForm" id="adminForm" <!-- id="wsaonepage-form" --> class="form-validate">
+    method="post" name="adminForm" id="wsaonepage-form" class="form-validate">
     <div class="form-horizontal">
 		<?php echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'details')); ?>
 		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'details', JText::_('COM_WSAONEPAGE_WSAONEPAGE_DETAILS')); ?>

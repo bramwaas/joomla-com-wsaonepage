@@ -7,7 +7,7 @@
     </include>
   </compatibility>
 	<name>COM_WSAONEPAGE</name>
-	<!-- The following elements are optional and free of formatting constraints -->
+	<!-- The following elements are optional and free of formatting constraints. -->
 	<creationDate>14 Oktober 2020</creationDate>
 	<author>A.H.C. Waasdorp</author>
 	<authorEmail>bram@waasdorpsoekhan.nl</authorEmail>
