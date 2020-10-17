@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `#__wsaonepage` (
 	`published` tinyint(4) NOT NULL DEFAULT '1',  -- TODO nodig??
 	`params`   VARCHAR(1024) NOT NULL DEFAULT '', -- TODO nodig??
 	`image`   VARCHAR(1024) NOT NULL DEFAULT '', -- TODO nodig??
-	PRIMARY KEY (`id`)
+	PRIMARY KEY (`id`),
   	KEY `idx_access` (`access`),
 
   	KEY `idx_checkout` (`checked_out`),
