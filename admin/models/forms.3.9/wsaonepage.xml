@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addrulepath="/administrator/components/com_wsaonepage/models/rules">
+<!--  Form to update the component in Admin Component menu 
+changed 4-10-2020 after an example of banner.xml
+-->
+	<fieldset 
+	name="details"
+	addfieldpath="/administrator/components/com_wsaonepage/models/fields"
+	label="COM_WSAONEPAGE_WSAONEPAGE_DETAILS"
+	>
+		<fieldset
+				name="wsaonepagedetails"
+				label="JGLOBAL_FIELDSET_DISPLAY_OPTIONS"
+		>
+		<field
+			name="id"
+			type="number"
+			label="JGLOBAL_FIELD_ID_LABEL"
+			description="JGLOBAL_FIELD_ID_DESC"
+			default="0"
+			readonly="true"
+			class="readonly"
+				/>
+		<field
+				name="title"
+				type="text"
+				label="COM_WSAONEPAGE_WSAONEPAGE_TITLE_LABEL"
+				description="COM_WSAONEPAGE_WSAONEPAGE_TITLE_DESC"
+				size="40"
+				class="inputbox"
+				default=""
+				/>
+		<field
+				name="menutype"
+				type="wsamenutype"
+				label="COM_WSAONEPAGE_WSAONEPAGE_MENUTYPE_LABEL"
+				description="COM_WSAONEPAGE_WSAONEPAGE_MENUTYPE_DESC"
+				/>
+		<field
+				name="description"
+				type="text"
+				label="COM_WSAONEPAGE_WSAONEPAGE_DESCRIPTION_LABEL"
+				description="COM_WSAONEPAGE_WSAONEPAGE_DESCRIPTION_DESC"
+				size="256"
+				class="inputbox"
+				default=""
+				/>
+		<field 
+				name="alias" 
+				type="text" 
+				label="JFIELD_ALIAS_LABEL"
+				description="JFIELD_ALIAS_DESC"
+				hint="JFIELD_ALIAS_PLACEHOLDER"
+				size="40" 
+				/>
+		</fieldset>
+
+	
+		<field
+				name="catid"
+				type="category"
+				label="COM_WSAONEPAGE_WSAONEPAGE_FIELD_CATID_LABEL"
+				description="COM_WSAONEPAGE_WSAONEPAGE_FIELD_CATID_DESC"
+				extension="com_wsaonepage"
+				required="true"
+				class="inputbox"
+				default="0"
+		>
+				 <option value="0">JOPTION_SELECT_CATEGORY</option>
+<!--				addfieldpath="/administrator/components/com_categories/models/fields" -->
+					</field>		
+		<field
+			name="state"
+			type="list"
+			label="JSTATUS"
+			description="COM_WSAONEPAGE_FIELD_STATE_DESC"
+			class="chzn-color-state"
+			size="1"
+			default="1"
+			>
+			<option value="1">JPUBLISHED</option>
+			<option value="0">JUNPUBLISHED</option>
+			<option value="2">JARCHIVED</option>
+			<option value="-2">JTRASHED</option>
+		</field>
+
+		<!-- field
+			name="ordering"
+			type="ordering"
+			label="JFIELD_ORDERING_LABEL"
+			description="JFIELD_ORDERING_DESC"
+			table="#__wsaonepage"
+		/ -->
+
+		<field
+				name="language" 
+				type="contentlanguage" 
+				label="JFIELD_LANGUAGE_LABEL"
+				description="COM_WSAONEPAGE_WSAONEPAGE_FIELD_LANGUAGE_DESC"
+				>
+				<option value="*">JALL</option>
+		</field>
+		<field
+			name="version_note"
+			type="text"
+			label="JGLOBAL_FIELD_VERSION_NOTE_LABEL"
+			description="JGLOBAL_FIELD_VERSION_NOTE_DESC"
+			maxlength="255"
+			class="span12"
+			size="45"
+			labelclass="control-label"
+		/>
+	</fieldset>
+	<fieldset name="publish" label="COM_WSAONEPAGE_GROUP_LABEL_PUBLISHING_DETAILS">
+
+		<field
+			name="created"
+			type="calendar"
+			label="COM_WSAONEPAGE_FIELD_CREATED_LABEL"
+			description="COM_WSAONEPAGE_FIELD_CREATED_DESC"
+			size="22"
+			translateformat="true"
+			showtime="true"
+			filter="user_utc"
+		/>
+
+		<field
+			name="created_by"
+			type="user"
+			label="COM_WSAONEPAGE_FIELD_CREATED_BY_LABEL"
+			description="COM_WSAONEPAGE_FIELD_CREATED_BY_DESC"
+		/>
+
+		<field
+			name="created_by_alias"
+			type="text"
+			label="COM_WSAONEPAGE_FIELD_CREATED_BY_ALIAS_LABEL"
+			description="COM_WSAONEPAGE_FIELD_CREATED_BY_ALIAS_DESC"
+			size="20"
+		/>
+
+		<field
+			name="modified"
+			type="calendar"
+			label="JGLOBAL_FIELD_MODIFIED_LABEL"
+			description="COM_WSAONEPAGE_FIELD_MODIFIED_DESC"
+			class="readonly"
+			size="22"
+			readonly="true"
+			translateformat="true"
+			showtime="true"
+			filter="user_utc"
+		/>
+
+		<field
+			name="modified_by"
+			type="user"
+			label="JGLOBAL_FIELD_MODIFIED_BY_LABEL"
+			description="COM_WSAONEPAGE_FIELD_MODIFIED_BY_DESC"
+			class="readonly"
+			readonly="true"
+			filter="unset"
+		/>
+
+		<field
+			name="version"
+			type="text"
+			label="COM_WSAONEPAGE_FIELD_VERSION_LABEL"
+			description="COM_WSAONEPAGE_FIELD_VERSION_DESC"
+			class="readonly"
+			size="6"
+			readonly="true"
+			filter="unset"
+		/>
+
+		<field
+			name="publish_up"
+			type="calendar"
+			label="COM_WSAONEPAGE_FIELD_PUBLISH_UP_LABEL"
+			description="COM_WSAONEPAGE_FIELD_PUBLISH_UP_DESC"
+			translateformat="true"
+			showtime="true"
+			size="22"
+			filter="user_utc"
+		/>
+
+		<field
+			name="publish_down"
+			type="calendar"
+			label="COM_WSAONEPAGE_FIELD_PUBLISH_DOWN_LABEL"
+			description="COM_WSAONEPAGE_FIELD_PUBLISH_DOWN_DESC"
+			translateformat="true"
+			showtime="true"
+			size="22"
+			filter="user_utc"
+		/>
+	</fieldset>
+	<fields name="metadata" label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
+		<fieldset name="jmetadata" label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
+			<field 
+				name="robots"
+				type="list"
+				label="JFIELD_METADATA_ROBOTS_LABEL"
+				description="JFIELD_METADATA_ROBOTS_DESC"
+				>
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="index, follow">JGLOBAL_INDEX_FOLLOW</option>
+				<option value="noindex, follow">JGLOBAL_NOINDEX_FOLLOW</option>
+				<option value="index, nofollow">JGLOBAL_INDEX_NOFOLLOW</option>
+				<option value="noindex, nofollow">JGLOBAL_NOINDEX_NOFOLLOW</option>
+			</field>
+
+			<field 
+				name="author" 
+				type="text"
+				label="JAUTHOR"
+				description="JFIELD_METADATA_AUTHOR_DESC"
+				size="20" 
+			/>
+
+			<field 
+				name="rights" 
+				type="textarea" 
+				label="JFIELD_META_RIGHTS_LABEL"
+				description="JFIELD_META_RIGHTS_DESC" 
+				filter="string"
+				cols="30" 
+				rows="2" 
+			/>
+
+		<!-- TODO from article but probably not  applicable here
+			<field 
+				name="xreference" 
+				type="text"
+				label="COM_CONTENT_FIELD_XREFERENCE_LABEL"
+				description="COM_CONTENT_FIELD_XREFERENCE_DESC"
+				size="20" 
+			/> -->
+
+		<field
+			name="metakey"
+			type="textarea"
+			label="JFIELD_META_KEYWORDS_LABEL"
+			description="COM_WSAONEPAGE_FIELD_METAKEYWORDS_DESC"
+			rows="3"
+			cols="30"
+		/>
+<!-- TODO from banners but probably not  applicable here
+		<field
+			name="own_prefix"
+			type="radio"
+			label="COM_WSAONEPAGE_FIELD_WSAONEPAGEOWNPREFIX_LABEL"
+			description="COM_WSAONEPAGE_FIELD_WSAONEPAGEOWNPREFIX_DESC"
+			class="btn-group btn-group-yesno"
+			default="0"
+			>
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+		<field
+			name="metakey_prefix"
+			type="text"
+			label="COM_WSAONEPAGE_FIELD_METAKEYWORDPREFIX_LABEL"
+			description="COM_WSAONEPAGE_FIELD_METAKEYWORDPREFIX_DESC"
+		/>
+		-->
+	</fieldset>
+	</fields>
+	<fields name="params">
+		<fieldset
+				name="params"
+				label="JGLOBAL_FIELDSET_DISPLAY_OPTIONS"
+		>
+			<field
+					name="show_category"
+					type="list"
+					label="COM_WSAONEPAGE_WSAONEPAGE_FIELD_SHOW_CATEGORY_LABEL"
+					description="COM_WSAONEPAGE_WSAONEPAGE_FIELD_SHOW_CATEGORY_DESC"
+					default=""
+			>
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+		</fieldset>
+	</fields>
+
+		<fieldset
+			name="accesscontrol"
+			label="COM_WSAONEPAGE_FIELDSET_RULES"
+	>
+    	<field
+				name="asset_id"
+				type="hidden"
+				filter="unset"
+				/>
+    	<field
+				name="rules"
+				type="rules"
+				label="COM_WSAONEPAGE_FIELD_RULES_LABEL"
+				filter="rules"
+				validate="rules"
+				class="inputbox"
+				component="com_wsaonepage"
+				section="message"
+				/>
+    </fieldset>
+</form>
