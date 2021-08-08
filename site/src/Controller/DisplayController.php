@@ -1,12 +1,4 @@
 <?php
-
-namespace WaasdorpSoekhan\Component\WsaOnePage\Site\Controller;
-
-defined('_JEXEC') or die;
-
-use Joomla\CMS\MVC\Controller\BaseController;
-use Joomla\CMS\Factory;
-
 /**
  * @package     Joomla.Site
  * @subpackage  com_wsaonepage
@@ -14,6 +6,13 @@ use Joomla\CMS\Factory;
  * @copyright   Copyright (C) 2021 A.H.C. Waasdorp. All rights reserved.
  * @license     GNU General Public License version 3; see LICENSE
  */
+namespace WaasdorpSoekhan\Component\WsaOnePage\Site\Controller;
+
+\defined('_JEXEC') or die;
+
+use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\Factory;
+
 
 /**
  * WsaOnePage Component Controller

@@ -1,12 +1,4 @@
 <?php
-
-namespace WaasdorpSoekhan\Component\WsaOnePage\Site\View\WsaOnePage;
-
-
-defined('_JEXEC') or die;
-
-use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
-
 /**
  * @package     Joomla.Site
  * @package     Joomla.Administrator
@@ -15,6 +7,13 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
  * @copyright   Copyright (C) 2021 A.H.C. Waasdorp. All rights reserved.
  * @license     GNU General Public License version 3; see LICENSE
  */
+namespace WaasdorpSoekhan\Component\WsaOnePage\Site\View\WsaOnePage;
+
+
+\defined('_JEXEC') or die;
+
+use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+
 
 /**
  * View for the user identity validation form

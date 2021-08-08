@@ -10,7 +10,7 @@
  */
 namespace WaasdorpSoekhan\Component\WsaOnePage\Site\Model;
 // No direct access to this file
-defined('_JEXEC') or die('Restricted access');
+\defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel; // of ItemModel;  ItemModel is almost the same as BaseDatabaseModel; it just has an extra getStoreId() method which is relevant when you have a component and/or several modules sharing the same model and you want to distinguish between data sets relevant to each.

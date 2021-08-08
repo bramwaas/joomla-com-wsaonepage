@@ -1,11 +1,4 @@
 <?php
-
-namespace WaasdorpSoekhan\Component\WsaOnePage\Administrator\View\WsaOnePages;
-
-defined('_JEXEC') or die;
-
-use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
-
 /**
  * @package     Joomla.Administrator
  * @subpackage  com_wsaonepage
@@ -13,6 +6,12 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
  * @copyright   Copyright (C) 2021 A.H.C. Waasdorp. All rights reserved.
  * @license     GNU General Public License version 3; see LICENSE
  */
+namespace WaasdorpSoekhan\Component\WsaOnePage\Administrator\View\WsaOnePages;
+
+\defined('_JEXEC') or die;
+
+use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+
 
 /**
  * Main "WsaOnePages" Admin View
