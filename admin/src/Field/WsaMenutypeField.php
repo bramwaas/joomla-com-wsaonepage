@@ -10,6 +10,7 @@ namespace WaasdorpSoekhan\Component\WsaOnePage\Administrator\Field;
 // No direct access to this file
 \defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Factory;
+use Joomla\CMS\Form\Field\ListField;
 use Joomla\Utilities\ArrayHelper;
 
 JFormHelper::loadFieldClass('list');
