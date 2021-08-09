@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<form addrulepath="/administrator/components/com_wsaonepage/models/rules">
+<form  addruleprefix="WaasdorpSoekhan\Component\WsaOnePage\Administrator\Rule">
 <!--  Form to update the component in Admin Component menu 
 changed 4-10-2020 after an example of banner.xml
-TODO in plaats van addrulepath 	Deprecated use \Joomla\CMS\Form\FormHelper::addRulePath() directly
-
+9-8-2021 J4 compared with contact.xml
+TODO in plaats van addrulepath 	Deprecated use \Joomla\CMS\Form\FormHelper::addRulePath() directly or is addruleprefix working well
 -->
 	<fieldset 
 	name="details"
@@ -32,11 +32,15 @@ TODO in plaats van addrulepath 	Deprecated use \Joomla\CMS\Form\FormHelper::addR
 				class="inputbox"
 				default=""
 				/>
+<!-- trying a simple rule after example contact and helloworld joomla 3.2 -->				
 		<field
 				name="menutype"
 				type="wsamenutype"
 				label="COM_WSAONEPAGE_WSAONEPAGE_MENUTYPE_LABEL"
 				description="COM_WSAONEPAGE_WSAONEPAGE_MENUTYPE_DESC"
+			filter="string"
+			validate="WsaMenutype"
+			required="true"
 				/>
 		<field
 				name="description"
