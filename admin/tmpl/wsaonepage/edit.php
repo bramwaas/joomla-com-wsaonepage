@@ -5,7 +5,7 @@
  *
   * @copyright   Copyright (C) 2005 - 2021 A.H.C. Waasdorp. All rights reserved.
  * @license     GNU General Public License version 3 or later; see LICENSE.txt
- * 11-8-2021 changed after similar changes J3.5 to J4 from com_banner
+ * 11-8-2021 changed after similar changes J3.5 to J4 from com_banner and com_contact.
  */
 // 
 // No direct access
@@ -31,16 +31,17 @@ $wa->useScript('keepalive')
     ->useScript('form.validate');
 
 // TODO formbehavior.chosen changed in  ->enableAsset('choicesjs') at the moment unclear what happens to the arguments text::script ... ?
-/* not found in com_banner looking for an other example.
+/* not found in com_banner looking for an other example incom_contact remove without replacement so replacement starred out
     HTMLHelper::_('formbehavior.chosen', '#jform_catid', null, array('disable_search_threshold' => 0 ));
     HTMLHelper::_('formbehavior.chosen', 'select');
  */
+ /*   
     Text::script('JGLOBAL_SELECT_NO_RESULTS_MATCH');
     Text::script('JGLOBAL_SELECT_PRESS_TO_SELECT');
-    
+  
 $wa->getWebAssetManager()->enableAsset('choicesjs');
     HTMLHelper::_('webcomponent', 'system/webcomponents/joomla-field-fancy-select.min.js', ['version' => 'auto', 'relative' => true]);
-    
+ */   
     
 
 ?>
