@@ -3,93 +3,91 @@
  * @package     Joomla.Administrator
  * @subpackage  com_wsaonepage
  *
- * @copyright   Copyright (C) 2005 - 2020 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * 14-10-2020
+  * @copyright   Copyright (C) 2005 - 2021 A.H.C. Waasdorp. All rights reserved.
+ * @license     GNU General Public License version 3 or later; see LICENSE.txt
+ * 11-8-2021 changed after similar changes J3.5 to J4 from com_banner
  */
-
+// 
 // No direct access
 \defined('_JEXEC') or die('Restricted access');
 
-JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
+//use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Layout\LayoutHelper;
+use Joomla\CMS\Router\Route;
 
-JHtml::_('jquery.framework');
-JHtml::_('behavior.formvalidator');
-JHtml::_('formbehavior.chosen', '#jform_catid', null, array('disable_search_threshold' => 0 ));
-JHtml::_('formbehavior.chosen', 'select');
-// TODO from banners is this usefull?
+// JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html'); seems not to be necessary in J4 
+/**
+ *  @var WaasdorpSoekhan\Component\WsaOnePage\Administrator\View\WsaOnePage\HtmlView; $this
+ *  The class where this template is part of
+ */
 
-JFactory::getDocument()->addScriptDeclaration('
-	Joomla.submitbutton = function(task)
-	{
-		if (task == "wsaonepage.cancel" || document.formvalidator.isValid(document.getElementById("wsaonepage-form")))
-		{
-			Joomla.submitform(task, document.getElementById("wsaonepage-form"));
-		}
-	};
-	jQuery(document).ready(function ($){
-		$("#jform_type").on("change", function (a, params) {
+/** @var Joomla\CMS\WebAsset\WebAssetManager $wa 
+ * seems to be used from J4 Beta1 29-6-2021 eg in com_banner replacing HTMLHelper::_('behavior.formvalidator'); HTMLHelper::_('behavior.keepalive') etc.;
+ * */
+$wa = $this->document->getWebAssetManager();
+$wa->useScript('keepalive')
+    ->useScript('form.validate');
+
+// TODO formbehavior.chosen changed in  ->enableAsset('choicesjs') at the moment unclear what happens to the arguments text::script ... ?
+/* not found in com_banner looking for an other example.
+    HTMLHelper::_('formbehavior.chosen', '#jform_catid', null, array('disable_search_threshold' => 0 ));
+    HTMLHelper::_('formbehavior.chosen', 'select');
+ */
+    Text::script('JGLOBAL_SELECT_NO_RESULTS_MATCH');
+    Text::script('JGLOBAL_SELECT_PRESS_TO_SELECT');
     
-			var v = typeof(params) !== "object" ? $("#jform_type").val() : params.selected;
+$wa->getWebAssetManager()->enableAsset('choicesjs');
+    HTMLHelper::_('webcomponent', 'system/webcomponents/joomla-field-fancy-select.min.js', ['version' => 'auto', 'relative' => true]);
     
-			var img_url = $("#image, #url");
-			var custom  = $("#custom");
     
-			switch (v) {
-				case "0":
-					// Image
-					img_url.show();
-					custom.hide();
-					break;
-				case "1":
-					// Custom
-					img_url.hide();
-					custom.show();
-					break;
-			}
-		}).trigger("change");
-	});
-');
 
 ?>
-<form action="<?php echo JRoute::_('index.php?option=com_wsaonepage&layout=edit&id=' . (int) $this->item->id); ?>"
+<form action="<?php echo Route::_('index.php?option=com_wsaonepage&layout=edit&id=' . (int) $this->item->id); ?>"
     method="post" name="adminForm" id="wsaonepage-form" class="form-validate">
-    <div class="form-horizontal">
-		<?php echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'details')); ?>
-		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'details', JText::_('COM_WSAONEPAGE_WSAONEPAGE_DETAILS')); ?>
-            <div class="row-fluid">
-                <div class="span9">
+	<?php echo LayoutHelper::render('joomla.edit.title_alias', $this); ?>
+    <div class="main-card">
+		<?php echo HTMLHelper::_('uitab.startTabSet', 'myTab', array('active' => 'details')); ?>
+		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'details', Text::_('COM_WSAONEPAGE_WSAONEPAGE_DETAILS')); ?>
+            <div class="row">
+                <div class="col-lg-9">
 					<?php echo $this->form->renderFieldset('wsaonepagedetails'); ?>
                 </div>
-				<div class="span3">
-					<?php echo JLayoutHelper::render('joomla.edit.global', $this); ?>
+				<div class="col-lg-3">
+					<?php echo LayoutHelper::render('joomla.edit.global', $this); ?>
 				</div>
             </div>
-		<?php echo JHtml::_('bootstrap.endTab'); ?>
+		<?php echo HTMLHelper::_('uitab.endTab'); ?>
 
 
 
 
 
-		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'params', JText::_('COM_WSAONEPAGE_GROUP_LABEL_WSAONEPAGE_DETAILS')); ?>
-		<?php echo $this->form->renderFieldset('params'); ?>
-		<?php echo JHtml::_('bootstrap.endTab'); ?>
+		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'params', Text::_('COM_WSAONEPAGE_GROUP_LABEL_WSAONEPAGE_DETAILS')); ?>
+			<fieldset id="fieldset-params" class="options-form">
+				<legend><?php echo Text::_('COM_WSAONEPAGE_GROUP_LABEL_WSAONEPAGE_DETAILS'); ?></legend>
+				<div>
+				<?php echo $this->form->renderFieldset('params'); ?>
+				</div>
+			</fieldset>
+		<?php echo HTMLHelper::_('uitab.endTab'); ?>
 		
-		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'publishing', JText::_('JGLOBAL_FIELDSET_PUBLISHING')); ?>
-		<div class="row-fluid form-horizontal-desktop">
-			<div class="span6">
-				<?php echo JLayoutHelper::render('joomla.edit.publishingdata', $this); ?>
+		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'publishing', Text::_('JGLOBAL_FIELDSET_PUBLISHING')); ?>
+		<div class="row">
+			<div class="col-md-6">
+				<?php echo LayoutHelper::render('joomla.edit.publishingdata', $this); ?>
 			</div>
-			<div class="span6">
-				<?php echo JLayoutHelper::render('joomla.edit.metadata', $this); ?>
+			<div class="col-md-6">
+				<?php echo LayoutHelper::render('joomla.edit.metadata', $this); ?>
 			</div>
 		</div>
-		<?php echo JHtml::_('bootstrap.endTab'); ?>
+		<?php echo HTMLHelper::_('uitab.endTab'); ?>
 
-		<?php echo JHtml::_('bootstrap.endTabSet'); ?>
+		<?php echo HTMLHelper::_('uitab.endTabSet'); ?>
 
 
     </div>
     <input type="hidden" name="task" value="wsaonepage.edit" />
-    <?php echo JHtml::_('form.token'); ?>
+    <?php echo HTMLHelper::_('form.token'); ?>
 </form>
