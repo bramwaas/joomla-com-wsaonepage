@@ -5,22 +5,46 @@
  *
  * @copyright   Copyright (C) 2020 - 2020 AHC Waasdorp. All rights reserved.
  * @license     GNU General Public License version 3 or later; see LICENSE.txt
- *6-8-2021
+ *12-8-2021
  */
 
 // No direct access to this file
 defined('_JEXEC') or die('Restricted Access');
 
-use Joomla\Registry\Registry;
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Layout\LayoutHelper;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Session\Session;
+use Joomla\Registry\Registry;
+/**
+ *  @var WaasdorpSoekhan\Component\WsaOnePage\Administrator\View\WsaOnePages\HtmlView; $this
+ *  The class where this template is apart of
+ */
+
+// TODO replaced by code from com_contact mayby changes in HtmlView necessary  
+//$listOrder     = $this->escape($this->filter_order);
+//$listDirn      = $this->escape($this->filter_order_Dir);
+
+HTMLHelper::_('behavior.multiselect');
+
+$user      = Factory::getUser();
+$userId    = $user->get('id');
+$listOrder = $this->escape($this->state->get('list.ordering'));
+$listDirn  = $this->escape($this->state->get('list.direction'));
+$saveOrder = $listOrder == 'a.ordering';
+if ($saveOrder && !empty($this->items))
+{
+    $saveOrderingUrl = 'index.php?option=com_wsaonepage&task=wsaonepage.saveOrderAjax&tmpl=component&' . Session::getFormToken() . '=1';
+    HTMLHelper::_('draggablelist.draggable');
+}
+// end TODO
 
 
-JHtml::_('formbehavior.chosen', 'select');
 
-$listOrder     = $this->escape($this->filter_order);
-$listDirn      = $this->escape($this->filter_order_Dir);
 ?>
-<form action="index.php?option=com_wsaonepage&view=wsaonepages" method="post" id="adminForm" name="adminForm">
+<form action="<?php echo Route::_('index.php?option=com_wsaonepage&view=wsaonepages'); ?>" method="post" id="adminForm" name="adminForm">
 	<div id="j-sidebar-container" class="span2">
 		<?php echo JHtmlSidebar::render(); ?>
 	</div>
