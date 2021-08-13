@@ -5,19 +5,16 @@
  *
  * @copyright   Copyright (C) 2020 - 2020 AHC Waasdorp. All rights reserved.
  * @license     GNU General Public License version 3 or later; see LICENSE.txt
- *12-8-2021
+ *13-8-2021
  */
 
 // No direct access to this file
 defined('_JEXEC') or die('Restricted Access');
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
-use Joomla\CMS\Session\Session;
-use Joomla\Registry\Registry;
 /**
  *  @var WaasdorpSoekhan\Component\WsaOnePage\Administrator\View\WsaOnePages\HtmlView; $this
  *  The class where this template is apart of
@@ -29,105 +26,102 @@ use Joomla\Registry\Registry;
 
 HTMLHelper::_('behavior.multiselect');
 
-$user      = Factory::getUser();
-$userId    = $user->get('id');
 $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn  = $this->escape($this->state->get('list.direction'));
-$saveOrder = $listOrder == 'a.ordering';
-if ($saveOrder && !empty($this->items))
-{
-    $saveOrderingUrl = 'index.php?option=com_wsaonepage&task=wsaonepage.saveOrderAjax&tmpl=component&' . Session::getFormToken() . '=1';
-    HTMLHelper::_('draggablelist.draggable');
-}
 // end TODO
 
 
 
 ?>
 <form action="<?php echo Route::_('index.php?option=com_wsaonepage&view=wsaonepages'); ?>" method="post" id="adminForm" name="adminForm">
-	<div id="j-sidebar-container" class="span2">
-		<?php echo JHtmlSidebar::render(); ?>
-	</div>
-	<div id="j-main-container" class="span10">
-	<div class="row-fluid">
-		<div class="span6">
+	<div class="row">
+	<!-- div id="j-sidebar-container" class="span2" -->
+		<?php //TODO removed in all examples echo JHtmlSidebar::render(); ?>
+	<!-- /div -->
+	<div id="j-main-container" class="col-md-12">
 			<?php echo Text::_('COM_WSAONEPAGE_WSAONEPAGES_FILTER'); ?>
-			<?php
-				echo JLayoutHelper::render(
-					'joomla.searchtools.default',
-					array('view' => $this)
-				);
-			?>
-		</div>
-	</div>
-	<table class="table table-striped table-hover">
-		<thead>
-		<tr>
-			<th width="1%"><?php echo Text::_('COM_WSAONEPAGE_NUM'); ?></th>
-			<th width="2%">
-				<?php echo JHtml::_('grid.checkall'); ?>
-			</th>
-			<th width="30%">
-				<?php echo JHtml::_('searchtools.sort', 'COM_WSAONEPAGE_WSAONEPAGE_TITLE', 'title', $listDirn, $listOrder); ?>
-			</th>
-			<th width="auto">
-				<?php echo JHtml::_('searchtools.sort', 'COM_WSAONEPAGE_WSAONEPAGE_MENUTYPE', 'menutype', $listDirn, $listOrder); ?>
-			</th>
-                <th width="15%">
-                    <?php echo JHtml::_('searchtools.sort', 'COM_WSAONEPAGE_LANGUAGE', 'language', $listDirn, $listOrder); ?>
-                </th>
-			<th width="5%">
-				<?php echo JHtml::_('searchtools.sort', 'COM_WSAONEPAGE_PUBLISHED', 'published', $listDirn, $listOrder); ?>
-			</th>
-			<th width="2%">
-				<?php echo JHtml::_('searchtools.sort', 'COM_WSAONEPAGE_ID', 'id', $listDirn, $listOrder); ?>
-			</th>
-		</tr>
-		</thead>
-		<tfoot>
-			<tr>
-				<td colspan="5">
-					<?php echo $this->pagination->getListFooter(); ?>
-				</td>
-			</tr>
-		</tfoot>
-		<tbody>
-			<?php if (!empty($this->items)) : ?>
-				<?php foreach ($this->items as $i => $row) :
-				$link = JRoute::_('index.php?option=com_wsaonepage&task=wsaonepage.edit&id=' . $row->id);
+				<?php
+				// Search tools bar
+				echo LayoutHelper::render('joomla.searchtools.default', ['view' => $this]);
 				?>
+				<?php if (empty($this->items)) : ?>
+					<div class="alert alert-info">
+						<span class="icon-info-circle" aria-hidden="true"></span><span class="visually-hidden"><?php echo Text::_('INFO'); ?></span>
+						<?php echo Text::_('JGLOBAL_NO_MATCHING_RESULTS'); ?>
+					</div>
+				<?php else : ?>
 
-					<tr>
-						<td>
-							<?php echo $this->pagination->getRowOffset($i); ?>
-						</td>
-						<td>
-							<?php echo JHtml::_('grid.id', $i, $row->id); ?>
-						</td>
-						<td>
-							<a href="<?php echo $link; ?>" title="<?php echo Text::_('COM_WSAONEPAGE_EDIT_WSAONEPAGE'); ?>">
-							<?php echo $row->title; ?>
-							</a>
-						</td>
-						<td>
-							<?php echo $row->menutype; ?>
-						</td>
-                            <td align="center">
-                                <?php echo JLayoutHelper::render('joomla.content.language', $row); ?>
-                            </td>
-						<td align="center">
-							<?php echo JHtml::_('jgrid.published', $row->published, $i, 'wsaonepages.', true, 'cb'); ?>
-						</td>
-						<td align="center">
-							<?php echo $row->id; ?>
-						</td>
-					</tr>
-				<?php endforeach; ?>
-			<?php endif; ?>
-		</tbody>
-	</table>
+                	<table class="table" id="wsaonepageList">
+                						<caption class="visually-hidden">
+                							<?php echo Text::_('COM_BANNERS_BANNERS_TABLE_CAPTION'); ?>,
+                							<span id="orderedBy"><?php echo Text::_('JGLOBAL_SORTED_BY'); ?> </span>,
+                							<span id="filteredBy"><?php echo Text::_('JGLOBAL_FILTERED_BY'); ?></span>
+                						</caption>
+                		<thead>
+                		<tr>
+                			<th class="w-1 text-center">
+                				<?php echo HTMLHelper::_('grid.checkall'); ?>
+                			</th>
+                			<th scope="col" class="w-30 text-center d-none d-md-table-cell">
+                				<?php echo HTMLHelper::_('searchtools.sort', 'COM_WSAONEPAGE_WSAONEPAGE_TITLE', 'title', $listDirn, $listOrder); ?>
+                			</th>
+                			<th scope="col">
+                				<?php echo HTMLHelper::_('searchtools.sort', 'COM_WSAONEPAGE_WSAONEPAGE_MENUTYPE', 'menutype', $listDirn, $listOrder); ?>
+                			</th>
+                                <th scope="col" class="w-15 text-center d-none d-md-table-cell">
+                                    <?php echo HTMLHelper::_('searchtools.sort', 'COM_WSAONEPAGE_LANGUAGE', 'language', $listDirn, $listOrder); ?>
+                                </th>
+                			<th scope="col" class="w-5 text-center d-none d-md-table-cell">
+                				<?php echo HTMLHelper::_('searchtools.sort', 'COM_WSAONEPAGE_PUBLISHED', 'published', $listDirn, $listOrder); ?>
+                			</th>
+                			<th scope="col" class="w-2 text-center d-none d-md-table-cell">
+                				<?php echo HTMLHelper::_('searchtools.sort', 'COM_WSAONEPAGE_ID', 'id', $listDirn, $listOrder); ?>
+                			</th>
+                		</tr>
+                		</thead>
+                		<tbody>
+                			<?php if (!empty($this->items)) : ?>
+                				<?php foreach ($this->items as $i => $row) :
+                				$link = Route::_('index.php?option=com_wsaonepage&task=wsaonepage.edit&id=' . $row->id);
+                				?>
+                
+        					<tr>
+        						<td>
+        							<?php echo HTMLHelper::_('grid.id', $i, $row->id); ?>
+        						</td>
+                						<td class="small d-none d-md-table-cell">
+                							<a href="<?php echo $link; ?>" title="<?php echo Text::_('COM_WSAONEPAGE_EDIT_WSAONEPAGE'); ?>">
+                							<?php echo $row->title; ?>
+                							</a>
+                						</td>
+                						<td class="text-center d-none d-md-table-cell">
+                							<?php echo $row->menutype; ?>
+                						</td>
+                                            <td class="small text-center d-none d-md-table-cell">
+                                                <?php echo LayoutHelper::render('joomla.content.language', $row); ?>
+                                            </td>
+                						<td class="small text-center d-none d-md-table-cell">
+                							<?php echo HTMLHelper::_('jgrid.published', $row->published, $i, 'wsaonepages.', true, 'cb'); ?>
+                						</td>
+                						<td class="small text-center d-none d-md-table-cell">
+                							<?php echo $row->id; ?>
+                						</td>
+                					</tr>
+                				<?php endforeach; ?>
+                			<?php endif; ?>
+                		</tbody>
+            	</table>
+					<?php // Load the pagination. ?>
+					<?php echo $this->pagination->getListFooter(); ?>
+
+
+				<?php endif; ?>
+
 	<input type="hidden" name="task" value=""/>
 	<input type="hidden" name="boxchecked" value="0"/>
-	<?php echo JHtml::_('form.token'); ?>
+	<?php echo HTMLHelper::_('form.token'); ?>
 	</div>
+	
+	</div>
+	
 </form>
