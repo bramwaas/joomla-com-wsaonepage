@@ -3,7 +3,12 @@
 	<name>joomla-com-wsaonepage</name>
 	<comment></comment>
 	<projects>
+		<project>database</project>
+		<project>di</project>
 		<project>joomla-cms</project>
+		<project>registry</project>
+		<project>string</project>
+		<project>utilities</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

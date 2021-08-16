@@ -5,26 +5,51 @@
  *
  * @copyright   Copyright (C) 2021 A.H.C. Waasdorp. All rights reserved.
  * @license     GNU General Public License version 3; see LICENSE
+ * 16-8-2021
  */
+
 namespace WaasdorpSoekhan\Component\WsaOnePage\Administrator\View\WsaOnePage;
 
 \defined('_JEXEC') or die;
 
+//use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Form\Form;
+//use Joomla\CMS\Helper\ContentHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\View\GenericDataException; 
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Exception;
+use Joomla\CMS\Toolbar\ToolbarHelper;
+use WaasdorpSoekhan\Component\WsaOnePage\Administrator\Model\WsaOnePageModel;
 
 
 /**
  * Main "WsaOnePage" Admin View
  */
-class HtmlView extends BaseHtmlView {
-    
- 
+class HtmlView extends BaseHtmlView
+{
     /**
      * View form
      *
-     * @var         form
+     * @var         Form
      */
     protected $form = null;
+    /**
+     * The active item
+     *
+     * @var    object
+     * @since  0.6.1
+     */
+    protected $item;
+    
+    /**
+     * The model state
+     *
+     * @var    object
+     * @since  0.6.1
+     */
+    protected $state;
     
     /**
      * Display the main "WsaOnePage" view
@@ -32,17 +57,24 @@ class HtmlView extends BaseHtmlView {
      * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
      *
      * @return  void
+	 *
+	 * @throws  \Exception
+
      */
     public function display($tpl = null)
     {
+        /** @var WsaOnePageModel $model added after banner j.4*/
+        $model       = $this->getModel();
         // Get the Data
         $this->form = $this->get('Form');
         $this->item = $this->get('Item');
+        $this->state = $model->getState(); //added after banner j.4
+        
         
         // Check for errors.
         if (count($errors = $this->get('Errors')))
         {
-            JError::raiseError(500, implode('<br />', $errors));
+            throw new GenericDataException(500, implode('<br />', $errors));
             
             return false;
         }
@@ -55,7 +87,7 @@ class HtmlView extends BaseHtmlView {
         parent::display($tpl);
         
         // Set the document
-        $this->setDocument();
+        $this->setDocument(); //TODO is this necessary not found in any example banners etc.
     }
     
     /**
@@ -64,32 +96,84 @@ class HtmlView extends BaseHtmlView {
      * @return  void
      *
      * @since   1.6
+	 * @throws  Exception
      */
     protected function addToolBar()
     {
-        $input = JFactory::getApplication()->input;
-        
         // Hide Joomla Administrator Main menu
-        $input->set('hidemainmenu', true);
+        Factory::getApplication()->input->set('hidemainmenu', true);
         
+//        $user       = Factory::getUser();
+//        $userId     = $user->id;
         $isNew = ($this->item->id == 0);
+//        $checkedOut = !(is_null($this->item->checked_out) || $this->item->checked_out == $userId);
+        $checkedOut = FALSE;
+
+        // Built the actions for new and existing records.
+//        $canDo = $this->canDo; TODO from article
         
+//        $toolbar = Toolbar::getInstance(); TODO from article
+        
+        
+        ToolbarHelper::title($isNew ? Text::_('COM_WSAONEPAGE_MANAGER_WSAONEPAGE_NEW') : Text::_('COM_WSAONEPAGE_MANAGER_WSAONEPAGE_EDIT'), 'wsaonepage');
+
+        // Build the actions for new and existing records. // TODO  from contact but validations are skipped for the start.
         if ($isNew)
         {
-            $title = JText::_('COM_WSAONEPAGE_MANAGER_WSAONEPAGE_NEW');
+            // For new records, check the create permission.
+//            if (count($user->getAuthorisedCategories('com_contact', 'core.create')) > 0)
+//            {
+                ToolbarHelper::apply('wsaonepage.apply');
+                
+                ToolbarHelper::saveGroup(
+                    [
+                        ['save', 'wsaonepage.save'],
+                        ['save2new', 'wsaonepage.save2new']
+                    ],
+                    'btn-success'
+                    );
+//            }
+            
+            ToolbarHelper::cancel('wsaonepage.cancel');
         }
-        else
+        else //(!$isNew)
         {
-            $title = JText::_('COM_WSAONEPAGE_MANAGER_WSAONEPAGE_EDIT');
+            // Since it's an existing record, check the edit permission, or fall back to edit own if the owner.
+//            $itemEditable = $canDo->get('core.edit') || ($canDo->get('core.edit.own') && $this->item->created_by == $userId);
+            $itemEditable = TRUE;
+            
+            $toolbarButtons = [];
+            
+            // Can't save the record if it's checked out and editable
+            if (!$checkedOut && $itemEditable)
+            {
+                ToolbarHelper::apply('wsaonepage.apply');
+                
+                $toolbarButtons[] = ['save', 'wsaonepage.save'];
+                
+                // We can save this record, but check the create permission to see if we can return to make a new one.
+//                if ($canDo->get('core.create'))
+//                {
+                    $toolbarButtons[] = ['save2new', 'wsaonepage.save2new'];
+//                }
+            }
+            
+            // If checked out, we can still save
+//            if ($canDo->get('core.create'))
+//            {
+                $toolbarButtons[] = ['save2copy', 'wsaonepage.save2copy'];
+//            }
+            
+            ToolbarHelper::saveGroup(
+                $toolbarButtons,
+                'btn-success'
+                );
+            
+            ToolbarHelper::cancel('wsaonepage.cancel', 'JTOOLBAR_CLOSE');
+            
         }
         
-        JToolbarHelper::title($title, 'wsaonepage');
-        JToolbarHelper::save('wsaonepage.save');
-        JToolbarHelper::cancel(
-            'wsaonepage.cancel',
-            $isNew ? 'JTOOLBAR_CANCEL' : 'JTOOLBAR_CLOSE'
-            );
-    }
+   }
     /**
      * Method to set up the document properties
      *
@@ -98,9 +182,9 @@ class HtmlView extends BaseHtmlView {
     protected function setDocument()
     {
         $isNew = ($this->item->id < 1);
-        $document = JFactory::getDocument();
-        $document->setTitle($isNew ? JText::_('COM_WSAONEPAGE_WSAONEPAGE_CREATING') :
-            JText::_('COM_WSAONEPAGE_WSAONEPAGE_EDITING'));
+        $document = Factory::getDocument();
+        $document->setTitle($isNew ? Text::_('COM_WSAONEPAGE_WSAONEPAGE_CREATING') :
+            Text::_('COM_WSAONEPAGE_WSAONEPAGE_EDITING'));
     }
     
 
