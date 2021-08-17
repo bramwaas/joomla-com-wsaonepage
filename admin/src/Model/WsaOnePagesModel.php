@@ -5,11 +5,15 @@
  *
  * @copyright   Copyright (C) 2020 - 2021 AHC Waasdorp. All rights reserved.
  * @license     GNU General Public License version 3 or later; see LICENSE.txt
+ * 17-8-2021
  */
+
 namespace WaasdorpSoekhan\Component\WsaOnePage\Administrator\Model;
 // No direct access to this file
 \defined('_JEXEC') or die('Restricted access');
 
+//use Joomla\CMS\Component\ComponentHelper;
+//use Joomla\CMS\Factory;
 use \Joomla\CMS\MVC\Model\ListModel;
 
 /**
@@ -24,7 +28,7 @@ class WsaOnePagesModel extends ListModel
      *
      * @param   array  $config  An optional associative array of configuration settings.
      *
-     * @see     JController
+     * @see     \Joomla\CMS\MVC\Controller\BaseController
      * @since   1.6
      */
     public function __construct($config = array())
@@ -52,9 +56,12 @@ class WsaOnePagesModel extends ListModel
 	protected function getListQuery()
 	{
 		// Initialize variables.
-		$db    = JFactory::getDbo();
+		$db    = $this->getDbo();
 		$query = $db->getQuery(true);
-
+//		$user  = Factory::getUser();
+		
+//		$params = ComponentHelper::getParams('com_wsaonepage');
+		
 		// Create the base select statement.
 		$query->select('a.id as id, a.title as title, a.menutype as menutype, a.description as description,
                          a.published as published, a.created as created, a.alias as alias, a.language as language')

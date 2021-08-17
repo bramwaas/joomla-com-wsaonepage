@@ -11,7 +11,12 @@ namespace WaasdorpSoekhan\Component\WsaOnePage\Administrator\Model;
 // No direct access to this file
 \defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Form\Form;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
+use Joomla\CMS\Table\Table;
+use Joomla\Registry\Registry;
 
 /**
  * WsaOnePage Model
@@ -21,19 +26,32 @@ use Joomla\CMS\MVC\Model\AdminModel;
 class WsaOnePageModel extends AdminModel
 {
     /**
+     * Name of the form
+     *
+     * @var string
+     * @since  4.0.0
+     */
+    protected $formName = 'wsaonepage';
+    
+    /**
      * Method to get a table object, load it if necessary.
      *
-     * @param   string  $type    The table name. Optional.
+     * @param   string  $name    The table name. Optional.
      * @param   string  $prefix  The class prefix. Optional.
      * @param   array   $config  Configuration array for model. Optional.
      *
-     * @return  JTable  A JTable object
+     * @return  Table  A Table object
      *
      * @since   1.6
      */
-    public function getTable($type = 'WsaOnePage', $prefix = 'WsaOnePageTable', $config = array())
+    public function getTable($name = 'WsaOnePage', $prefix = 'WsaOnePageTable', $config = array())
     {
-        return JTable::getInstance($type, $prefix, $config);
+        if ($table = $this->_createTable($name, $prefix, $config))
+        {
+            return $table;
+        }
+        
+        throw new \Exception(Text::sprintf('JLIB_APPLICATION_ERROR_TABLE_NAME_NOT_SUPPORTED', $name), 0);
     }
     
     /**
@@ -108,7 +126,7 @@ class WsaOnePageModel extends AdminModel
     protected function loadFormData()
     {
         // Check the session for previously entered form data.
-        $data = JFactory::getApplication()->getUserState(
+        $data = Factory::getApplication()->getUserState(
             'com_wsaonepage.edit.wsaonepage.data',
             array()
             );
@@ -116,35 +134,6 @@ class WsaOnePageModel extends AdminModel
         if (empty($data))
         {
             $data = $this->getItem();
-            /* TODO is from banners.php is this a good idea ?
-             // Prime some default values.
-             if ($this->getState('banner.id') == 0)
-             {
-             $filters     = (array) $app->getUserState('com_banners.banners.filter');
-             $filterCatId = isset($filters['category_id']) ? $filters['category_id'] : null;
-             
-             $data->set('catid', $app->input->getInt('catid', $filterCatId));
-             }
-             */
-            /* TODO or the same from article
-            // Pre-select some filters (Status, Category, Language, Access) in edit form if those have been selected in Article Manager: Articles
-			if ($this->getState('article.id') == 0)
-			{
-				$filters = (array) $app->getUserState('com_content.articles.filter');
-				$data->set(
-					'state',
-					$app->input->getInt(
-						'state',
-						((isset($filters['published']) && $filters['published'] !== '') ? $filters['published'] : null)
-					)
-				);
-				$data->set('catid', $app->input->getInt('catid', (!empty($filters['category_id']) ? $filters['category_id'] : null)));
-				$data->set('language', $app->input->getString('language', (!empty($filters['language']) ? $filters['language'] : null)));
-				$data->set('access',
-					$app->input->getInt('access', (!empty($filters['access']) ? $filters['access'] : JFactory::getConfig()->get('access')))
-				);
-			}
-             */
             
         }
         // If there are params fieldsets in the form it will fail with a registry object
@@ -152,8 +141,6 @@ class WsaOnePageModel extends AdminModel
         {
             $data->params = $data->params->toArray();
         }
-        
-        
         return $data;
     }
 }
