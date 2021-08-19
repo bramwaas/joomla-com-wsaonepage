@@ -5,7 +5,7 @@
  *
  * @copyright   Copyright (C) 2021 A.H.C. Waasdorp. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * 20210819     rewritten for Joomla 4 after example of contact.
+ * 20210819     rewritten for Joomla 4 after example of contact. Joomla\Database\ParameterType replaced by \PDO
  */
 
 namespace WaasdorpSoekhan\Component\WsaOnePage\Site\Controller;
@@ -159,7 +159,7 @@ class Router extends RouterView
             $dbquery->select($this->db->quoteName('alias'))
             ->from($this->db->quoteName('#__wsaonepage'))
             ->where($this->db->quoteName('id') . ' = :id')
-            ->bind(':id', $id, ParameterType::INTEGER);
+            ->bind(':id', $id, \PDO::INTEGER);
             $this->db->setQuery($dbquery);
             
             $id .= ':' . $this->db->loadResult();
@@ -264,7 +264,7 @@ class Router extends RouterView
                 ]
                 )
                 ->bind(':alias', $segment)
-                ->bind(':catid', $query['id'], ParameterType::INTEGER);
+                ->bind(':catid', $query['id'], \PDO::INTEGER);
                 $this->db->setQuery($dbquery);
                 
                 return (int) $this->db->loadResult();
