@@ -12,11 +12,13 @@
  * 20200812 create bookmark before processing alias
  * 20200816 restore documentdata like title
  * 20200817 restore pathway and (maybe temporary) defaylts for open graph front end ready for the time being so a new version 0.1
- * 20210805 adaptations for joomla 4.0
+ * 20210805 first adaptations for joomla 4.0
  */
- 
+// namespace WaasdorpSoekhan\Component\WsaOnePage\Site\View\WsaOnePage;
+// part of HtmlView
+
 // No direct access to this file
-defined('_JEXEC') or die('Restricted access');
+\defined('_JEXEC') or die('Restricted access');
 // TODO alle uses nodig?
 use Joomla\CMS\Factory;   // this is the same as use Joomla\CMS\Factory as Factory
 use Joomla\CMS\Helper\ModuleHelper;
@@ -29,11 +31,12 @@ use Joomla\CMS\Component\ComponentHelper;  //tbv algemene renderComponent
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Table\Table;
+use Joomla\CMS\Uri\Uri;
 /*
  * secure variables of app page and page component
  */
 $app = Factory::getApplication();
-$document = Factory::getDocument();
+$document = $app->getDocument();
 $renderer = $document->loadRenderer('module');
 $sitename = $app->get('sitename'); 
 $input = $app->input;
@@ -73,10 +76,10 @@ if ($params->get('show_title') || $params->get('show_author')) : ?>
 		<?php if ($this->item->state == 0) : ?>
 			<span class="label label-warning"><?php echo Text::_('JUNPUBLISHED'); ?></span>
 		<?php endif; ?>
-		<?php if (strtotime($this->item->publish_up) > strtotime(JFactory::getDate())) : ?>
+		<?php if (strtotime($this->item->publish_up) > strtotime(Factory::getDate())) : ?>
 			<span class="label label-warning"><?php echo Text::_('JNOTPUBLISHEDYET'); ?></span>
 		<?php endif; ?>
-		<?php if ((strtotime($this->item->publish_down) < strtotime(JFactory::getDate())) && $this->item->publish_down != JFactory::getDbo()->getNullDate()) : ?>
+		<?php if ((strtotime($this->item->publish_down) < strtotime(Factory::getDate())) && $this->item->publish_down != Factory::getDbo()->getNullDate()) : ?>
 			<span class="label label-warning"><?php echo Text::_('JEXPIRED'); ?></span>
 		<?php endif; ?>
 	</div>
@@ -274,7 +277,7 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
     // restore pathway (breadcrumb)
     $pathway->setPathway($wsaOrgPathway);
     // set defaults fore some open graph  meta properties TODO maybe not the best place
-    $document->setMetaData('og:url', JUri::base(), 'property');
+    $document->setMetaData('og:url', Uri::base(), 'property');
     $document->setMetaData('og:title', $wsaOrgDocumentVars['title'], 'property');
     $document->setMetaData('og:description', $wsaOrgDocumentVars['description'], 'property'); 
     $document->setMetaData('og:site_name', $sitename, 'property');

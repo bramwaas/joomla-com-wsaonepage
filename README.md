@@ -20,9 +20,10 @@ Admin component for com-wsaonepage
 ## Copyright and License
 
 This project is licensed under the [GNU GPL], version 3 or later.
-2018&thinsp;&ndash;&thinsp;2018 &copy; [Bram Waasdorp](http://www.waasdorpsoekhan.nl).
+2018&thinsp;&ndash;&thinsp;2021 &copy; [Bram Waasdorp](http://www.waasdorpsoekhan.nl).
 
 ## Changelog
+* 0.7 20210819 All errors that Eclipse sees resolved
 * 0.5 20210807 started transition to J4.
 * 0.0 20200720 started from the helloworld example in (https://docs.joomla.org/J3.x:Developing_an_MVC_Component/Developing_a_Basic_Component) remane references to helloworld to wsaonepage
 
