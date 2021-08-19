@@ -3,8 +3,15 @@
  * WsaOnePage Component Helper file for generating the URL Routes
  *
  */
+
 namespace WaasdorpSoekhan\Component\WsaOnePage\Site\Controller;
 \defined('_JEXEC') or die;
+
+use Joomla\CMS\Categories\CategoryNode;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Multilanguage;
+use Joomla\CMS\Router\Route;
+
 
 class RouteHelper
 {
@@ -15,13 +22,13 @@ class RouteHelper
 	 */
 	public static function getAjaxURL()
 	{
-		if (!JLanguageMultilang::isEnabled())
+	    if (!Multilanguage::isEnabled())
 		{
 			return null;
 		}
         
-		$lang = JFactory::getLanguage()->getTag();
-		$app  = JFactory::getApplication();
+		$lang = Factory::getLanguage()->getTag();
+		$app  = Factory::getApplication();
 		$sitemenu= $app->getMenu();
 		$thismenuitem = $sitemenu->getActive();
 
@@ -37,7 +44,7 @@ class RouteHelper
 		if ($menuitem)
 		{
 			$itemid = $menuitem[0]->id; 
-			$url = JRoute::_("index.php?Itemid=$itemid&view=wsaonepage&format=json");
+			$url = Route::_("index.php?Itemid=$itemid&view=wsaonepage&format=json");
 			return $url;
 		}
 		else
