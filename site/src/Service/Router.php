@@ -5,9 +5,13 @@
  *
  * @copyright   Copyright (C) 2021 A.H.C. Waasdorp. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * 20210819     rewritten for Joomla 4 after example of contact.
  */
+
 namespace WaasdorpSoekhan\Component\WsaOnePage\Site\Controller;
 \defined('_JEXEC') or die;
+
+use Joomla\CMS\Factory;
 use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Categories\CategoryFactoryInterface;
 use Joomla\CMS\Categories\CategoryInterface;
@@ -18,185 +22,276 @@ use Joomla\CMS\Component\Router\Rules\MenuRules;
 use Joomla\CMS\Component\Router\Rules\NomenuRules;
 use Joomla\CMS\Component\Router\Rules\StandardRules;
 use Joomla\CMS\Menu\AbstractMenu;
+use Joomla\CMS\Language\Multilanguage;
 use Joomla\Database\DatabaseInterface;
-use Joomla\Database\ParameterType;
-\\TODO was: class WsaOnePageRouter implements JComponentRouterInterface
-{
+// use Joomla\Database\ParameterType;
+
+//TODO was: class WsaOnePageRouter implements JComponentRouterInterface
 class Router extends RouterView
-	public function build(&$query)
-	{
-		$segments = array();
-
-		if (!JLanguageMultilang::isEnabled() || !isset($query['view']))
-		{
-			return $segments;
-		}
-
-		$lang = JFactory::getLanguage()->getTag();
-		$app  = JFactory::getApplication();
+{
+    /**
+     * Flag to remove IDs
+     *
+     * @var    boolean
+     */
+    protected $noIDs = false;
+    
+    /**
+     * The category factory
+     *
+     * @var CategoryFactoryInterface
+     *
+     * @since  4.0.0
+     */
+    private $categoryFactory;
+    
+    /**
+     * The category cache
+     *
+     * @var  array
+     *
+     * @since  4.0.0
+     */
+    private $categoryCache = [];
+    
+    /**
+     * The db
+     *
+     * @var DatabaseInterface
+     *
+     * @since  4.0.0
+     */
+    private $db;
+    /**
+     * Content Component router constructor
+     *
+     * @param   SiteApplication           $app              The application object
+     * @param   AbstractMenu              $menu             The menu object to work with
+     * @param   CategoryFactoryInterface  $categoryFactory  The category object
+     * @param   DatabaseInterface         $db               The database object
+     */
+    public function __construct(SiteApplication $app, AbstractMenu $menu, CategoryFactoryInterface $categoryFactory, DatabaseInterface $db)
+    {
+        $this->categoryFactory = $categoryFactory;
+        $this->db              = $db;
         
-		// get the menu item that this call to build() relates to
-		if (!isset($query['Itemid']))
-		{
-			return $segments;
-		}
-		$sitemenu = $app->getMenu();
-		$thisMenuitem = $sitemenu->getItem($query['Itemid']);
-
-		if ($thisMenuitem->language != $lang)
-		{
-			return $segments;
-		}
+        $params = ComponentHelper::getParams('com_wsaonepage');
+        $this->noIDs = (bool) $params->get('sef_ids');
+        $categories = new RouterViewConfiguration('categories');
+        $categories->setKey('id');
+        $this->registerView($categories);
+        $category = new RouterViewConfiguration('category');
+        $category->setKey('id')->setParent($categories, 'catid')->setNestable();
+        $this->registerView($category);
+        $onepage = new RouterViewConfiguration('wsaonepage');
+        $onepage->setKey('id')->setParent($category, 'catid');
+        $this->registerView($onepage);
+        $this->registerView(new RouterViewConfiguration('featured'));
+        $form = new RouterViewConfiguration('form');
+        $form->setKey('id');
+        $this->registerView($form);
         
-		if ($thisMenuitem->note == "Ajax")
-		{   
-			// We're on the /message menuitem. 
-			// Check we've got the right parameters then set url segment = id : alias
-			if ($query['view'] == "wsaonepage" && isset($query['id']))
-			{
-				// we'll support the passed id being in the form id:alias
-				$segments[] = $query['id'];
-
-				unset($query['id']);
-				unset($query['catid']);
-			}
-		}
-		else
-		{
-			// assume we're on the /messages menuitem
-			if (($query['view'] == "category") && isset($query['id']))
-			{
-				// set this part of the url to be of the form /subcat1/subcat2/...
-				$pathSegments = $this->getCategorySegments($query['id']);
-				if ($pathSegments)
-				{
-					$segments = $pathSegments;
-					unset($query['id']);
-				}
-			}
-			elseif ($query['view'] == "wsaonepage" && isset($query['catid']) && isset($query['id']))
-			{
-				// set this part of the url to be of the form /subcat1/subcat2/.../hello-world 
-				$pathSegments = $this->getCategorySegments($query['catid']);
-				if ($pathSegments)
-				{
-					$segments = $pathSegments;
-				}
-
-				$segments[] = $query['id'];
-
-				unset($query['id']);
-				unset($query['catid']);
-			}
-		}
-
-		unset($query['view']);
-		return $segments;
-	}
-
-	/*
-	 * This function take a category id and finds the path from that category to the root of the category tree
-	 * The path returned from getPath() is an associative array of key = category id, value = id:alias
-	 * If no valid category is found from the passed-in category id then null is returned. 
-	 */
-     
-	private function getCategorySegments($catid)
-	{
-		$categories = JCategories::getInstance('WsaOnePage', array());
-		$categoryNode = $categories->get($catid);
-		if ($categoryNode)
-		{
-			$path = $categoryNode->getPath();
-
-			return $path;
-		}
-		else
-		{
-			return null;
-		}
-	}
-
-	public function parse(&$segments)
-	{
-		$vars = array();
-		$nSegments = count($segments);
+        parent::__construct($app, $menu);
         
-		$app  = JFactory::getApplication();
-		$sitemenu = $app->getMenu();
-		$activeMenuitem = $sitemenu->getActive();
-		if (!$activeMenuitem)
-		{
-			return $vars;
-		}
+        $this->attachRule(new MenuRules($this));
+        $this->attachRule(new StandardRules($this));
+        $this->attachRule(new NomenuRules($this));
+    }
+
+    /**
+     * Method to get the segment(s) for a category
+     *
+     * @param   string  $id     ID of the category to retrieve the segments for
+     * @param   array   $query  The request that is built right now
+     *
+     * @return  array|string  The segments of this item
+     */
+    public function getCategorySegment($id, $query)
+    {
+        $category = $this->getCategories()->get($id);
         
-		if ($activeMenuitem->note == "Ajax")
-		{
-			// Expect 1 segment of the form id:alias for the wsaonepage record
-			if ($nSegments == 1)
-			{
-				$vars['id'] = $segments[0];
-				$vars['view'] = 'wsaonepage';
-			}
-		}
-		else
-		{
-			// Try to match the categories in the segments, starting at the root
-			$categories = JCategories::getInstance('WsaOnePage', array());
-			$matchingCategory = $categories->get('root');
+        if ($category)
+        {
+            $path = array_reverse($category->getPath(), true);
+            $path[0] = '1:root';
             
-			// Go through the category tree, try to get a match between each segment
-			// and the id:alias of one of the children
-			// The last segment may be a category id:alias or a wsaonepage record id:alias
-			for ($i=0; $i < $nSegments; $i++)
-			{
-				$children = $matchingCategory->getChildren();
-				$matchingCategory = $this->match($children, $segments[$i]);
-				if ($matchingCategory)
-				{
-					$catid = $matchingCategory->id;
-					if ($i == $nSegments - 1)    // we're done, all segments are categories
-					{
-						$vars['view'] = 'category';
-						$vars['id'] = $catid;
-					}
-				}
-				else
-				{
-					if ($i == $nSegments - 1)   // all but last segment are categories
-					{
-						$vars['id'] = $segments[$i];
-						$vars['view'] = 'wsaonepage';
-					}
-					else   // something went wrong - didn't get a match at this level
-					{
-						break;
-					}
-				}
-			}
-		}
-
-		return $vars;
-	}
-
-	/*
-	 * This function takes an array of categoryNode elements and a url segment
-	 * It goes through the categoryNodes looking for the one whose id:alias matches the passed-in segment
-	 *   and returns the matching categoryNode, or null if not found
+            if ($this->noIDs)
+            {
+                foreach ($path as &$segment)
+                {
+                    list($id, $segment) = explode(':', $segment, 2);
+                }
+            }
+            
+            return $path;
+        }
+        
+        return array();
+    }
+    
+    /**
+     * Method to get the segment(s) for a category
+     *
+     * @param   string  $id     ID of the category to retrieve the segments for
+     * @param   array   $query  The request that is built right now
+     *
+     * @return  array|string  The segments of this item
+     */
+    public function getCategoriesSegment($id, $query)
+    {
+        return $this->getCategorySegment($id, $query);
+    }
+    
+    /**
+     * Method to get the segment(s) for a wsaonepage
+     *
+     * @param   string  $id     ID of the contact to retrieve the segments for
+     * @param   array   $query  The request that is built right now
+     *
+     * @return  array|string  The segments of this item
+     */
+    public function getWsaOnePageSegment($id, $query)
+    {
+        if (!strpos($id, ':'))
+        {
+            $id = (int) $id;
+            $dbquery = $this->db->getQuery(true);
+            $dbquery->select($this->db->quoteName('alias'))
+            ->from($this->db->quoteName('#__wsaonepage'))
+            ->where($this->db->quoteName('id') . ' = :id')
+            ->bind(':id', $id, ParameterType::INTEGER);
+            $this->db->setQuery($dbquery);
+            
+            $id .= ':' . $this->db->loadResult();
+        }
+        
+        if ($this->noIDs)
+        {
+            list($void, $segment) = explode(':', $id, 2);
+            
+            return array($void => $segment);
+        }
+        
+        return array((int) $id => $id);
+    }
+    
+    /**
+     * Method to get the segment(s) for a form
+     *
+     * @param   string  $id     ID of the contact form to retrieve the segments for
+     * @param   array   $query  The request that is built right now
+     *
+     * @return  array|string  The segments of this item
+     *
+     * @since   4.0.0
+     */
+    public function getFormSegment($id, $query)
+    {
+        return $this->getWsaOnePageSegment($id, $query);
+    }
+    
+    /**
+     * Method to get the id for a category
+     *
+     * @param   string  $segment  Segment to retrieve the ID for
+     * @param   array   $query    The request that is parsed right now
+     *
+     * @return  mixed   The id of this item or false
+     */
+    public function getCategoryId($segment, $query)
+    {
+        if (isset($query['id']))
+        {
+            $category = $this->getCategories(['access' => false])->get($query['id']);
+            
+            if ($category)
+            {
+                foreach ($category->getChildren() as $child)
+                {
+                    if ($this->noIDs)
+                    {
+                        if ($child->alias == $segment)
+                        {
+                            return $child->id;
+                        }
+                    }
+                    else
+                    {
+                        if ($child->id == (int) $segment)
+                        {
+                            return $child->id;
+                        }
+                    }
+                }
+            }
+        }
+        
+        return false;
+    }
+    
+    /**
+     * Method to get the segment(s) for a category
+     *
+     * @param   string  $segment  Segment to retrieve the ID for
+     * @param   array   $query    The request that is parsed right now
+     *
+     * @return  mixed   The id of this item or false
+     */
+    public function getCategoriesId($segment, $query)
+    {
+        return $this->getCategoryId($segment, $query);
+    }
+    
+    /**
+     * Method to get the segment(s) for a WsaOnePage
+     *
+     * @param   string  $segment  Segment of the contact to retrieve the ID for
+     * @param   array   $query    The request that is parsed right now
+     *
+     * @return  mixed   The id of this item or false
+     */
+    public function getWsaOnePageId($segment, $query)
+    {
+        if ($this->noIDs)
+        {
+            $dbquery = $this->db->getQuery(true);
+            $dbquery->select($this->db->quoteName('id'))
+            ->from($this->db->quoteName('#__wsaonepage'))
+            ->where(
+                [
+                    $this->db->quoteName('alias') . ' = :alias',
+                    $this->db->quoteName('catid') . ' = :catid',
+                ]
+                )
+                ->bind(':alias', $segment)
+                ->bind(':catid', $query['id'], ParameterType::INTEGER);
+                $this->db->setQuery($dbquery);
+                
+                return (int) $this->db->loadResult();
+        }
+        
+        return (int) $segment;
+    }
+    
+    /**
+	 * Method to get categories from cache
+	 *
+	 * @param   array  $options   The options for retrieving categories
+	 *
+	 * @return  CategoryInterface  The object containing categories
+	 *
+	 * @since   4.0.0
 	 */
-	private function match($categoryNodes, $segment)
+	private function getCategories(array $options = []): CategoryInterface
 	{
-		foreach ($categoryNodes as $categoryNode)
-		{
-			if ($segment == $categoryNode->id . ':' . $categoryNode->alias)
-			{
-				return $categoryNode;
-			}
-		}
-		return null;
+	    $key = serialize($options);
+	    
+	    if (!isset($this->categoryCache[$key]))
+	    {
+	        $this->categoryCache[$key] = $this->categoryFactory->createCategory($options);
+	    }
+	    
+	    return $this->categoryCache[$key];
 	}
 
-	public function preprocess($query)
-	{
-		return $query;
-	}
 }

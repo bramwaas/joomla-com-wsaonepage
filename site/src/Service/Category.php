@@ -14,9 +14,9 @@ namespace  WaasdorpSoekhan\Component\WsaOnePage\Site\Service;
 use Joomla\CMS\Categories\Categories;
 
 /**
- * Contact Component Category Tree
+ * WsaOnePage Component Category Tree
  *
- * @since  1.6
+ * @since  0.6.2
  */
 class Category extends Categories
 {
