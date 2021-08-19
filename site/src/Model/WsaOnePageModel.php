@@ -5,20 +5,28 @@
  *
  * @copyright   Copyright (C) 2020 - 2021 AHC Waasdorp. All rights reserved.
  * @license     GNU General Public License version 3 or later; see LICENSE.txt
+ * 20210819 adaptations for Joomla 4.0
  * 20200901 component modules at position-7 and 8 added
- * 20210806 adaptations for Joomla 4.0
  */
+
 namespace WaasdorpSoekhan\Component\WsaOnePage\Site\Model;
 // No direct access to this file
 \defined('_JEXEC') or die('Restricted access');
 
+// use Joomla\CMS\Cache\Cache;
+use Joomla\CMS\Cache\CacheControllerFactoryInterface;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel; // of ItemModel;  ItemModel is almost the same as BaseDatabaseModel; it just has an extra getStoreId() method which is relevant when you have a component and/or several modules sharing the same model and you want to distinguish between data sets relevant to each.
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Language\Multilanguage;
+use Joomla\CMS\Log\Log;
+use Joomla\Registry\Registry;
+
+// use WaasdorpSoekhan\Component\WsaOnePage\Site\Controller\RouteHelper;
 
 
-JLoader::register('WsaOnePageHelperRoute', JPATH_ROOT . '/components/com_wsaonepage/helpers/route.php');
+// JLoader::register('WsaOnePageHelperRoute', JPATH_ROOT . '/components/com_wsaonepage/helpers/route.php');
 
 
 /**
@@ -32,10 +40,6 @@ class WsaOnePageModel extends BaseDatabaseModel
      * @var object item
      */
     protected $item;
-    /**
-	 * @var string message
-	 */
-	protected $message;
 	/**
 	 * @var array menuitems
 	 */
@@ -73,7 +77,7 @@ class WsaOnePageModel extends BaseDatabaseModel
 	 * @param   string  $prefix  The class prefix. Optional.
 	 * @param   array   $config  Configuration array for model. Optional.
 	 *
-	 * @return  JTable  A JTable object
+	 * @return  Table  A Table object
 	 *
 	 * @since   1.6
 	 */
@@ -90,14 +94,14 @@ class WsaOnePageModel extends BaseDatabaseModel
 	    if (!isset($this->item))
 	    {
 	        $id    = $this->getState('wsaonepage.id');
-	        $db    = Factory::getDbo();
+	        $db    = $this->getDbo();
 	        $query = $db->getQuery(true);
 	        $query->select('h.id, h.asset_id, h.created, h.created_by, h.title, h.alias, h.language, h.description, h.menutype, h.description, h.published, h.params, c.title as category')
 	        ->from('#__wsaonepage as h')
 	        ->leftJoin('#__categories as c ON h.catid=c.id')
 	        ->where('h.id=' . (int)$id);
 	        
-	        if (JLanguageMultilang::isEnabled())
+	        if (Multilanguage::isEnabled())
 	        {
 	            $lang = Factory::getLanguage()->getTag();
 	            $query->where('h.language IN ("*","' . $lang . '")');
@@ -108,7 +112,7 @@ class WsaOnePageModel extends BaseDatabaseModel
 	        if ($this->item = $db->loadObject())
 	        {
 	            // Load the JSON string
-	            $params = new JRegistry;
+	            $params = new Registry;
 	            $params->loadString($this->item->params, 'JSON');
 	            $this->item->params = $params;
 	            
@@ -120,7 +124,7 @@ class WsaOnePageModel extends BaseDatabaseModel
 	        }
 	        else
 	        {
-	            throw new Exception('WsaOnePage id not found', 404);
+	            throw new \Exception('WsaOnePage id not found', 404);
 	        }
 	    }
 	    return $this->item;
@@ -137,7 +141,7 @@ class WsaOnePageModel extends BaseDatabaseModel
 	        // Get the menuitems
 	        $app = Factory::getApplication();
 	        $sitemenu = $app->getMenu();
-	        $menuItems = $sitemenu->getItems(array('menutype', 'language'),array($this->item->menutype, array('*', $item->language)) );
+	        $menuItems = $sitemenu->getItems(array('menutype', 'language'),array($this->item->menutype, array('*', $this->item->language)) );
 	        $this->menuitems = $menuItems;
 	    }
 	    
@@ -222,14 +226,14 @@ class WsaOnePageModel extends BaseDatabaseModel
 	    
 	    try
 	    {
-	        /** @var \JCacheControllerCallback $cache */
-	        $cache = Factory::getCache('com_modules', 'callback');
+	        /** @var \Joomla\CMS\Cache\CacheController $cache */
+	        $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('com_modules', 'callback');
 	        
 	        $modules = $cache->get(array($db, 'loadObjectList'), array(), md5($cacheId), false);
 	    }
 	    catch (\RuntimeException $e)
 	    {
-	        \JLog::add(\Text::sprintf('JLIB_APPLICATION_ERROR_MODULE_LOAD', $e->getMessage()), \JLog::WARNING, 'jerror');
+	        Log::add(Text::sprintf('JLIB_APPLICATION_ERROR_MODULE_LOAD', $e->getMessage()), Log::WARNING, 'jerror');
 	        
 	        return array();
 	    }
@@ -290,5 +294,20 @@ class WsaOnePageModel extends BaseDatabaseModel
 	    unset($dupes);
 	    return $clean;
 	}
+	/**
+	 * Cleans the cache of com_content and content modules
+	 *
+	 * @param   string   $group     The cache group
+	 * @param   integer  $clientId  @deprecated   5.0   No longer used.
+	 *
+	 * @return  void
+	 *
+	 * @since   0.6.2
+	 */
+	protected function cleanCache($group = null, $clientId = 0)
+	{
+	    parent::cleanCache('com_wsaonepage');
+	}
+	
 	
 }
