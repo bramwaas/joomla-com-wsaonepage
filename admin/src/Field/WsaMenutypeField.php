@@ -5,15 +5,17 @@
  *
  * @copyright   Copyright (C) 2005 - 2021 A.H.C. Waasdorp. All rights reserved.
  * @license     GNU General Public License version 3 or later; see LICENSE.txt
+ * 19-8-2021
  */
 namespace WaasdorpSoekhan\Component\WsaOnePage\Administrator\Field;
 // No direct access to this file
 \defined('_JEXEC') or die('Restricted access');
+
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\Utilities\ArrayHelper;
 
-JFormHelper::loadFieldClass('list');
 
 /**
  * wsaMenutype Form Field class for the WsaOnePage component
@@ -48,7 +50,7 @@ class WsaMenutypeField extends ListField
 		{
 		    foreach ($menutypes as $menutype)
 			{
-			    $options[] = JHtml::_('select.option', $menutype->menutype, $menutype->menutype . ' :' . $menutype->title . ' ' . $menutype->description );
+			    $options[] = HTMLHelper::_('select.option', $menutype->menutype, $menutype->menutype . ' :' . $menutype->title . ' ' . $menutype->description );
 			}
 		}
 

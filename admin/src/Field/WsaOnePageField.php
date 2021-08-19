@@ -5,15 +5,16 @@
  *
  * @copyright   Copyright (C) 2005 - 2021 A.H.C. Waasdorp. All rights reserved.
  * @license     GNU General Public License version 3 or later; see LICENSE.txt
+ * 19-8-2021
  */
 namespace WaasdorpSoekhan\Component\WsaOnePage\Administrator\Field;
 // No direct access to this file
 \defined('_JEXEC') or die('Restricted access');
+
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\Utilities\ArrayHelper;
-
-JFormHelper::loadFieldClass('list');
 
 /**
  * wsaonepage Form Field class for the WsaOnePage component
@@ -48,7 +49,7 @@ class WsaOnePageField extends ListField
 		{
 		    foreach ($wsaonepages as $wsaonepage)
 			{
-			    $options[] = JHtml::_('select.option', $wsaonepage->id,  $wsaonepage->title . ':' . $wsaonepage->description );
+			    $options[] = HTMLHelper::_('select.option', $wsaonepage->id,  $wsaonepage->title . ':' . $wsaonepage->description );
 			}
 		}
 

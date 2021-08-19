@@ -19,7 +19,6 @@ use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException; 
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
-use Exception;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use WaasdorpSoekhan\Component\WsaOnePage\Administrator\Model\WsaOnePageModel;
 
@@ -96,7 +95,7 @@ class HtmlView extends BaseHtmlView
      * @return  void
      *
      * @since   1.6
-	 * @throws  Exception
+	 * @throws  \Exception
      */
     protected function addToolBar()
     {
