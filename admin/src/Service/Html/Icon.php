@@ -8,7 +8,7 @@
  * 20-8-2021 copied from com_content
  */
 
-namespace WaasdorpSoekhan\Component\WsaOnePage\Administrator\Service\Html;
+namespace WaasdorpSoekhan\Component\Wsaonepage\Administrator\Service\Html;
 
 \defined('_JEXEC') or die;
 

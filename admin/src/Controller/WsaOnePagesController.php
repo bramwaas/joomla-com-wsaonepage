@@ -6,7 +6,7 @@
  * @copyright   Copyright (C) 2005 - 2021 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 3 or later; see LICENSE.txt
  */
-namespace WaasdorpSoekhan\Component\WsaOnePage\Administrator\Controller;
+namespace WaasdorpSoekhan\Component\Wsaonepage\Administrator\Controller;
 // No direct access to this file
 \defined('_JEXEC') or die('Restricted access');
 
@@ -14,11 +14,11 @@ use Joomla\CMS\MVC\Controller\AdminController;
 
 
 /**
- * WsaOnePages Controller
+ * Wsaonepages Controller
  *
  * @since  0.5.7
  */
-class WsaOnePagesController extends AdminController
+class WsaonepagesController extends AdminController
 {
 	/**
 	 * Proxy for getModel.
@@ -31,7 +31,7 @@ class WsaOnePagesController extends AdminController
 	 *
 	 * @since   1.6
 	 */
-	public function getModel($name = 'WsaOnePage', $prefix = 'Administrator', $config = array('ignore_request' => true))
+	public function getModel($name = 'Wsaonepage', $prefix = 'Administrator', $config = array('ignore_request' => true))
 	{
 		$model = parent::getModel($name, $prefix, $config);
 

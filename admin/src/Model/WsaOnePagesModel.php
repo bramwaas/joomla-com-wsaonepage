@@ -8,7 +8,7 @@
  * 17-8-2021
  */
 
-namespace WaasdorpSoekhan\Component\WsaOnePage\Administrator\Model;
+namespace WaasdorpSoekhan\Component\Wsaonepage\Administrator\Model;
 // No direct access to this file
 \defined('_JEXEC') or die('Restricted access');
 
@@ -17,11 +17,11 @@ namespace WaasdorpSoekhan\Component\WsaOnePage\Administrator\Model;
 use \Joomla\CMS\MVC\Model\ListModel;
 
 /**
- * WsaOnePageList Model
+ * WsaonepageList Model
  *
  * @since  0.0.1
  */
-class WsaOnePagesModel extends ListModel
+class WsaonepagesModel extends ListModel
 {
     /**
      * Constructor.

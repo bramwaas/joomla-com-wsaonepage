@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<form  addruleprefix="WaasdorpSoekhan\Component\WsaOnePage\Administrator\Rule">
+<form  addruleprefix="WaasdorpSoekhan\Component\Wsaonepage\Administrator\Rule">
 <!--  Form to update the component in Admin Component menu 
 changed 4-10-2020 after an example of banner.xml
 9-8-2021 J4 compared with contact.xml
@@ -7,7 +7,7 @@ TODO in plaats van addrulepath 	Deprecated use \Joomla\CMS\Form\FormHelper::addR
 -->
 	<fieldset 
 	name="details"
-	addfieldprefix="WaasdorpSoekhan\Component\WsaOnePage\Administrator\Field"
+	addfieldprefix="WaasdorpSoekhan\Component\Wsaonepage\Administrator\Field"
 	label="COM_WSAONEPAGE_WSAONEPAGE_DETAILS"
 	>
 		<fieldset

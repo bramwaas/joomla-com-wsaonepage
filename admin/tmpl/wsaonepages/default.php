@@ -16,7 +16,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 /**
- *  @var WaasdorpSoekhan\Component\WsaOnePage\Administrator\View\WsaOnePages\HtmlView; $this
+ *  @var WaasdorpSoekhan\Component\Wsaonepage\Administrator\View\Wsaonepages\HtmlView; $this
  *  The class where this template is apart of
  */
 

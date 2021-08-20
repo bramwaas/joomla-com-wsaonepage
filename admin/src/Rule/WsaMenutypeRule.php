@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 3 or later; see LICENSE.txt
  */
 
-namespace Joomla\Component\Contact\Site\Rule;
+namespace WaasdorpSoekhan\Component\Wsaonepage\Administrator\Rule;
 
 \defined('_JEXEC') or die;
 
@@ -20,7 +20,7 @@ use Joomla\Registry\Registry;
  *
  * @since  0.5.8
  */
-class WsaMenutypeRule extends FormRule
+class WsamenutypeRule extends FormRule
 {
 		/**
 	 * The regular expression. Necessary if you use the parent test function.

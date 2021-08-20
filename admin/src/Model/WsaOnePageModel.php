@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 3 or later; see LICENSE.txt
  * 8-8-2021
  */
-namespace WaasdorpSoekhan\Component\WsaOnePage\Administrator\Model;
+namespace WaasdorpSoekhan\Component\Wsaonepage\Administrator\Model;
 // No direct access to this file
 \defined('_JEXEC') or die('Restricted access');
 
@@ -19,11 +19,11 @@ use Joomla\CMS\Table\Table;
 use Joomla\Registry\Registry;
 
 /**
- * WsaOnePage Model
+ * Wsaonepage Model
  *
  * @since  0.0.1
  */
-class WsaOnePageModel extends AdminModel
+class WsaonepageModel extends AdminModel
 {
     /**
      * Name of the form
@@ -44,7 +44,7 @@ class WsaOnePageModel extends AdminModel
      *
      * @since   1.6
      */
-    public function getTable($name = 'WsaOnePage', $prefix = 'WsaOnePageTable', $config = array())
+    public function getTable($name = 'Wsaonepage', $prefix = 'WsaonepageTable', $config = array())
     {
         if ($table = $this->_createTable($name, $prefix, $config))
         {

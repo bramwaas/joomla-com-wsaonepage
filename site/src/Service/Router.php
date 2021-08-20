@@ -8,7 +8,7 @@
  * 20210819     rewritten for Joomla 4 after example of contact. Joomla\Database\ParameterType replaced by \PDO
  */
 
-namespace WaasdorpSoekhan\Component\WsaOnePage\Site\Controller;
+namespace WaasdorpSoekhan\Component\Wsaonepage\Site\Controller;
 \defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
@@ -26,7 +26,7 @@ use Joomla\CMS\Language\Multilanguage;
 use Joomla\Database\DatabaseInterface;
 // use Joomla\Database\ParameterType;
 
-//TODO was: class WsaOnePageRouter implements JComponentRouterInterface
+//TODO was: class WsaonepageRouter implements JComponentRouterInterface
 class Router extends RouterView
 {
     /**
@@ -150,7 +150,7 @@ class Router extends RouterView
      *
      * @return  array|string  The segments of this item
      */
-    public function getWsaOnePageSegment($id, $query)
+    public function getWsaonepageSegment($id, $query)
     {
         if (!strpos($id, ':'))
         {
@@ -187,7 +187,7 @@ class Router extends RouterView
      */
     public function getFormSegment($id, $query)
     {
-        return $this->getWsaOnePageSegment($id, $query);
+        return $this->getWsaonepageSegment($id, $query);
     }
     
     /**
@@ -243,14 +243,14 @@ class Router extends RouterView
     }
     
     /**
-     * Method to get the segment(s) for a WsaOnePage
+     * Method to get the segment(s) for a Wsaonepage
      *
      * @param   string  $segment  Segment of the contact to retrieve the ID for
      * @param   array   $query    The request that is parsed right now
      *
      * @return  mixed   The id of this item or false
      */
-    public function getWsaOnePageId($segment, $query)
+    public function getWsaonepageId($segment, $query)
     {
         if ($this->noIDs)
         {

@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 3 or later; see LICENSE.txt
  * 19-8-2021
  */
-namespace WaasdorpSoekhan\Component\WsaOnePage\Administrator\Field;
+namespace WaasdorpSoekhan\Component\Wsaonepage\Administrator\Field;
 // No direct access to this file
 \defined('_JEXEC') or die('Restricted access');
 
@@ -18,18 +18,18 @@ use Joomla\Utilities\ArrayHelper;
 
 
 /**
- * wsaMenutype Form Field class for the WsaOnePage component
+ * wsamenutype Form Field class for the Wsaonepage component
  *
  * @since  0.0.1
  */
-class WsaMenutypeField extends ListField
+class WsamenutypeField extends ListField
 {
 	/**
 	 * The field type.
 	 *
 	 * @var         string
 	 */
-	protected $type = 'WsaMenutype';
+	protected $type = 'Wsamenutype';
 
 	/**
 	 * Method to get a list of options for a list input.

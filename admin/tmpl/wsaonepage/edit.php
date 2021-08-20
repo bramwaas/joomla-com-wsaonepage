@@ -19,7 +19,7 @@ use Joomla\CMS\Router\Route;
 
 // JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html'); seems not to be necessary in J4 
 /**
- *  @var WaasdorpSoekhan\Component\WsaOnePage\Administrator\View\WsaOnePage\HtmlView; $this
+ *  @var WaasdorpSoekhan\Component\Wsaonepage\Administrator\View\Wsaonepage\HtmlView; $this
  *  The class where this template is part of
  */
 

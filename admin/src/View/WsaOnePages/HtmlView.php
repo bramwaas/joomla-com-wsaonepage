@@ -6,7 +6,7 @@
  * @copyright   Copyright (C) 2021 A.H.C. Waasdorp. All rights reserved.
  * @license     GNU General Public License version 3; see LICENSE
  */
-namespace WaasdorpSoekhan\Component\WsaOnePage\Administrator\View\WsaOnePages;
+namespace WaasdorpSoekhan\Component\Wsaonepage\Administrator\View\Wsaonepages;
 
 \defined('_JEXEC') or die;
 
@@ -22,7 +22,7 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 
 
 /**
- * Main "WsaOnePages" Admin View
+ * Main "Wsaonepages" Admin View
  */
 class HtmlView extends BaseHtmlView {
  
@@ -35,7 +35,7 @@ class HtmlView extends BaseHtmlView {
     private $isEmptyState = false;
     
     /**
-     * Display the WsaOnePage view
+     * Display the Wsaonepage view
      *
      * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
      *

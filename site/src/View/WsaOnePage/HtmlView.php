@@ -7,7 +7,7 @@
  * @copyright   Copyright (C) 2021 A.H.C. Waasdorp. All rights reserved.
  * @license     GNU General Public License version 3; see LICENSE
  */
-namespace WaasdorpSoekhan\Component\WsaOnePage\Site\View\WsaOnePage;
+namespace WaasdorpSoekhan\Component\Wsaonepage\Site\View\Wsaonepage;
 
 
 \defined('_JEXEC') or die;

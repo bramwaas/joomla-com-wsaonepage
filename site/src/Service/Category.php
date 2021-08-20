@@ -7,14 +7,14 @@
  * @license     GNU General Public License version 3 or later; see LICENSE.txt
  */
 
-namespace  WaasdorpSoekhan\Component\WsaOnePage\Site\Service;
+namespace  WaasdorpSoekhan\Component\Wsaonepage\Site\Service;
 
 \defined('_JEXEC') or die;
 
 use Joomla\CMS\Categories\Categories;
 
 /**
- * WsaOnePage Component Category Tree
+ * Wsaonepage Component Category Tree
  *
  * @since  0.6.2
  */

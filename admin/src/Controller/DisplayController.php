@@ -1,6 +1,6 @@
 <?php
 
-namespace WaasdorpSoekhan\Component\WsaOnePage\Administrator\Controller;
+namespace WaasdorpSoekhan\Component\Wsaonepage\Administrator\Controller;
 
 \defined('_JEXEC') or die;
 
@@ -15,7 +15,7 @@ use Joomla\CMS\MVC\Controller\BaseController;
  */
 
 /**
- * Default Controller of WsaOnePage component
+ * Default Controller of Wsaonepage component
  *
  * @package     Joomla.Administrator
  * @subpackage  com_wsaonepage

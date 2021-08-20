@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace WaasdorpSoekhan\Component\WsaOnePage\Administrator\Service\Html;
+namespace WaasdorpSoekhan\Component\Wsaonepage\Administrator\Service\Html;
 
 \defined('_JEXEC') or die;
 

@@ -9,7 +9,7 @@
  * 20200901 component modules at position-7 and 8 added
  */
 
-namespace WaasdorpSoekhan\Component\WsaOnePage\Site\Model;
+namespace WaasdorpSoekhan\Component\Wsaonepage\Site\Model;
 // No direct access to this file
 \defined('_JEXEC') or die('Restricted access');
 
@@ -23,10 +23,10 @@ use Joomla\CMS\Language\Multilanguage;
 use Joomla\CMS\Log\Log;
 use Joomla\Registry\Registry;
 
-// use WaasdorpSoekhan\Component\WsaOnePage\Site\Controller\RouteHelper;
+// use WaasdorpSoekhan\Component\Wsaonepage\Site\Controller\RouteHelper;
 
 
-// JLoader::register('WsaOnePageHelperRoute', JPATH_ROOT . '/components/com_wsaonepage/helpers/route.php');
+// JLoader::register('WsaonepageHelperRoute', JPATH_ROOT . '/components/com_wsaonepage/helpers/route.php');
 
 
 /**
@@ -34,7 +34,7 @@ use Joomla\Registry\Registry;
  *
  * @since  0.5.0
  */
-class WsaOnePageModel extends BaseDatabaseModel
+class WsaonepageModel extends BaseDatabaseModel
 {
     /**
      * @var object item
@@ -81,7 +81,7 @@ class WsaOnePageModel extends BaseDatabaseModel
 	 *
 	 * @since   1.6
 	 */
-	public function getTable($type = 'WsaOnePage', $prefix = 'WsaOnePageTable', $config = array())
+	public function getTable($type = 'Wsaonepage', $prefix = 'WsaonepageTable', $config = array())
 	{
 	    return Table::getInstance($type, $prefix, $config);
 	}
@@ -124,7 +124,7 @@ class WsaOnePageModel extends BaseDatabaseModel
 	        }
 	        else
 	        {
-	            throw new \Exception('WsaOnePage id not found', 404);
+	            throw new \Exception('Wsaonepage id not found', 404);
 	        }
 	    }
 	    return $this->item;

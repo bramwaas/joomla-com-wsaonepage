@@ -1,10 +1,10 @@
 <?php
 /**
- * WsaOnePage Component Helper file for generating the URL Routes
+ * Wsaonepage Component Helper file for generating the URL Routes
  *
  */
 
-namespace WaasdorpSoekhan\Component\WsaOnePage\Site\Controller;
+namespace WaasdorpSoekhan\Component\Wsaonepage\Site\Controller;
 \defined('_JEXEC') or die;
 
 use Joomla\CMS\Categories\CategoryNode;
@@ -16,7 +16,7 @@ use Joomla\CMS\Router\Route;
 class RouteHelper
 {
 	/**
-	 * When the WsaOnePage message is displayed then there is also shown a map with a Search Here button.
+	 * When the Wsaonepage message is displayed then there is also shown a map with a Search Here button.
 	 * This function generates the URL which the Ajax call will use to perform the search. 
 	 * 
 	 */

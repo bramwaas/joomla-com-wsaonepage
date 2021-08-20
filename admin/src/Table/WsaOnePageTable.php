@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 3 or later; see LICENSE.txt
  */
 
- namespace WaasdorpSoekhan\Component\WsaOnePage\Administrator\Controller;
+ namespace WaasdorpSoekhan\Component\Wsaonepage\Administrator\Controller;
 
 // No direct access
 \defined('_JEXEC') or die('Restricted access');
@@ -22,7 +22,7 @@ use Joomla\Registry\Registry;
  *
  * @since  0.0.1
  */
-class WsaOnePageTable extends Table
+class WsaonepageTable extends Table
 {
 	/**
 	 * Constructor

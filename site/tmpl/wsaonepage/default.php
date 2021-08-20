@@ -14,7 +14,7 @@
  * 20200817 restore pathway and (maybe temporary) defaylts for open graph front end ready for the time being so a new version 0.1
  * 20210805 first adaptations for joomla 4.0
  */
-// namespace WaasdorpSoekhan\Component\WsaOnePage\Site\View\WsaOnePage;
+// namespace WaasdorpSoekhan\Component\Wsaonepage\Site\View\Wsaonepage;
 // part of HtmlView
 
 // No direct access to this file

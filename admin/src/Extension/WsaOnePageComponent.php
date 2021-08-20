@@ -8,7 +8,7 @@
  * 20-8-2021 copied from com_banners and adapted after mywalks component.
  */
 
-namespace WaasdorpSoekhan\Component\WsaOnePage\Administrator\Extension;
+namespace WaasdorpSoekhan\Component\Wsaonepage\Administrator\Extension;
 
 \defined('JPATH_PLATFORM') or die;
 
@@ -21,7 +21,7 @@ use Joomla\CMS\Extension\MVCComponent;
 use Joomla\CMS\HTML\HTMLRegistryAwareTrait;
 //use Joomla\CMS\Tag\TagServiceInterface;
 //use Joomla\CMS\Tag\TagServiceTrait;
-//use WaasdorpSoekhan\Component\WsaOnePage\Administrator\Service\Html\AdministratorService;
+//use WaasdorpSoekhan\Component\Wsaonepage\Administrator\Service\Html\AdministratorService;
 use Psr\Container\ContainerInterface;  // TODO find a way to solve this eclipse error
 
 /**
@@ -29,7 +29,7 @@ use Psr\Container\ContainerInterface;  // TODO find a way to solve this eclipse 
  *
  * @since  0.7.1  (Joomla 4.0.0)
  */
-class WsaOnePageComponent extends MVCComponent implements BootableExtensionInterface,  RouterServiceInterface
+class WsaonepageComponent extends MVCComponent implements BootableExtensionInterface,  RouterServiceInterface
 {
 	use HTMLRegistryAwareTrait;
 	use RouterServiceTrait;

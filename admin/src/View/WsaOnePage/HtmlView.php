@@ -8,7 +8,7 @@
  * 16-8-2021
  */
 
-namespace WaasdorpSoekhan\Component\WsaOnePage\Administrator\View\WsaOnePage;
+namespace WaasdorpSoekhan\Component\Wsaonepage\Administrator\View\Wsaonepage;
 
 \defined('_JEXEC') or die;
 
@@ -20,11 +20,11 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException; 
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use WaasdorpSoekhan\Component\WsaOnePage\Administrator\Model\WsaOnePageModel;
+use WaasdorpSoekhan\Component\Wsaonepage\Administrator\Model\WsaonepageModel;
 
 
 /**
- * Main "WsaOnePage" Admin View
+ * Main "Wsaonepage" Admin View
  */
 class HtmlView extends BaseHtmlView
 {
@@ -51,7 +51,7 @@ class HtmlView extends BaseHtmlView
     protected $state;
     
     /**
-     * Display the main "WsaOnePage" view
+     * Display the main "Wsaonepage" view
      *
      * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
      *
@@ -62,7 +62,7 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null)
     {
-        /** @var WsaOnePageModel $model added after banner j.4*/
+        /** @var WsaonepageModel $model added after banner j.4*/
         $model       = $this->getModel();
         // Get the Data
         $this->form = $this->get('Form');
