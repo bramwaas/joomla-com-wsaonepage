@@ -39,7 +39,7 @@ TODO in plaats van addrulepath 	Deprecated use \Joomla\CMS\Form\FormHelper::addR
 				label="COM_WSAONEPAGE_WSAONEPAGE_MENUTYPE_LABEL"
 				description="COM_WSAONEPAGE_WSAONEPAGE_MENUTYPE_DESC"
 			filter="string"
-			validate="WsaMenutype"
+			validate="Wsamenutype"
 			required="true"
 				/>
 		<field
