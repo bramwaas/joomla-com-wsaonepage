@@ -3,6 +3,7 @@
 -- v 0.0.11 added important Joomla fields like language and created. version not in line with https://docs.joomla.org/J3.x:Developing_an_MVC_Component any more, but in line with Component version
 -- v 0.2.01 added some default fields from #__content and chend some existing field in accordance with #__content (has no effect on existing table)
 -- v 0.7.9 attribs default '' until I know how to fill it from params.
+-- v 0.7.19 metainfo default '' until I know how to fill it from params.
 --
 DROP TABLE IF EXISTS `#__wsaonepage`;
 
@@ -45,15 +46,15 @@ CREATE TABLE IF NOT EXISTS `#__wsaonepage` (
 
   	`ordering` int(11) NOT NULL DEFAULT 0,
 
-  	`metakey` text NOT NULL,
+  	`metakey` text NOT NULL DEFAULT '',
 
-  	`metadesc` text NOT NULL,
+  	`metadesc` text NOT NULL DEFAULT '',
 
   	`access` int(10) unsigned NOT NULL DEFAULT 0,
 
   	`hits` int(10) unsigned NOT NULL DEFAULT 0,
 
-  	`metadata` text NOT NULL,
+  	`metadata` text NOT NULL DEFAULT '',
 
 	`language`  CHAR(7)  NOT NULL DEFAULT '*',
   	`xreference` varchar(50) NOT NULL DEFAULT '' COMMENT 'A reference to enable linkages to external data sets.',
