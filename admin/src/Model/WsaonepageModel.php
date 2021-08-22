@@ -41,18 +41,16 @@ class WsaonepageModel extends AdminModel
      * @param   array   $config  Configuration array for model. Optional.
      *
      * @return  Table  A Table object
-     *
+     * TODO probably unnecessary
      * @since   1.6
      */
-    public function getTable($name = 'Wsaonepage', $prefix = 'Table', $config = array())
+    /*
+    public function getTable($name = 'Wsaonepage', $prefix = 'Administrator', $config = array())
     {
-        if ($table = $this->_createTable($name, $prefix, $config))
-        {
-            return $table;
-        }
-        
-        throw new \Exception(Text::sprintf('JLIB_APPLICATION_ERROR_TABLE_NAME_NOT_SUPPORTED', $name), 0);
+        return $this->_createTable($name, $prefix, $config);
+       
     }
+    */
     
     /**
      * Method to get the record form.

@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 3 or later; see LICENSE.txt
  */
 
- namespace WaasdorpSoekhan\Component\Wsaonepage\Administrator\Controller;
+namespace WaasdorpSoekhan\Component\Wsaonepage\Administrator\Table;
 
 // No direct access
 \defined('_JEXEC') or die('Restricted access');
