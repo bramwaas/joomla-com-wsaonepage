@@ -30,6 +30,12 @@ $wa = $this->document->getWebAssetManager();
 $wa->useScript('keepalive')
     ->useScript('form.validate');
 
+// Fieldsets to not automatically render by /layouts/joomla/edit/params.php
+$this->ignore_fieldsets = ['details', 'item_associations', 'jmetadata'];
+$this->useCoreUI = true;
+    
+    
+
 // TODO formbehavior.chosen changed in  ->enableAsset('choicesjs') at the moment unclear what happens to the arguments text::script ... ?
 /* not found in com_banner looking for an other example incom_contact remove without replacement so replacement starred out
     HTMLHelper::_('formbehavior.chosen', '#jform_catid', null, array('disable_search_threshold' => 0 ));
@@ -70,6 +76,10 @@ $wa->getWebAssetManager()->enableAsset('choicesjs');
 				</div>
 			</fieldset>
 		<?php echo HTMLHelper::_('uitab.endTab'); ?>
+		
+				<?php /* might ever replace params but is to chaotic for now attribs default ''
+				* echo LayoutHelper::render('joomla.edit.params', $this); */ ?>
+		
 		
 		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'publishing', Text::_('JGLOBAL_FIELDSET_PUBLISHING')); ?>
 		<div class="row">

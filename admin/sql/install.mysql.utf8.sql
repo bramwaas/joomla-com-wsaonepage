@@ -2,6 +2,7 @@
 -- This file will contain Table structure for `"__wsaonepage`
 -- v 0.0.11 added important Joomla fields like language and created. version not in line with https://docs.joomla.org/J3.x:Developing_an_MVC_Component any more, but in line with Component version
 -- v 0.2.01 added some default fields from #__content and chend some existing field in accordance with #__content (has no effect on existing table)
+-- v 0.7.9 attribs default '' until I know how to fill it from params.
 --
 DROP TABLE IF EXISTS `#__wsaonepage`;
 
@@ -38,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `#__wsaonepage` (
 
   	`publish_down` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
 
-  	`attribs` varchar(5120) NOT NULL,
+  	`attribs` varchar(5120) NOT NULL DEFAULT '',
 
   	`version` int(10) unsigned NOT NULL DEFAULT 1,
 

@@ -119,7 +119,17 @@ changed 4-10-2020 after an example of banner.xml
 				name="params"
 				label="JGLOBAL_FIELDSET_DISPLAY_OPTIONS"
 		>
-			<field
+				<field
+					name="show_title"
+					type="list"
+					label="JGLOBAL_SHOW_TITLE_LABEL"
+					useglobal="true"
+					validate="options"
+					>
+					<option value="1">JSHOW</option>
+					<option value="0">JHIDE</option>
+				</field>
+				<field
 					name="show_category"
 					type="list"
 					label="COM_WSAONEPAGE_FIELD_SHOW_CATEGORY_LABEL"
@@ -267,26 +277,7 @@ changed 4-10-2020 after an example of banner.xml
 			rows="3"
 			cols="30"
 		/>
-<!-- TODO from banners but probably not  applicable here
-		<field
-			name="own_prefix"
-			type="radio"
-			label="COM_WSAONEPAGE_FIELD_WSAONEPAGEOWNPREFIX_LABEL"
-			description="COM_WSAONEPAGE_FIELD_WSAONEPAGEOWNPREFIX_DESC"
-			class="btn-group btn-group-yesno"
-			default="0"
-			>
-			<option value="1">JYES</option>
-			<option value="0">JNO</option>
-		</field>
 
-		<field
-			name="metakey_prefix"
-			type="text"
-			label="COM_WSAONEPAGE_FIELD_METAKEYWORDPREFIX_LABEL"
-			description="COM_WSAONEPAGE_FIELD_METAKEYWORDPREFIX_DESC"
-		/>
-		-->
 	</fieldset>
 	</fields>
 		<fieldset
