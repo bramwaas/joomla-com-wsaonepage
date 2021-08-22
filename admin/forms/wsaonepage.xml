@@ -67,10 +67,13 @@ changed 4-10-2020 after an example of banner.xml
 				label="JCATEGORY"
 				description="JCATEGORY"
 				extension="com_wsaonepage"
-				required="true"
+				required="false"
 				class="inputbox"
 				default="0"
-		/>
+				>
+				 <option value="0">JOPTION_SELECT_CATEGORY</option>
+				 <option value="1">1</option>
+		</field>
 		
 		<!-- from article but there within fieldset TODO for later -->
 		<!--  field 
