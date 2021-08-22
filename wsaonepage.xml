@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="4.0" method="upgrade">
-<!-- 2021-08-06 start  adjustments for Joomla 4 to begin with namespaces for ythis component's classes-->
+<!-- 2021-08-06 start  adjustments for Joomla 4 to begin with namespaces for this component's classes-->
   <compatibility>
     <include>
       <versions from="3.9.0" to="4.99.99" />
@@ -15,7 +15,7 @@
 	<copyright>A.H.C. Waasdorp, Amsterdam 2020 - 2021</copyright>
     <license>GPL v3</license>
 	<!--  The version string is recorded in the components table -->
-	<version>0.7.6</version>
+	<version>0.7.7</version>
 	<!-- The description is optional and defaults to the name -->
 	<description>COM_WSAONEPAGE_DESCRIPTION</description>
     <!-- This is the PHP namespace under which the extension's
@@ -52,7 +52,7 @@
 				XML and be parsed by the installer
 			-->
 			<menu link="option=com_wsaonepage" img="class:content"
-				alt="Wsaonepage/Wsaonepage">COM_WSAONEPAGE_MENU</menu>
+				alt="Wsaonepage/Wsaonepage"><![CDATA[COM_WSAONEPAGE_MENU]]></menu>
 		</submenu>
 		<!-- Administration Main File Copy Section -->
 		<!-- Note the folder attribute: This attribute describes the folder
