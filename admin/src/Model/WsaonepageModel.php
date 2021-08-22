@@ -44,7 +44,7 @@ class WsaonepageModel extends AdminModel
      *
      * @since   1.6
      */
-    public function getTable($name = 'Wsaonepage', $prefix = 'WsaonepageTable', $config = array())
+    public function getTable($name = 'Wsaonepage', $prefix = 'Table', $config = array())
     {
         if ($table = $this->_createTable($name, $prefix, $config))
         {

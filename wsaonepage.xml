@@ -31,6 +31,22 @@
     -->
     <namespace path="src/">WaasdorpSoekhan\Component\Wsaonepage</namespace>
 
+ 	<install><!-- Runs on install -->
+ 		<sql>
+			<file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+		</sql>
+	</install>
+	<uninstall><!-- Runs on uninstall -->
+ 		<sql>
+			<file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+		</sql>
+	</uninstall>
+	<update><!-- Runs on update; New since J2.5 -->
+ 		<schemas>
+			<schemapath type="mysql">sql/updates/mysql</schemapath>
+		</schemas>
+	</update>
+
 	<!-- Site Main File Copy Section -->
 	<!-- Note the folder attribute: This attribute describes the folder
 		to copy FROM in the package to install therefore files copied
@@ -71,22 +87,6 @@
 			<language tag="en-GB">en-GB/en-GB.com_wsaonepage.sys.ini</language>
 		</languages>
 	</administration>
-
- 	<install><!-- Runs on install -->
- 		<sql>
-			<file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
-		</sql>
-	</install>
-	<uninstall><!-- Runs on uninstall -->
- 		<sql>
-			<file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
-		</sql>
-	</uninstall>
-	<update><!-- Runs on update; New since J2.5 -->
- 		<schemas>
-			<schemapath type="mysql">sql/updates/mysql</schemapath>
-		</schemas>
-	</update>
 
 	<media destination="com_wsaonepage" folder="media">
 		<filename>index.html</filename>
