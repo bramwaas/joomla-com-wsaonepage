@@ -78,11 +78,11 @@ CREATE TABLE IF NOT EXISTS `#__wsaonepage` (
   	KEY `idx_alias` (`alias`(191))
 
 )
-	ENGINE =MyISAM
---	ENGINE =InnoDB
+--	ENGINE =MyISAM
+	ENGINE =InnoDB
 --	AUTO_INCREMENT =0
 	DEFAULT CHARSET =utf8mb4
 	DEFAULT COLLATE=utf8mb4_unicode_ci;
 
---      CREATE UNIQUE INDEX `aliasindex` ON `#__wsaonepage` (`alias`, `catid`); -- use after alias is filled ok
+      CREATE UNIQUE INDEX `aliasindex` ON `#__wsaonepage` (`alias`, `catid`); -- use after alias is filled ok
 
