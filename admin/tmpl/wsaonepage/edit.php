@@ -50,7 +50,8 @@ $wa->getWebAssetManager()->enableAsset('choicesjs');
 	<?php echo LayoutHelper::render('joomla.edit.title_alias', $this); ?>
     <div class="main-card">
 		<?php echo HTMLHelper::_('uitab.startTabSet', 'myTab', array('active' => 'details')); ?>
-		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'details', Text::_('COM_WSAONEPAGE_WSAONEPAGE_DETAILS')); ?>
+
+		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'details', Text::_('COM_WSAONEPAGE_DETAILS')); ?>
             <div class="row">
                 <div class="col-lg-9">
 					<?php echo $this->form->renderFieldset('wsaonepagedetails'); ?>
@@ -60,10 +61,6 @@ $wa->getWebAssetManager()->enableAsset('choicesjs');
 				</div>
             </div>
 		<?php echo HTMLHelper::_('uitab.endTab'); ?>
-
-
-
-
 
 		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'params', Text::_('COM_WSAONEPAGE_GROUP_LABEL_WSAONEPAGE_DETAILS')); ?>
 			<fieldset id="fieldset-params" class="options-form">
@@ -77,10 +74,16 @@ $wa->getWebAssetManager()->enableAsset('choicesjs');
 		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'publishing', Text::_('JGLOBAL_FIELDSET_PUBLISHING')); ?>
 		<div class="row">
 			<div class="col-md-6">
+				<fieldset id="fieldset-publishingdata" class="options-form">
+					<legend><?php echo Text::_('JGLOBAL_FIELDSET_PUBLISHING'); ?></legend>
 				<?php echo LayoutHelper::render('joomla.edit.publishingdata', $this); ?>
+				</fieldset>
 			</div>
 			<div class="col-md-6">
+				<fieldset id="fieldset-metadata" class="options-form">
+					<legend><?php echo Text::_('JGLOBAL_FIELDSET_METADATA_OPTIONS'); ?></legend>
 				<?php echo LayoutHelper::render('joomla.edit.metadata', $this); ?>
+				</fieldset>
 			</div>
 		</div>
 		<?php echo HTMLHelper::_('uitab.endTab'); ?>

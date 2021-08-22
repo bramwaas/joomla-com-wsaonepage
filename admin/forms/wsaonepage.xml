@@ -3,13 +3,30 @@
 <!--  Form to update the component in Admin Component menu 
 changed 4-10-2020 after an example of banner.xml
 9-8-2021 J4 compared with contact.xml
-TODO in plaats van addrulepath 	Deprecated use \Joomla\CMS\Form\FormHelper::addRulePath() directly or is addruleprefix working well
+22-8-2021
 -->
 	<fieldset 
 	name="details"
 	addfieldprefix="WaasdorpSoekhan\Component\Wsaonepage\Administrator\Field"
-	label="COM_WSAONEPAGE_WSAONEPAGE_DETAILS"
+	label="COM_WSAONEPAGE_DETAILS"
 	>
+		<field
+				name="title"
+				type="text"
+				label="COM_WSAONEPAGE_TITLE_LABEL"
+				description="COM_WSAONEPAGE_TITLE_DESC"
+				size="40"
+				class="inputbox"
+				default=""
+				/>
+		<field 
+				name="alias" 
+				type="text" 
+				label="JFIELD_ALIAS_LABEL"
+				description="JFIELD_ALIAS_DESC"
+				hint="JFIELD_ALIAS_PLACEHOLDER"
+				size="40" 
+				/>
 		<fieldset
 				name="wsaonepagedetails"
 				label="JGLOBAL_FIELDSET_DISPLAY_OPTIONS"
@@ -23,21 +40,12 @@ TODO in plaats van addrulepath 	Deprecated use \Joomla\CMS\Form\FormHelper::addR
 			readonly="true"
 			class="readonly"
 				/>
-		<field
-				name="title"
-				type="text"
-				label="COM_WSAONEPAGE_WSAONEPAGE_TITLE_LABEL"
-				description="COM_WSAONEPAGE_WSAONEPAGE_TITLE_DESC"
-				size="40"
-				class="inputbox"
-				default=""
-				/>
 <!-- trying a simple rule after example contact and helloworld joomla 3.2 -->				
 		<field
 				name="menutype"
 				type="wsamenutype"
-				label="COM_WSAONEPAGE_WSAONEPAGE_MENUTYPE_LABEL"
-				description="COM_WSAONEPAGE_WSAONEPAGE_MENUTYPE_DESC"
+				label="COM_WSAONEPAGE_MENUTYPE_LABEL"
+				description="COM_WSAONEPAGE_MENUTYPE_DESC"
 			filter="string"
 			validate="Wsamenutype"
 			required="true"
@@ -45,19 +53,11 @@ TODO in plaats van addrulepath 	Deprecated use \Joomla\CMS\Form\FormHelper::addR
 		<field
 				name="description"
 				type="text"
-				label="COM_WSAONEPAGE_WSAONEPAGE_DESCRIPTION_LABEL"
-				description="COM_WSAONEPAGE_WSAONEPAGE_DESCRIPTION_DESC"
+				label="COM_WSAONEPAGE_DESCRIPTION_LABEL"
+				description="COM_WSAONEPAGE_DESCRIPTION_DESC"
 				size="256"
 				class="inputbox"
 				default=""
-				/>
-		<field 
-				name="alias" 
-				type="text" 
-				label="JFIELD_ALIAS_LABEL"
-				description="JFIELD_ALIAS_DESC"
-				hint="JFIELD_ALIAS_PLACEHOLDER"
-				size="40" 
 				/>
 		</fieldset>
 		<!-- from article but there within fieldset -->
@@ -65,26 +65,12 @@ TODO in plaats van addrulepath 	Deprecated use \Joomla\CMS\Form\FormHelper::addR
 			name="catid"
 			type="categoryedit"
 			label="JCATEGORY"
+			extension="com_wsaonepage"
 			addfieldprefix="Joomla\Component\Categories\Administrator\Field"
 			required="true"
 			default=""
+			class="advancedSelect"
 		/>
-
-	
-		<!-- field
-				name="catid"
-				type="category"
-				label="COM_WSAONEPAGE_WSAONEPAGE_FIELD_CATID_LABEL"
-				description="COM_WSAONEPAGE_WSAONEPAGE_FIELD_CATID_DESC"
-				extension="com_wsaonepage"
-				required="true"
-				class="inputbox"
-				default="0"
-		-->
-				 <!-- option value="0">JOPTION_SELECT_CATEGORY</option -->
-<!--				addfieldpath="/administrator/components/com_categories/models/fields">
-					</field -->		
-		<!-- like article but there within fieldset -->
 		<field
 			name="state"
 			type="list"
@@ -112,7 +98,7 @@ TODO in plaats van addrulepath 	Deprecated use \Joomla\CMS\Form\FormHelper::addR
 				name="language" 
 				type="contentlanguage" 
 				label="JFIELD_LANGUAGE_LABEL"
-				description="COM_WSAONEPAGE_WSAONEPAGE_FIELD_LANGUAGE_DESC"
+				description="COM_WSAONEPAGE_FIELD_LANGUAGE_DESC"
 				>
 				<option value="*">JALL</option>
 		</field>
@@ -127,6 +113,26 @@ TODO in plaats van addrulepath 	Deprecated use \Joomla\CMS\Form\FormHelper::addR
 			labelclass="control-label"
 		/>
 	</fieldset>
+
+	<fields name="params">
+		<fieldset
+				name="params"
+				label="JGLOBAL_FIELDSET_DISPLAY_OPTIONS"
+		>
+			<field
+					name="show_category"
+					type="list"
+					label="COM_WSAONEPAGE_FIELD_SHOW_CATEGORY_LABEL"
+					description="COM_WSAONEPAGE_FIELD_SHOW_CATEGORY_DESC"
+					default=""
+			>
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+		</fieldset>
+	</fields>
+
 	<fieldset name="publish" label="COM_WSAONEPAGE_GROUP_LABEL_PUBLISHING_DETAILS">
 
 		<field
@@ -283,25 +289,6 @@ TODO in plaats van addrulepath 	Deprecated use \Joomla\CMS\Form\FormHelper::addR
 		-->
 	</fieldset>
 	</fields>
-	<fields name="params">
-		<fieldset
-				name="params"
-				label="JGLOBAL_FIELDSET_DISPLAY_OPTIONS"
-		>
-			<field
-					name="show_category"
-					type="list"
-					label="COM_WSAONEPAGE_WSAONEPAGE_FIELD_SHOW_CATEGORY_LABEL"
-					description="COM_WSAONEPAGE_WSAONEPAGE_FIELD_SHOW_CATEGORY_DESC"
-					default=""
-			>
-				<option value="">JGLOBAL_USE_GLOBAL</option>
-				<option value="0">JHIDE</option>
-				<option value="1">JSHOW</option>
-			</field>
-		</fieldset>
-	</fields>
-
 		<fieldset
 			name="accesscontrol"
 			label="COM_WSAONEPAGE_FIELDSET_RULES"
