@@ -62,11 +62,12 @@ changed 4-10-2020 after an example of banner.xml
 				label="COM_WSAONEPAGE_WSAONEPAGE_FIELD_CATID_LABEL"
 				description="COM_WSAONEPAGE_WSAONEPAGE_FIELD_CATID_DESC"
 				extension="com_wsaonepage"
-				required="true"
+				required="false"
 				class="inputbox"
 				default="0"
 		>
 				 <option value="0">JOPTION_SELECT_CATEGORY</option>
+				 <option value="1">1</option>
 <!--				addfieldpath="/administrator/components/com_categories/models/fields" -->
 					</field>		
 		<field
