@@ -6,7 +6,7 @@
       <versions from="3.9.0" to="4.99.99" />
     </include>
   </compatibility>
-	<name>COM_WSAONEPAGE</name>
+	<name>com_wsaonepage</name>
 	<!-- The following elements are optional and free of formatting constraints. -->
 	<creationDate>14 Oktober 2020</creationDate>
 	<author>A.H.C. Waasdorp</author>
@@ -15,7 +15,7 @@
 	<copyright>A.H.C. Waasdorp, Amsterdam 2020 - 2021</copyright>
     <license>GPL v3</license>
 	<!--  The version string is recorded in the components table -->
-	<version>0.7.4</version>
+	<version>0.7.5</version>
 	<!-- The description is optional and defaults to the name -->
 	<description>COM_WSAONEPAGE_DESCRIPTION</description>
     <!-- This is the PHP namespace under which the extension's
