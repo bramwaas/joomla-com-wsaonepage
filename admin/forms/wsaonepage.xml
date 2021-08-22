@@ -59,9 +59,19 @@ changed 4-10-2020 after an example of banner.xml
 				class="inputbox"
 				default=""
 				/>
-		</fieldset>
-		<!-- from article but there within fieldset -->
-		<field 
+		<field
+				name="catid"
+				type="category"
+				label="COM_WSAONEPAGE_WSAONEPAGE_FIELD_CATID_LABEL"
+				description="COM_WSAONEPAGE_WSAONEPAGE_FIELD_CATID_DESC"
+				extension="com_wsaonepage"
+				required="true"
+				class="inputbox"
+				default="0"
+		/>
+		
+		<!-- from article but there within fieldset TODO for later -->
+		<!--  field 
 			name="catid"
 			type="categoryedit"
 			label="JCATEGORY"
@@ -70,8 +80,10 @@ changed 4-10-2020 after an example of banner.xml
 			required="true"
 			default=""
 			class="advancedSelect"
-		/>
-		<field
+		/ -->
+		
+	</fieldset>
+			<field
 			name="state"
 			type="list"
 			label="JSTATUS"
@@ -112,7 +124,8 @@ changed 4-10-2020 after an example of banner.xml
 			size="45"
 			labelclass="control-label"
 		/>
-	</fieldset>
+		</fieldset>
+	
 
 	<fields name="params">
 		<fieldset
