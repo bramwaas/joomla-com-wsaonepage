@@ -15,7 +15,7 @@
 	<copyright>A.H.C. Waasdorp, Amsterdam 2020 - 2021</copyright>
     <license>GPL v3</license>
 	<!--  The version string is recorded in the components table -->
-	<version>0.7.11</version>
+	<version>0.7.12</version>
 	<!-- The description is optional and defaults to the name -->
 	<description>COM_WSAONEPAGE_DESCRIPTION</description>
     <!-- This is the PHP namespace under which the extension's

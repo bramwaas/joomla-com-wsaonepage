@@ -59,11 +59,13 @@ changed 4-10-2020 after an example of banner.xml
 				class="inputbox"
 				default=""
 				/>
-		<field
+		
+	</fieldset>
+			<field
 				name="catid"
 				type="category"
-				label="COM_WSAONEPAGE_WSAONEPAGE_FIELD_CATID_LABEL"
-				description="COM_WSAONEPAGE_WSAONEPAGE_FIELD_CATID_DESC"
+				label="JCATEGORY"
+				description="JCATEGORY"
 				extension="com_wsaonepage"
 				required="true"
 				class="inputbox"
@@ -81,8 +83,7 @@ changed 4-10-2020 after an example of banner.xml
 			default=""
 			class="advancedSelect"
 		/ -->
-		
-	</fieldset>
+	
 			<field
 			name="state"
 			type="list"
