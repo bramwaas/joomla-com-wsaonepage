@@ -96,8 +96,11 @@ class HtmlView extends BaseHtmlView {
         ToolbarHelper::title(Text::_('COM_WSAONEPAGE_MANAGER_WSAONEPAGES'), 'wsaonepage');
         $toolbar->addNew('wsaonepage.add');
         $toolbar->edit('wsaonepage.edit');
+        $toolbar->delete('wsaonepages.trash')
+        ->text('JTOOLBAR_TRASH') // JTRASH JACTION_DELETE
+        ->listCheck(true);
         $toolbar->delete('wsaonepages.delete')
-        ->text('JTOOLBAR_EMPTY_TRASH')
+        ->text('JTOOLBAR_EMPTY_TRASH') // JTRASH JACTION_DELETE
         ->message('JGLOBAL_CONFIRM_DELETE')
         ->listCheck(true);
         $toolbar->preferences('com_wsaonepages');

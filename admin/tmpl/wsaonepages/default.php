@@ -5,7 +5,7 @@
  *
  * @copyright   Copyright (C) 2020 - 2020 AHC Waasdorp. All rights reserved.
  * @license     GNU General Public License version 3 or later; see LICENSE.txt
- *13-8-2021
+ *23-8-2021
  */
 
 // No direct access to this file
@@ -39,7 +39,6 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
 		<?php //TODO removed in all examples echo JHtmlSidebar::render(); ?>
 	<!-- /div -->
 	<div id="j-main-container" class="col-md-12">
-			<?php echo Text::_('COM_WSAONEPAGE_WSAONEPAGES_FILTER'); ?>
 				<?php
 				// Search tools bar
 				echo LayoutHelper::render('joomla.searchtools.default', ['view' => $this]);
@@ -53,7 +52,7 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
 
                 	<table class="table" id="wsaonepageList">
                 						<caption class="visually-hidden">
-                							<?php echo Text::_('COM_BANNERS_BANNERS_TABLE_CAPTION'); ?>,
+                							<?php echo Text::_('COM_WSAONEPAGE_N_TABLE_CAPTION'); ?>,
                 							<span id="orderedBy"><?php echo Text::_('JGLOBAL_SORTED_BY'); ?> </span>,
                 							<span id="filteredBy"><?php echo Text::_('JGLOBAL_FILTERED_BY'); ?></span>
                 						</caption>
@@ -63,10 +62,10 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                 				<?php echo HTMLHelper::_('grid.checkall'); ?>
                 			</th>
                 			<th scope="col" class="w-30 text-center d-none d-md-table-cell">
-                				<?php echo HTMLHelper::_('searchtools.sort', 'COM_WSAONEPAGE_WSAONEPAGE_TITLE', 'title', $listDirn, $listOrder); ?>
+                				<?php echo HTMLHelper::_('searchtools.sort', 'COM_WSAONEPAGE_TITLE', 'title', $listDirn, $listOrder); ?>
                 			</th>
                 			<th scope="col">
-                				<?php echo HTMLHelper::_('searchtools.sort', 'COM_WSAONEPAGE_WSAONEPAGE_MENUTYPE', 'menutype', $listDirn, $listOrder); ?>
+                				<?php echo HTMLHelper::_('searchtools.sort', 'COM_WSAONEPAGE_MENUTYPE', 'menutype', $listDirn, $listOrder); ?>
                 			</th>
                                 <th scope="col" class="w-15 text-center d-none d-md-table-cell">
                                     <?php echo HTMLHelper::_('searchtools.sort', 'COM_WSAONEPAGE_LANGUAGE', 'language', $listDirn, $listOrder); ?>
