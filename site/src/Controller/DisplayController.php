@@ -33,4 +33,32 @@ class DisplayController extends BaseController {
         $view->display();
     }
     
+    /**
+     * Set the object properties based on a named array/hash.
+     *
+     * @param   mixed  $properties  Either an associative array or another object.
+     *
+     * @return  boolean
+     *
+     * @since   0.8.1
+     *
+     * see     CMSObject->setProperties
+     */
+    public function setProperties($properties)
+    {
+        if (\is_array($properties) || \is_object($properties))
+        {
+            foreach ((array) $properties as $k => $v)
+            {
+                // Use the set function which might be overridden.
+                $this->set($k, $v);
+            }
+            
+            return true;
+        }
+        
+        return false;
+    }
+    
+    
 }
