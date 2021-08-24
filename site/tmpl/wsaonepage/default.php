@@ -55,7 +55,8 @@ echo ' ]]> -->', PHP_EOL;
 
 if ($controller = $this->get('wsacontroller')) {
 //if ($controller = BaseController::getInstance(substr($wsaOrgActiveMenuItem->query['option'], 4))) {
-    $wsaOrgControllerVars = $controller->getProperties(FALSE);
+//    $wsaOrgControllerVars = $controller->getProperties(FALSE);
+    $wsaOrgControllerVars = get_object_vars($controller);
     $wsaOrgDocumentVars['title'] = $document->getTitle();
     $wsaOrgDocumentVars['description'] = $document->getDescription();
     $wsaOrgDocumentMetaName['title'] = $document->getMetaData('title') ?: $wsaOrgDocumentVars['title'] ;
