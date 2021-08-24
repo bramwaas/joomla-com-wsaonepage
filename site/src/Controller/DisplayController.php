@@ -29,6 +29,7 @@ class DisplayController extends BaseController {
         $view->setModel($this->getModel('Wsaonepage'), true);
         
         $view->document = $document;
+        $view->set('wsacontroller', $this);
         $view->display();
     }
     

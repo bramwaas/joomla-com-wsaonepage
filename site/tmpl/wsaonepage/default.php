@@ -15,7 +15,7 @@
  * 20210805 first adaptations for joomla 4.0
  */
 // namespace WaasdorpSoekhan\Component\Wsaonepage\Site\View\Wsaonepage;
-// part of HtmlView
+// part of WaasdorpSoekhan\Component\Wsaonepage\Site\View\Wsaonepage\HtmlView
 
 // No direct access to this file
 \defined('_JEXEC') or die('Restricted access');
@@ -53,7 +53,8 @@ echo '<!-- Start default.php  <![CDATA[';
 //           print_r($document);
 echo ' ]]> -->', PHP_EOL;
 
-if ($controller = BaseController::getInstance(substr($wsaOrgActiveMenuItem->query['option'], 4))) {
+if ($controller = $this->get('wsacontroller')) {
+//if ($controller = BaseController::getInstance(substr($wsaOrgActiveMenuItem->query['option'], 4))) {
     $wsaOrgControllerVars = $controller->getProperties(FALSE);
     $wsaOrgDocumentVars['title'] = $document->getTitle();
     $wsaOrgDocumentVars['description'] = $document->getDescription();
