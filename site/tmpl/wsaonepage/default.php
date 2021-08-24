@@ -68,7 +68,7 @@ if ($controller = $this->get('wsacontroller')) {
 /*
  * Title for this component
  */    
-if ($params->get('show_title') || $params->get('show_author')) : ?>
+if (isset($params) && ($params->get('show_title') || $params->get('show_author'))) : ?>
 	<div class="page-header">
 		<?php if ($params->get('show_title')) : ?>
 			<h2 itemprop="headline">
