@@ -49,7 +49,8 @@ $wsaOrgRouterVars = $wsaSiteRouter->getVars();
 $wsaIsAlias = FALSE;
 $wsaAliasBookmark = NULL;
 $params  = $this->item->params;
-echo '<!-- Start default.php  <![CDATA[';
+echo '<!-- Start default.php', PHP_EOL, '<![CDATA[';
+    print_r($this->item);
 //           print_r($document);
 echo ' ]]> -->', PHP_EOL;
 
