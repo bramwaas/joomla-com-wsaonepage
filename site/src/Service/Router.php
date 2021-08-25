@@ -5,10 +5,10 @@
  *
  * @copyright   Copyright (C) 2021 A.H.C. Waasdorp. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * 20210819     rewritten for Joomla 4 after example of contact. Joomla\Database\ParameterType replaced by \PDO
+ * 20210825     rewritten for Joomla 4 after example of contact. Joomla\Database\ParameterType replaced by \PDO
  */
 
-namespace WaasdorpSoekhan\Component\Wsaonepage\Site\Controller;
+namespace WaasdorpSoekhan\Component\Wsaonepage\Site\Service;
 \defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
