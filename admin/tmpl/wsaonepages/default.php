@@ -63,10 +63,10 @@ $canEditOwn= TRUE; // TODO for later use
                 			<th class="w-1 text-center">
                 				<?php echo HTMLHelper::_('grid.checkall'); ?>
                 			</th>
-                			<th scope="col" class="w-30 text-center d-none d-md-table-cell">
+                			<th scope="col" class=" text-center d-none d-md-table-cell">
                 				<?php echo HTMLHelper::_('searchtools.sort', 'COM_WSAONEPAGE_TITLE', 'title', $listDirn, $listOrder); ?>
                 			</th>
-                			<th scope="col">
+                			<th scope="col" class="w-30 text-center d-none d-md-table-cell">
                 				<?php echo HTMLHelper::_('searchtools.sort', 'COM_WSAONEPAGE_MENUTYPE', 'menutype', $listDirn, $listOrder); ?>
                 			</th>
                                 <th scope="col" class="w-15 text-center d-none d-md-table-cell">
@@ -90,7 +90,7 @@ $canEditOwn= TRUE; // TODO for later use
             						<td>
             							<?php echo HTMLHelper::_('grid.id', $i, $row->id); ?>
             						</td>
-            						<td class="small d-none d-md-table-cell">
+            						<td class="text-center small d-none d-md-table-cell">
                     					<?php if ($canEdit || $canEditOwn) : ?>
     									<a href="<?php echo $link; ?>" title="<?php echo Text::_('JACTION_EDIT'); ?> <?php echo $this->escape($item->title); ?>">
     										<?php echo $this->escape($row->title); ?></a>
