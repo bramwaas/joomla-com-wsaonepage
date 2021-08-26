@@ -6,7 +6,7 @@
 	</layout>
 
 	<fields name="request"
-			addfieldprefix="WaasdorpSoekhan\Component\WsaOnePage\Administrator\Field"
+			addfieldprefix="WaasdorpSoekhan\Component\Wsaonepage\Administrator\Field"
 	>
 		<fieldset name="request">
 			<field
