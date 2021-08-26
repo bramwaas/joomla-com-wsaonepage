@@ -86,35 +86,36 @@ $canEditOwn= TRUE; // TODO for later use
                 				$link = Route::_('index.php?option=com_wsaonepage&task=wsaonepage.edit&id=' . $row->id);
                 				?>
                 
-        					<tr>
-        						<td>
-        							<?php echo HTMLHelper::_('grid.id', $i, $row->id); ?>
-        						</td>
-                							<?php if ($canEdit || $canEditOwn) : ?>
-											<a href="<?php echo $link; ?>" title="<?php echo Text::_('JACTION_EDIT'); ?> <?php echo $this->escape($item->title); ?>">
-												<?php echo $this->escape($row->title); ?></a>
-											<?php else : ?>
-											<span title="<?php echo Text::sprintf('JFIELD_ALIAS_LABEL', $this->escape($row->alias)); ?>"><?php echo $this->escape($row->title); ?></span>
-										<?php endif; ?>
-										<div class="small break-word">
-												<?php echo Text::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($row->alias)); ?>
-										</div>
-                							
-                							
-                						</td>
-                						<td class="text-center d-none d-md-table-cell">
-                							<?php echo $row->menutype; ?>
-                						</td>
-                                            <td class="small text-center d-none d-md-table-cell">
-                                                <?php echo LayoutHelper::render('joomla.content.language', $row); ?>
-                                            </td>
-                						<td class="small text-center d-none d-md-table-cell">
-                							<?php echo HTMLHelper::_('jgrid.published', $row->published, $i, 'wsaonepages.', true, 'cb'); ?>
-                						</td>
-                						<td class="small text-center d-none d-md-table-cell">
-                							<?php echo $row->id; ?>
-                						</td>
-                					</tr>
+            					<tr>
+            						<td>
+            							<?php echo HTMLHelper::_('grid.id', $i, $row->id); ?>
+            						</td>
+            						<td class="small d-none d-md-table-cell">
+                    					<?php if ($canEdit || $canEditOwn) : ?>
+    									<a href="<?php echo $link; ?>" title="<?php echo Text::_('JACTION_EDIT'); ?> <?php echo $this->escape($item->title); ?>">
+    										<?php echo $this->escape($row->title); ?></a>
+    									<?php else : ?>
+    										<span title="<?php echo Text::sprintf('JFIELD_ALIAS_LABEL', $this->escape($row->alias)); ?>"><?php echo $this->escape($row->title); ?></span>
+    									<?php endif; ?>
+    									<div class="small break-word">
+    										<?php echo Text::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($row->alias)); ?>
+    									</div>
+                    							
+                    							
+                    				</td>
+                					<td class="text-center d-none d-md-table-cell">
+            							<?php echo $row->menutype; ?>
+            						</td>
+                                        <td class="small text-center d-none d-md-table-cell">
+                                            <?php echo LayoutHelper::render('joomla.content.language', $row); ?>
+                                        </td>
+            						<td class="small text-center d-none d-md-table-cell">
+            							<?php echo HTMLHelper::_('jgrid.published', $row->published, $i, 'wsaonepages.', true, 'cb'); ?>
+            						</td>
+            						<td class="small text-center d-none d-md-table-cell">
+            							<?php echo $row->id; ?>
+            						</td>
+            					</tr>
                 				<?php endforeach; ?>
                 			<?php endif; ?>
                 		</tbody>
