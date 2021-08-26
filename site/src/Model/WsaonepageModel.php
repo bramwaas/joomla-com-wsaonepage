@@ -124,7 +124,7 @@ class WsaonepageModel extends BaseDatabaseModel
 	        }
 	        else
 	        {
-	            throw new \Exception('Wsaonepage id not found', 404);
+	            throw new \Exception('Wsaonepage id not found id=' . (string)$id, 404);
 	        }
 	    }
 	    return $this->item;

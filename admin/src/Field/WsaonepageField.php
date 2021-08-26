@@ -39,7 +39,7 @@ class WsaonepageField extends ListField
 	{
  		$db    = Factory::getDBO();
 		$query = $db->getQuery(true);
-		$query->select('id,menutype,title,description');
+		$query->select('id,title,description');
 		$query->from('#__wsaonepage');
 		$db->setQuery((string) $query);
 		$wsaonepages = $db->loadObjectList();
@@ -49,7 +49,7 @@ class WsaonepageField extends ListField
 		{
 		    foreach ($wsaonepages as $wsaonepage)
 			{
-			    $options[] = HTMLHelper::_('select.option', $wsaonepage->id,  $wsaonepage->title . ':' . $wsaonepage->description );
+			    $options[] = HTMLHelper::_('select.option', $wsaonepage->id,  $wsaonepage->title . ': ' . $wsaonepage->description );
 			}
 		}
 
