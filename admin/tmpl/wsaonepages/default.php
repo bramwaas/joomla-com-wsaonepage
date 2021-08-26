@@ -28,6 +28,8 @@ HTMLHelper::_('behavior.multiselect');
 
 $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn  = $this->escape($this->state->get('list.direction'));
+$canEdit = TRUE; // TODO for later use
+$canEditOwn= TRUE; // TODO for later use
 // end TODO
 
 
@@ -88,10 +90,17 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
         						<td>
         							<?php echo HTMLHelper::_('grid.id', $i, $row->id); ?>
         						</td>
-                						<td class="small d-none d-md-table-cell">
-                							<a href="<?php echo $link; ?>" title="<?php echo Text::_('COM_WSAONEPAGE_EDIT_WSAONEPAGE'); ?>">
-                							<?php echo $row->title; ?>
-                							</a>
+                							<?php if ($canEdit || $canEditOwn) : ?>
+											<a href="<?php echo $link; ?>" title="<?php echo Text::_('JACTION_EDIT'); ?> <?php echo $this->escape($item->title); ?>">
+												<?php echo $this->escape($row->title); ?></a>
+											<?php else : ?>
+											<span title="<?php echo Text::sprintf('JFIELD_ALIAS_LABEL', $this->escape($row->alias)); ?>"><?php echo $this->escape($row->title); ?></span>
+										<?php endif; ?>
+										<div class="small break-word">
+												<?php echo Text::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($row->alias)); ?>
+										</div>
+                							
+                							
                 						</td>
                 						<td class="text-center d-none d-md-table-cell">
                 							<?php echo $row->menutype; ?>
