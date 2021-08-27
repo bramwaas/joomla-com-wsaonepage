@@ -78,8 +78,8 @@ class DisplayController extends BaseController {
         {
             foreach ((array) $properties as $k => $v)
             {
-                // Use the set function which might be overridden.
-                $this->set($k, $v);
+                
+                $this->$k = $v;
             }
             
             return true;
