@@ -50,7 +50,12 @@ $wsaIsAlias = FALSE;
 $wsaAliasBookmark = NULL;
 $params  = $this->item->params;
 echo '<!-- Start default.php <![CDATA[', PHP_EOL;
-    print_r($this->item);
+    
+    $controller = $this->get('wsacontroller');
+    $controller->setProperties( array('name'=>'wsaonepage'));
+    print_r(get_object_vars($this->get('wsacontroller')));
+    
+//    print_r($this->item);
 //           print_r($document);
 echo ' ]]> -->', PHP_EOL;
 
