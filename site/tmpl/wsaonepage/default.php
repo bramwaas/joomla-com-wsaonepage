@@ -29,9 +29,12 @@ use Joomla\CMS\Language\Text;
 
 use Joomla\CMS\Component\ComponentHelper;  //tbv algemene renderComponent
 use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\MVC\Factory\MVCFactory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Uri\Uri;
+use WaasdorpSoekhan\Component\Wsaonepage\Site\Factory\OPFactory;
+
 /*
  * secure variables of app page and page component
  */
@@ -48,12 +51,11 @@ $wsaSiteRouter = $app->getRouter('site');
 $wsaOrgRouterVars = $wsaSiteRouter->getVars();
 $wsaIsAlias = FALSE;
 $wsaAliasBookmark = NULL;
+$wsaOpfactory = new OPFactory('WaasdorpSoekhan\\Component\\Wsaonepage');
 $params  = $this->item->params;
 echo '<!-- Start default.php <![CDATA[', PHP_EOL;
     
-    $controller = $this->get('wsacontroller');
-    $controller->setProperties( array('name'=>'wsaonepage'));
-    print_r(get_object_vars($this->get('wsacontroller')));
+    print_r($wsaOpfactory);
     
 //    print_r($this->item);
 //           print_r($document);
@@ -129,6 +131,7 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 $wsaJPATH_COMPONENT = JPATH_BASE . '/components/' . $wsaOption;
                 $wsaJPATH_COMPONENT_SITE = JPATH_SITE . '/components/' . $wsaOption;
                 $wsaJPATH_COMPONENT_ADMINISTRATOR = JPATH_ADMINISTRATOR . '/components/' . $wsaOption;
+                $wsaOpfactory->setNamespace('Joomla\\Component\\' . $wsaComponent);
                 // replace input values by values from menuitem query
                 foreach ($wsaOrgActiveMenuItem->query as $tmpKey => $tmpVal) {
                     $app->input->set($tmpKey, NULL);
@@ -145,7 +148,7 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 // find component params
                 $wsaComponentParams = $app->getParams($mItm->query['option']);
                 // find menu params and merge with component params (menu params overwrite component params if both are available) and replace app params
-                $wsaMenuParams = new Registry($mItm->params);
+                $wsaMenuParams = new Registry($app->getParams());
                 $wsaComponentParams->merge($wsaMenuParams);
                 $tmp = $app->getParams()->flatten();
                 foreach ($tmp as $tmpKey => $tmpVal) {
@@ -177,16 +180,16 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 // load default language file for this component to translate labels of form but maybe also other labes
                 Factory::getLanguage()->load($mItm->query['option']);
                 // replace wrong settings in Controller
-                $controller->set('name', $wsaComponent);
-                $controller->set('basePath', $wsaJPATH_COMPONENT);
-                $controller->set('paths', array('view' => $wsaJPATH_COMPONENT . '/views/' ));
+//                $controller->set('name', $wsaComponent);
+//                $controller->set('basePath', $wsaJPATH_COMPONENT);
+//                $controller->set('paths', array('view' => $wsaJPATH_COMPONENT . '/views/' ));
                 $controller->set('model_prefix', $wsaComponent . 'Model');
                 $controller->addModelPath($wsaJPATH_COMPONENT . '/models', $wsaComponent . 'Model');
                 // get the view before display to overwrite the layout value of the previous iteration and the override paths for the lay-out file
-                $view = $controller->getView($mItm->query['view'], 'html', $wsaComponent . 'View', array(
-                    'base_path' => $wsaJPATH_COMPONENT,
-                    'layout' => 'default'
-                ));
+//                $view = $controller->getView($mItm->query['view'], 'html', $wsaComponent . 'View', array(
+//                    'base_path' => $wsaJPATH_COMPONENT,
+//                    'layout' => 'default'
+//                ));
                 $view->setLayout(($mItm->query['layout'] > ' ') ? $mItm->query['layout'] : 'default');
                 $view->addTemplatePath(array(
                     $wsaJPATH_COMPONENT . '/views/' . $mItm->query['view'] . '/tmpl/',
