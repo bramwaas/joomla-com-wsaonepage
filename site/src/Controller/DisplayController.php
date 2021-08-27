@@ -32,6 +32,34 @@ class DisplayController extends BaseController {
         $view->set('wsacontroller', $this);
         $view->display();
     }
+    /**
+     * Returns an associative array of object properties.
+     *
+     * @param   boolean  $public  If true, returns only the public properties.
+     *
+     * @return  array
+     *
+     * @since   1.7.0
+     *
+     * see     Joomla\CMS\Object\CMSObject::get()
+     */
+    public function getProperties($public = true)
+    {
+        $vars = get_object_vars($this);
+        
+        if ($public)
+        {
+            foreach ($vars as $key => $value)
+            {
+                if ('_' == substr($key, 0, 1))
+                {
+                    unset($vars[$key]);
+                }
+            }
+        }
+        
+        return $vars;
+    }
     
     /**
      * Set the object properties based on a named array/hash.
