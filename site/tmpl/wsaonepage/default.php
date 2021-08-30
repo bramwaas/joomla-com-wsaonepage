@@ -180,16 +180,20 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 // load default language file for this component to translate labels of form but maybe also other labes
                 Factory::getLanguage()->load($mItm->query['option']);
                 // replace wrong settings in Controller
+                // in J4 create a controller with  namespace from option
+                $micontroller = $wsaOpfactory->createController($mItm->query['view'], 'Site', array('base_path' => $wsaJPATH_COMPONENT,'layout' => 'default'),$app, $app->getInput());
+                //                ))
 //                $controller->set('name', $wsaComponent);
 //                $controller->set('basePath', $wsaJPATH_COMPONENT);
 //                $controller->set('paths', array('view' => $wsaJPATH_COMPONENT . '/views/' ));
-                $controller->set('model_prefix', $wsaComponent . 'Model');
-                $controller->addModelPath($wsaJPATH_COMPONENT . '/models', $wsaComponent . 'Model');
+//                $controller->set('model_prefix', $wsaComponent . 'Model');
+//                $controller->addModelPath($wsaJPATH_COMPONENT . '/models', $wsaComponent . 'Model');
                 // get the view before display to overwrite the layout value of the previous iteration and the override paths for the lay-out file
 //                $view = $controller->getView($mItm->query['view'], 'html', $wsaComponent . 'View', array(
 //                    'base_path' => $wsaJPATH_COMPONENT,
 //                    'layout' => 'default'
 //                ));
+                $view = $micontroller->getView();
                 $view->setLayout(($mItm->query['layout'] > ' ') ? $mItm->query['layout'] : 'default');
                 $view->addTemplatePath(array(
                     $wsaJPATH_COMPONENT . '/views/' . $mItm->query['view'] . '/tmpl/',
