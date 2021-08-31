@@ -169,8 +169,8 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 }
                 if ($mItm->query['option'] == 'com_contact') {
                     // add formpaths relative to variable active component path
- //                   Form::addFormPath($wsaJPATH_COMPONENT . '/models/forms');
- //                   Form::addFieldPath($wsaJPATH_COMPONENT . '/models/fields');
+                   Form::addFormPath($wsaJPATH_COMPONENT . '/forms');
+ //                   Form::addFieldPath($wsaJPATH_COMPONENT . '/fields');
  //                   Form::addFormPath($wsaJPATH_COMPONENT . '/model/form');
 //                    Form::addFieldPath($wsaJPATH_COMPONENT . '/model/field');
                 }
