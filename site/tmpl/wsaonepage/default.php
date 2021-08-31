@@ -13,6 +13,7 @@
  * 20200816 restore documentdata like title
  * 20200817 restore pathway and (maybe temporary) defaylts for open graph front end ready for the time being so a new version 0.1
  * 20210805 first adaptations for joomla 4.0
+ * 20210831 first version that displays an article (but no menu ant with warning about modules)
  */
 // namespace WaasdorpSoekhan\Component\Wsaonepage\Site\View\Wsaonepage;
 // part of WaasdorpSoekhan\Component\Wsaonepage\Site\View\Wsaonepage\HtmlView
@@ -168,10 +169,10 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 }
                 if ($mItm->query['option'] == 'com_contact') {
                     // add formpaths relative to variable active component path
-                    Form::addFormPath($wsaJPATH_COMPONENT . '/models/forms');
-                    Form::addFieldPath($wsaJPATH_COMPONENT . '/models/fields');
-                    Form::addFormPath($wsaJPATH_COMPONENT . '/model/form');
-                    Form::addFieldPath($wsaJPATH_COMPONENT . '/model/field');
+ //                   Form::addFormPath($wsaJPATH_COMPONENT . '/models/forms');
+ //                   Form::addFieldPath($wsaJPATH_COMPONENT . '/models/fields');
+ //                   Form::addFormPath($wsaJPATH_COMPONENT . '/model/form');
+//                    Form::addFieldPath($wsaJPATH_COMPONENT . '/model/field');
                 }
                 // from newsfeeds.php
                 Table::addIncludePath($wsaJPATH_COMPONENT_ADMINISTRATOR . '/tables');
@@ -191,6 +192,7 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 echo ' ]]> -->', PHP_EOL;
                 //                ))
                // get the view before display to overwrite the layout value of the previous iteration and the override paths for the lay-out file
+               // TODO probably unneccesary because we use the display method of the component controller
                 $view = $micontroller->getView($mItm->query['view'], 'Html');
                 $view->setLayout(($mItm->query['layout'] > ' ') ? $mItm->query['layout'] : 'default');
                 $view->addTemplatePath(array(
