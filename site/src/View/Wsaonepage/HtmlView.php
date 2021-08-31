@@ -50,6 +50,13 @@ class HtmlView extends BaseHtmlView
      * current user
      */
     protected $user;
+    /*
+     * array of Joomla\CMS\MVC\Factory\MVCFactory factories for different components (eg namespaces)
+     * @var    Joomla\CMS\MVC\Factory\MVCFactory[]
+     */
+    protected $mifactories = array();
+    
+    
     
     
 

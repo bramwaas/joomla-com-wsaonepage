@@ -130,15 +130,11 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 $wsaJPATH_COMPONENT = JPATH_BASE . '/components/' . $wsaOption;
                 $wsaJPATH_COMPONENT_SITE = JPATH_SITE . '/components/' . $wsaOption;
                 $wsaJPATH_COMPONENT_ADMINISTRATOR = JPATH_ADMINISTRATOR . '/components/' . $wsaOption;
-				$wsaOpfactory = new MVCFactory('Joomla\\Component\\' . $wsaComponent);
-
-                
-				echo '<!-- Na setNamespace <![CDATA[', PHP_EOL;
-    
-    print_r($wsaOpfactory);
-    
-
-echo ' ]]> -->', PHP_EOL;
+                if (!isset($this->mifactories[$wsaComponent])) {$this->mifactories[$wsaComponent] = new MVCFactory('Joomla\\Component\\' . $wsaComponent);};
+               
+				echo '<!-- Na setNamespace in factory <![CDATA[', PHP_EOL;
+ 				print_r($this->mifactories[$wsaComponent]);
+                echo ' ]]> -->', PHP_EOL;
 
                 // replace input values by values from menuitem query
                 foreach ($wsaOrgActiveMenuItem->query as $tmpKey => $tmpVal) {
@@ -189,21 +185,12 @@ echo ' ]]> -->', PHP_EOL;
                 Factory::getLanguage()->load($mItm->query['option']);
                 // replace wrong settings in Controller
                 // in J4 create a controller with  namespace from option
-                $micontroller = $wsaOpfactory->createController($mItm->query['view'], 'Site', array('base_path' => $wsaJPATH_COMPONENT,'layout' => 'default'),$app, $app->getInput());
+                $micontroller = $this->mifactories[$wsaComponent]->createController($mItm->query['view'], 'Site', array('base_path' => $wsaJPATH_COMPONENT,'layout' => 'default'),$app, $app->getInput());
                 echo '<!-- Start with micontroller =', $mItm->query['view'],'...', PHP_EOL;;
                  if (isset($micontroller))   {        echo(get_class($micontroller));};
                 echo ' ]]> -->', PHP_EOL;
                 //                ))
-//                $controller->set('name', $wsaComponent);
-//                $controller->set('basePath', $wsaJPATH_COMPONENT);
-//                $controller->set('paths', array('view' => $wsaJPATH_COMPONENT . '/views/' ));
-//                $controller->set('model_prefix', $wsaComponent . 'Model');
-//                $controller->addModelPath($wsaJPATH_COMPONENT . '/models', $wsaComponent . 'Model');
-                // get the view before display to overwrite the layout value of the previous iteration and the override paths for the lay-out file
-//                $view = $controller->getView($mItm->query['view'], 'html', $wsaComponent . 'View', array(
-//                    'base_path' => $wsaJPATH_COMPONENT,
-//                    'layout' => 'default'
-//                ));
+               // get the view before display to overwrite the layout value of the previous iteration and the override paths for the lay-out file
                 $view = $micontroller->getView($mItm->query['view'], 'Html');
                 $view->setLayout(($mItm->query['layout'] > ' ') ? $mItm->query['layout'] : 'default');
                 $view->addTemplatePath(array(
