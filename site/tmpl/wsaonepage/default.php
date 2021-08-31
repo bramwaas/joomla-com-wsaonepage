@@ -239,7 +239,7 @@ echo ' ]]> -->', PHP_EOL;
                 }
                 echo '<div class="col-12 ', $spanc, '" >', PHP_EOL;
                 // end section header html
-                $controller->display();
+                $micontroller->display();
                 
                 /*
                  * closing html (section) for this menuitem
