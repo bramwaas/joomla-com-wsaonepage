@@ -33,7 +33,6 @@ use Joomla\CMS\MVC\Factory\MVCFactory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Uri\Uri;
-use WaasdorpSoekhan\Component\Wsaonepage\Site\Factory\OPFactory;
 
 /*
  * secure variables of app page and page component
@@ -51,11 +50,11 @@ $wsaSiteRouter = $app->getRouter('site');
 $wsaOrgRouterVars = $wsaSiteRouter->getVars();
 $wsaIsAlias = FALSE;
 $wsaAliasBookmark = NULL;
-$wsaOpfactory = new OPFactory('WaasdorpSoekhan\\Component\\Wsaonepage');
+//$wsaOpfactory = new MVCFactory('WaasdorpSoekhan\\Component\\Wsaonepage');
 $params  = $this->item->params;
 echo '<!-- Start default.php <![CDATA[', PHP_EOL;
     
-    print_r($wsaOpfactory);
+//    print_r($wsaOpfactory);
     
 //    print_r($this->item);
 //           print_r($document);
@@ -131,7 +130,16 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 $wsaJPATH_COMPONENT = JPATH_BASE . '/components/' . $wsaOption;
                 $wsaJPATH_COMPONENT_SITE = JPATH_SITE . '/components/' . $wsaOption;
                 $wsaJPATH_COMPONENT_ADMINISTRATOR = JPATH_ADMINISTRATOR . '/components/' . $wsaOption;
-                $wsaOpfactory->setNamespace('Joomla\\Component\\' . $wsaComponent);
+				$wsaOpfactory = new MVCFactory('Joomla\\Component\\' . $wsaComponent);
+
+                
+				echo '<!-- Na setNamespace <![CDATA[', PHP_EOL;
+    
+    print_r($wsaOpfactory);
+    
+
+echo ' ]]> -->', PHP_EOL;
+
                 // replace input values by values from menuitem query
                 foreach ($wsaOrgActiveMenuItem->query as $tmpKey => $tmpVal) {
                     $app->input->set($tmpKey, NULL);
@@ -182,6 +190,9 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 // replace wrong settings in Controller
                 // in J4 create a controller with  namespace from option
                 $micontroller = $wsaOpfactory->createController($mItm->query['view'], 'Site', array('base_path' => $wsaJPATH_COMPONENT,'layout' => 'default'),$app, $app->getInput());
+                echo '<!-- Start with micontroller =', $mItm->query['view'],'...', PHP_EOL;;
+                 if (isset($micontroller))   {        echo(get_class($micontroller));};
+                echo ' ]]> -->', PHP_EOL;
                 //                ))
 //                $controller->set('name', $wsaComponent);
 //                $controller->set('basePath', $wsaJPATH_COMPONENT);
@@ -193,7 +204,7 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
 //                    'base_path' => $wsaJPATH_COMPONENT,
 //                    'layout' => 'default'
 //                ));
-                $view = $micontroller->getView();
+                $view = $micontroller->getView($mItm->query['view'], 'Html');
                 $view->setLayout(($mItm->query['layout'] > ' ') ? $mItm->query['layout'] : 'default');
                 $view->addTemplatePath(array(
                     $wsaJPATH_COMPONENT . '/views/' . $mItm->query['view'] . '/tmpl/',
