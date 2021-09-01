@@ -13,23 +13,26 @@
  * 20200816 restore documentdata like title
  * 20200817 restore pathway and (maybe temporary) defaylts for open graph front end ready for the time being so a new version 0.1
  * 20210805 first adaptations for joomla 4.0
- * 20210831 first version that displays an article (but no menu ant with warning about modules)
+ * 20210831 first version that displays an article and contactform. 
+ * 20210901 0.8.4 In working version use of controller object of wsaonepage with propertie adapted to the displayed component 
+ *             replaced by the use of a MVCFactory object for eacht type of component that creates a new display controller for each component to display
+ *             so we don't need to backup adapt and restore the properties of the wsaonepage controller object.  
+ *             Exception is de Input object although we could probably also use e new copy for each menu item we keep backing up the original,
+ *              filling tha active one from the menu-item and restoring it after use.
+ *             Because we work in J4 with new objects with namespaces we also need less adjustments for paths.
+ *             Cleaned up most code that was needed for the old method. 
  */
 // namespace WaasdorpSoekhan\Component\Wsaonepage\Site\View\Wsaonepage;
 // part of WaasdorpSoekhan\Component\Wsaonepage\Site\View\Wsaonepage\HtmlView
 
 // No direct access to this file
 \defined('_JEXEC') or die('Restricted access');
-// TODO alle uses nodig?
+
 use Joomla\CMS\Factory;   // this is the same as use Joomla\CMS\Factory as Factory
-use Joomla\CMS\Helper\ModuleHelper;
+// use Joomla\CMS\Helper\ModuleHelper;
 use Joomla\Registry\Registry; // for new Registry en params object
-use Joomla\CMS\MVC\Model\BaseDatabaseModel;  // JModelLegacy
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
-
-use Joomla\CMS\Component\ComponentHelper;  //tbv algemene renderComponent
-use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\MVC\Factory\MVCFactory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Table\Table;
@@ -42,29 +45,21 @@ $app = Factory::getApplication();
 $document = $app->getDocument();
 $renderer = $document->loadRenderer('module');
 $sitename = $app->get('sitename'); 
-$input = $app->input;
 $wsaOrgAppParams = clone $app->getParams();
-$wsaOrgInput = clone $input;
+//$wsaOrgInput = clone $app->input;
 $wsaOrgActiveMenuItem = $app->getMenu()->getActive();
-$wsaOrgDocumentViewType = $document->getType(); // = html is always ok
+//$wsaOrgDocumentViewType = $document->getType(); // = html is always ok
 $wsaSiteRouter = $app->getRouter('site');
 $wsaOrgRouterVars = $wsaSiteRouter->getVars();
 $wsaIsAlias = FALSE;
 $wsaAliasBookmark = NULL;
-//$wsaOpfactory = new MVCFactory('WaasdorpSoekhan\\Component\\Wsaonepage');
 $params  = $this->item->params;
 echo '<!-- Start default.php <![CDATA[', PHP_EOL;
-    
-//    print_r($wsaOpfactory);
-    
 //    print_r($this->item);
 //           print_r($document);
 echo ' ]]> -->', PHP_EOL;
 
-if ($controller = $this->get('wsacontroller')) {
-//if ($controller = BaseController::getInstance(substr($wsaOrgActiveMenuItem->query['option'], 4))) {
-//    $wsaOrgControllerVars = $controller->getProperties(FALSE);
-    $wsaOrgControllerVars = get_object_vars($controller);
+
     $wsaOrgDocumentVars['title'] = $document->getTitle();
     $wsaOrgDocumentVars['description'] = $document->getDescription();
     $wsaOrgDocumentMetaName['title'] = $document->getMetaData('title') ?: $wsaOrgDocumentVars['title'] ;
@@ -107,7 +102,6 @@ echo '<!-- onepage Component Sections from menu -->' . PHP_EOL;
 
 foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that changes in $mItm like adding bookmark are available in modules
         try {
-            // TODO juiste selectie voor menuitems
             if (stripos($mItm->note, '#op#') !== false) { // new code for one page when #op# is in $mItm-note
                 //  create bookmark from route before processing alias in accordance with template wsaonepage mod_menu wsaonepagebs4_component
                 $mItm->bookmark = ($mItm->route == '/') ? 'home' : ltrim(str_ireplace(array('/', '\\', '.html'), array('-', '-', ''), $mItm->route), '-#') ;
@@ -122,22 +116,15 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 }
                 /*
                  * actions for all kind of components (option) / views (view)
-                 * start with overwrite app values with values of this menu option.
+                 * start with overwrite app and com_wsaonepage values with values of this menu option.
                  */
-
                 // modified version of componentpath and the like in variables instead of constants
                 $wsaOption = preg_replace('/[^A-Z0-9_\.-]/i', '', $mItm->query['option']);
                 $wsaComponent = ucfirst(substr($wsaOption, 4));
                 $wsaJPATH_COMPONENT = JPATH_BASE . '/components/' . $wsaOption;
                 $wsaJPATH_COMPONENT_SITE = JPATH_SITE . '/components/' . $wsaOption;
                 $wsaJPATH_COMPONENT_ADMINISTRATOR = JPATH_ADMINISTRATOR . '/components/' . $wsaOption;
-                if (!isset($this->mifactories[$wsaComponent])) {$this->mifactories[$wsaComponent] = new MVCFactory('Joomla\\Component\\' . $wsaComponent);};
-               
-				echo '<!-- Na setNamespace in factory <![CDATA[', PHP_EOL;
- 				print_r($this->mifactories[$wsaComponent]);
-                echo ' ]]> -->', PHP_EOL;
-
-                // replace input values by values from menuitem query
+                 // replace input values by values from menuitem query
                 foreach ($wsaOrgActiveMenuItem->query as $tmpKey => $tmpVal) {
                     $app->input->set($tmpKey, NULL);
                 }
@@ -163,16 +150,13 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 echo '<!-- Start with menuid =', $mItm->id, ' option :', $mItm->query['option'], ' <![CDATA[';
                 //              print_r(ModuleHelper::getModuleList());
                 echo ' ]]> -->', PHP_EOL;
-                // add helper file include path for this component. from default article
+               // add helper file include path for this component. from default article
                 if ($mItm->query['option'] == 'com_content') {
                     HTMLHelper::addIncludePath($wsaJPATH_COMPONENT . '/helpers'); 
                 }
                 if ($mItm->query['option'] == 'com_contact') {
                     // add formpaths relative to variable active component path
                    Form::addFormPath($wsaJPATH_COMPONENT . '/forms');
- //                   Form::addFieldPath($wsaJPATH_COMPONENT . '/fields');
- //                   Form::addFormPath($wsaJPATH_COMPONENT . '/model/form');
-//                    Form::addFieldPath($wsaJPATH_COMPONENT . '/model/field');
                 }
                 // from newsfeeds.php
                 Table::addIncludePath($wsaJPATH_COMPONENT_ADMINISTRATOR . '/tables');
@@ -184,13 +168,11 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 JLoader::register($wsaComponent . 'HelperRoute', $wsaJPATH_COMPONENT . '/helpers/route.php');
                 // load default language file for this component to translate labels of form but maybe also other labes
                 Factory::getLanguage()->load($mItm->query['option']);
-                // replace wrong settings in Controller
-                // in J4 create a controller with  namespace from option
+                // in J4 create a controller with  namespace from option via MVCFactory
+                // for non-standard components an other composition of namespace is needed but for now ok.
+                if (!isset($this->mifactories[$wsaComponent])) {$this->mifactories[$wsaComponent] = new MVCFactory('Joomla\\Component\\' . $wsaComponent);};
                 $micontroller = $this->mifactories[$wsaComponent]->createController($mItm->query['view'], 'Site', array('base_path' => $wsaJPATH_COMPONENT,'layout' => 'default'),$app, $app->getInput());
-                echo '<!-- Start with micontroller =', $mItm->query['view'],'...', PHP_EOL;;
-                 if (isset($micontroller))   {        echo(get_class($micontroller));};
-                echo ' ]]> -->', PHP_EOL;
-                //                ))
+                
                // get the view before display to overwrite the layout value of the previous iteration and the override paths for the lay-out file
                // TODO probably unneccesary because we use the display method of the component controller
                 $view = $micontroller->getView($mItm->query['view'], 'Html');
@@ -275,8 +257,6 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
         $app->getParams()->remove($tmpKey);
     }
     $app->getParams()->merge($wsaOrgAppParams);
-    // restore controller vars
-    $controller->setProperties( $wsaOrgControllerVars);
     // restore Document
     $document->setTitle($wsaOrgDocumentVars['title']);
     $document->setDescription($wsaOrgDocumentVars['description']);
@@ -297,11 +277,7 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
     $document->setMetaData('og:description', $wsaOrgDocumentVars['description'], 'property'); 
     $document->setMetaData('og:site_name', $sitename, 'property');
     
-} else {
-    echo '<!-- ' . PHP_EOL;
-    echo 'Controller not instanciated:', substr($wsaOrgActiveMenuItem->query['option'], 4), PHP_EOL;
-    echo ' -->', PHP_EOL;
-}
+
 echo '<!-- einde onepage sections uit menu -->' . PHP_EOL;
 
 ?>
