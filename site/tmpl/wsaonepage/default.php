@@ -161,18 +161,19 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 // from newsfeeds.php
                 Table::addIncludePath($wsaJPATH_COMPONENT_ADMINISTRATOR . '/tables');
                 // from content.php
-                JLoader::register($wsaComponent . 'HelperQuery', $wsaJPATH_COMPONENT . '/helpers/query.php');
-                JLoader::register($wsaComponent . 'HelperAssociation', $wsaJPATH_COMPONENT . '/helpers/association.php');
+                //JLoader::register($wsaComponent . 'HelperQuery', $wsaJPATH_COMPONENT . '/helpers/query.php');
+                //JLoader::register($wsaComponent . 'HelperAssociation', $wsaJPATH_COMPONENT . '/helpers/association.php');
                 // ende from content.php
                 // from newsfeeds.php
-                JLoader::register($wsaComponent . 'HelperRoute', $wsaJPATH_COMPONENT . '/helpers/route.php');
+                //JLoader::register($wsaComponent . 'HelperRoute', $wsaJPATH_COMPONENT . '/helpers/route.php');
                 // load default language file for this component to translate labels of form but maybe also other labes
                 Factory::getLanguage()->load($mItm->query['option']);
                 // in J4 create a controller with  namespace from option via MVCFactory
                 // for non-standard components an other composition of namespace is needed but for now ok.
                 if (!isset($this->mifactories[$wsaComponent])) {$this->mifactories[$wsaComponent] = new MVCFactory('Joomla\\Component\\' . $wsaComponent);};
-                $micontroller = $this->mifactories[$wsaComponent]->createController($mItm->query['view'], 'Site', array('base_path' => $wsaJPATH_COMPONENT,'layout' => 'default'),$app, $app->getInput());
-                
+                // 0.8.4 always use 'DisplayController' in stead of $mItm->query['view']
+                $micontroller = $this->mifactories[$wsaComponent]->createController('Display', 'Site', array('base_path' => $wsaJPATH_COMPONENT,'layout' => 'default'),$app, $app->getInput());
+                if (isset($micontroller)) {
                // get the view before display to overwrite the layout value of the previous iteration and the override paths for the lay-out file
                // TODO probably unneccesary because we use the display method of the component controller
                 $view = $micontroller->getView($mItm->query['view'], 'Html');
@@ -232,7 +233,15 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                     $wsaIsAlias = FALSE;
                     $mItm->bookmark  = (isset($wsaAliasBookmark)) ? $wsaAliasBookmark : NULL;
                 }
-                // restore input
+            } //end isset micontroller
+            else 
+            {
+                echo '<!-- ' . PHP_EOL;
+                echo 'Controller not set for component :', $wsaComponent, '; View :',  $mItm->query['view'], '.', PHP_EOL;
+                echo ' -->', PHP_EOL;
+                
+            }
+            // restore input
                 foreach ($mItm->query as $tmpKey => $tmpVal) {
                     $app->input->set($tmpKey, NULL);
                 }
