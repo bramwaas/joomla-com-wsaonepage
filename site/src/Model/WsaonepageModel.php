@@ -5,6 +5,7 @@
  *
  * @copyright   Copyright (C) 2020 - 2021 AHC Waasdorp. All rights reserved.
  * @license     GNU General Public License version 3 or later; see LICENSE.txt
+ * 20210901 0.8.4 Item->params ->getParams()
  * 20210819 adaptations for Joomla 4.0
  * 20200901 component modules at position-7 and 8 added
  */
@@ -168,7 +169,7 @@ class WsaonepageModel extends BaseDatabaseModel
 	    {
 	        if ($menuitem->type == 'component') {$menuIds[] = $menuitem->id;}
 	        elseif ($menuitem->type == 'alias')
-	        {       $aliasToId = $menuitem->params->get('aliasoptions');
+	        {       $aliasToId = $menuitem->getParams()->get('aliasoptions');
 	        $mItm = $app->getMenu()->getItem($aliasToId);
 	        $menuIds[] = $mItm->id;
 	        }

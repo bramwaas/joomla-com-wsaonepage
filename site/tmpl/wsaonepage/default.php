@@ -109,7 +109,7 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 {
                     $wsaIsAlias = TRUE;
                     $tmp =$mItm->bookmark;
-                    $aliasToId = $mItm->params->get('aliasoptions');
+                    $aliasToId = $mItm->getParams()->get('aliasoptions');
                     $mItm = $app->getMenu()->getItem($aliasToId);
                     $wsaAliasBookmark = (isset($mItm->bookmark)) ? $mItm->bookmark : NULL;
                     $mItm->bookmark = $tmp; 
