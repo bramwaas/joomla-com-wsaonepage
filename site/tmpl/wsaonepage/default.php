@@ -160,12 +160,6 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 }
                 // from newsfeeds.php
                 Table::addIncludePath($wsaJPATH_COMPONENT_ADMINISTRATOR . '/tables');
-                // from content.php
-                //JLoader::register($wsaComponent . 'HelperQuery', $wsaJPATH_COMPONENT . '/helpers/query.php');
-                //JLoader::register($wsaComponent . 'HelperAssociation', $wsaJPATH_COMPONENT . '/helpers/association.php');
-                // ende from content.php
-                // from newsfeeds.php
-                //JLoader::register($wsaComponent . 'HelperRoute', $wsaJPATH_COMPONENT . '/helpers/route.php');
                 // load default language file for this component to translate labels of form but maybe also other labes
                 Factory::getLanguage()->load($mItm->query['option']);
                 // in J4 create a controller with  namespace from option via MVCFactory
@@ -174,14 +168,6 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 // 0.8.4 always use 'DisplayController' in stead of $mItm->query['view']
                 $micontroller = $this->mifactories[$wsaComponent]->createController('Display', 'Site', array('base_path' => $wsaJPATH_COMPONENT,'layout' => 'default'),$app, $app->getInput());
                 if (isset($micontroller)) {
-               // get the view before display to overwrite the layout value of the previous iteration and the override paths for the lay-out file
-               // TODO probably unneccesary because we use the display method of the component controller
-                $view = $micontroller->getView($mItm->query['view'], 'Html');
-                $view->setLayout(($mItm->query['layout'] > ' ') ? $mItm->query['layout'] : 'default');
-                $view->addTemplatePath(array(
-                    $wsaJPATH_COMPONENT . '/views/' . $mItm->query['view'] . '/tmpl/',
-                    JPATH_THEMES . '/' . $app->getTemplate() . '/html/' . $wsaOption . '/' . $mItm->query['view']
-                ));
                 /*
                  * section header html for each item
                  */
@@ -212,7 +198,6 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 echo '<div class="col-12 ', $spanc, '" >', PHP_EOL;
                 // end section header html
                 $micontroller->display();
-                
                 /*
                  * closing html (section) for this menuitem
                  */
@@ -228,11 +213,13 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 }
                 echo '</section>', PHP_EOL;
                 // end closing html
+                // set bookmark from alias to use in onepage-menu
                 if ($wsaIsAlias)
                 {
                     $wsaIsAlias = FALSE;
                     $mItm->bookmark  = (isset($wsaAliasBookmark)) ? $wsaAliasBookmark : NULL;
                 }
+                unset($micontroller);
             } //end isset micontroller
             else 
             {
