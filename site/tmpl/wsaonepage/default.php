@@ -230,6 +230,15 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                     $wsaIsAlias = FALSE;
                     $mItm->bookmark  = (isset($wsaAliasBookmark)) ? $wsaAliasBookmark : NULL;
                 }
+                echo '<!-- View  lead_items <![CDATA[', PHP_EOL;
+                print_r($miview->lead_items);
+                echo ' ]]> -->', PHP_EOL;
+                echo '<!-- View  link_items <![CDATA[', PHP_EOL;
+                print_r($miview->link_items);
+                echo ' ]]> -->', PHP_EOL;
+                echo '<!-- View  intro_items <![CDATA[', PHP_EOL;
+                print_r($miview->intro_items);
+                echo ' ]]> -->', PHP_EOL;
                 unset($micontroller);
             } //end isset micontroller
             else 
