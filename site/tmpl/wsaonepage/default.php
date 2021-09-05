@@ -169,9 +169,7 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 $micontroller = $this->mifactories[$wsaComponent]->createController('Display', 'Site', array('base_path' => $wsaJPATH_COMPONENT,'layout' => (($mItm->query['layout'] > ' ') ? $mItm->query['layout'] : 'default')),$app, $app->getInput());
                 if (isset($micontroller)) {
 					// get the view before display to add the templatepath for the menu item component in stead of com_wsaonepage, and to clean-up some properties after display.
-//                    $miview = $micontroller->getView($mItm->query['view'], $wsaOrgDocumentViewType, '');
-//    		        $miview->setLayout(($mItm->query['layout'] > ' ') ? $mItm->query['layout'] : 'default');
-      
+                    $miview = $micontroller->getView($mItm->query['view'], $wsaOrgDocumentViewType, '', array('base_path' => $wsaJPATH_COMPONENT,'layout' => (($mItm->query['layout'] > ' ') ? $mItm->query['layout'] : 'default')));
 //					$miview->addTemplatePath(array(JPATH_THEMES . '/' . $app->getTemplate() . '/html/' . $wsaOption . '/' . $mItm->query['view']));
 //					$mitemplates=$miview->get('template');
 //					$mitemplates[0]=JPATH_THEMES . '/' . $app->getTemplate() . '/html/' . $wsaOption . '/' . $mItm->query['view'];
