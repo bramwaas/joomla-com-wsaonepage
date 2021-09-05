@@ -13,14 +13,14 @@
  * 20200816 restore documentdata like title
  * 20200817 restore pathway and (maybe temporary) defaylts for open graph front end ready for the time being so a new version 0.1
  * 20210805 first adaptations for joomla 4.0
- * 20210831 first version that displays an article and contactform. 
- * 20210901 0.8.4 In working version use of controller object of wsaonepage with propertie adapted to the displayed component 
+ * 20210831 first version that displays an article and contactform.
+ * 20210901 0.8.4 In working version use of controller object of wsaonepage with propertie adapted to the displayed component
  *             replaced by the use of a MVCFactory object for eacht type of component that creates a new display controller for each component to display
- *             so we don't need to backup adapt and restore the properties of the wsaonepage controller object.  
+ *             so we don't need to backup adapt and restore the properties of the wsaonepage controller object.
  *             Exception is de Input object although we could probably also use e new copy for each menu item we keep backing up the original,
  *              filling tha active one from the menu-item and restoring it after use.
  *             Because we work in J4 with new objects with namespaces we also need less adjustments for paths.
- *             Cleaned up most code that was needed for the old method. 
+ *             Cleaned up most code that was needed for the old method.
  */
 // namespace WaasdorpSoekhan\Component\Wsaonepage\Site\View\Wsaonepage;
 // part of WaasdorpSoekhan\Component\Wsaonepage\Site\View\Wsaonepage\HtmlView
@@ -44,11 +44,11 @@ use Joomla\CMS\Uri\Uri;
 $app = Factory::getApplication();
 $document = $app->getDocument();
 $renderer = $document->loadRenderer('module');
-$sitename = $app->get('sitename'); 
+$sitename = $app->get('sitename');
 $wsaOrgAppParams = clone $app->getParams();
 //$wsaOrgInput = clone $app->input;
 $wsaOrgActiveMenuItem = $app->getMenu()->getActive();
-//$wsaOrgDocumentViewType = $document->getType(); // = html is always ok
+$wsaOrgDocumentViewType = $document->getType(); // = html is always ok
 $wsaSiteRouter = $app->getRouter('site');
 $wsaOrgRouterVars = $wsaSiteRouter->getVars();
 $wsaIsAlias = FALSE;
@@ -60,17 +60,17 @@ echo '<!-- Start default.php <![CDATA[', PHP_EOL;
 echo ' ]]> -->', PHP_EOL;
 
 
-    $wsaOrgDocumentVars['title'] = $document->getTitle();
-    $wsaOrgDocumentVars['description'] = $document->getDescription();
-    $wsaOrgDocumentMetaName['title'] = $document->getMetaData('title') ?: $wsaOrgDocumentVars['title'] ;
-    $wsaOrgDocumentMetaName['keywords'] = $document->getMetaData('keywords');
-    $wsaOrgPathway = $app->getPathway()->getPathway();
-    $pathway = $app->getPathway();
-    $wsaOrgPathway = $pathway->getPathway();
-    
+$wsaOrgDocumentVars['title'] = $document->getTitle();
+$wsaOrgDocumentVars['description'] = $document->getDescription();
+$wsaOrgDocumentMetaName['title'] = $document->getMetaData('title') ?: $wsaOrgDocumentVars['title'] ;
+$wsaOrgDocumentMetaName['keywords'] = $document->getMetaData('keywords');
+$wsaOrgPathway = $app->getPathway()->getPathway();
+$pathway = $app->getPathway();
+$wsaOrgPathway = $pathway->getPathway();
+
 /*
  * Title for this component
- */    
+ */
 if (isset($params) && ($params->get('show_title') || $params->get('show_author'))) : ?>
 	<div class="page-header">
 		<?php if ($params->get('show_title')) : ?>
@@ -166,8 +166,16 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 // for non-standard components an other composition of namespace is needed but for now ok.
                 if (!isset($this->mifactories[$wsaComponent])) {$this->mifactories[$wsaComponent] = new MVCFactory('Joomla\\Component\\' . $wsaComponent);};
                 // 0.8.4 always use 'DisplayController' in stead of $mItm->query['view']
-                $micontroller = $this->mifactories[$wsaComponent]->createController('Display', 'Site', array('base_path' => $wsaJPATH_COMPONENT,'layout' => 'default'),$app, $app->getInput());
+                $micontroller = $this->mifactories[$wsaComponent]->createController('Display', 'Site', array('base_path' => $wsaJPATH_COMPONENT,'layout' => (($mItm->query['layout'] > ' ') ? $mItm->query['layout'] : 'default')),$app, $app->getInput());
                 if (isset($micontroller)) {
+					// get the view before display to add the templatepath for the menu item component in stead of com_wsaonepage, and to clean-up some properties after display.
+//                    $miview = $micontroller->getView($mItm->query['view'], $wsaOrgDocumentViewType, '');
+//    		        $miview->setLayout(($mItm->query['layout'] > ' ') ? $mItm->query['layout'] : 'default');
+      
+//					$miview->addTemplatePath(array(JPATH_THEMES . '/' . $app->getTemplate() . '/html/' . $wsaOption . '/' . $mItm->query['view']));
+//					$mitemplates=$miview->get('template');
+//					$mitemplates[0]=JPATH_THEMES . '/' . $app->getTemplate() . '/html/' . $wsaOption . '/' . $mItm->query['view'];
+//					$mitemplates=$miview->get('template',$mitemplates);
                 /*
                  * section header html for each item
                  */
@@ -198,6 +206,11 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 echo '<div class="col-12 ', $spanc, '" >', PHP_EOL;
                 // end section header html
                 $micontroller->display();
+//        echo '<!-- View  na display <![CDATA[', PHP_EOL;
+//        $miview = $micontroller->getView($mItm->query['view'], 'Html', '');
+//        print_r($miview);
+//        echo ' ]]> -->', PHP_EOL;
+				
                 /*
                  * closing html (section) for this menuitem
                  */
