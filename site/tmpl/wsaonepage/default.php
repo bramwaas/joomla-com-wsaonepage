@@ -169,11 +169,10 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 $micontroller = $this->mifactories[$wsaComponent]->createController('Display', 'Site', array('base_path' => $wsaJPATH_COMPONENT,'layout' => (($mItm->query['layout'] > ' ') ? $mItm->query['layout'] : 'default')),$app, $app->getInput());
                 if (isset($micontroller)) {
 					// get the view before display to add the templatepath for the menu item component in stead of com_wsaonepage, and to clean-up some properties after display.
+					// first 3 parameter must exactly match (even in case) that of the statement in the controller, otherwise we get a new view.
                     $miview = $micontroller->getView($mItm->query['view'], $wsaOrgDocumentViewType, '', array('base_path' => $wsaJPATH_COMPONENT,'layout' => (($mItm->query['layout'] > ' ') ? $mItm->query['layout'] : 'default')));
+//                  TODO template override path is now of com_wsaonepage, can add that of $wsaOption before that.
 //					$miview->addTemplatePath(array(JPATH_THEMES . '/' . $app->getTemplate() . '/html/' . $wsaOption . '/' . $mItm->query['view']));
-//					$mitemplates=$miview->get('template');
-//					$mitemplates[0]=JPATH_THEMES . '/' . $app->getTemplate() . '/html/' . $wsaOption . '/' . $mItm->query['view'];
-//					$mitemplates=$miview->get('template',$mitemplates);
                 /*
                  * section header html for each item
                  */
@@ -204,11 +203,6 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 echo '<div class="col-12 ', $spanc, '" >', PHP_EOL;
                 // end section header html
                 $micontroller->display();
-//        echo '<!-- View  na display <![CDATA[', PHP_EOL;
-//        $miview = $micontroller->getView($mItm->query['view'], 'Html', '');
-//        print_r($miview);
-//        echo ' ]]> -->', PHP_EOL;
-				
                 /*
                  * closing html (section) for this menuitem
                  */
@@ -230,16 +224,10 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                     $wsaIsAlias = FALSE;
                     $mItm->bookmark  = (isset($wsaAliasBookmark)) ? $wsaAliasBookmark : NULL;
                 }
-                echo '<!-- View  lead_items <![CDATA[', PHP_EOL;
-                print_r($miview->lead_items);
-                echo ' ]]> -->', PHP_EOL;
-                echo '<!-- View  link_items <![CDATA[', PHP_EOL;
-                print_r($miview->link_items);
-                echo ' ]]> -->', PHP_EOL;
-                echo '<!-- View  intro_items <![CDATA[', PHP_EOL;
-                print_r($miview->intro_items);
-                echo ' ]]> -->', PHP_EOL;
-                unset($micontroller);
+                if (isset($miview->intro_items)) {unset($miview->intro_items);}
+                if (isset($miview->lead_items)) {unset($miview->lead_items);}
+                if (isset($miview->link_items)) {unset($miview->link_items);}
+                // unset($micontroller);
             } //end isset micontroller
             else 
             {
