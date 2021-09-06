@@ -169,7 +169,7 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 $micontroller = $this->mifactories[$wsaComponent]->createController('Display', 'Site', array('base_path' => $wsaJPATH_COMPONENT,'layout' => (($mItm->query['layout'] > ' ') ? $mItm->query['layout'] : 'default')),$app, $app->getInput());
                 if (isset($micontroller)) {
 					// get the view before display to add the templatepath for the menu item component in stead of com_wsaonepage, and to clean-up some properties after display.
-					// first 3 parameter must exactly match (even in case) that of the statement in the controller, otherwise we get a new view.
+					// first 3 parameters must exactly match (even in case) that of the statement in the controller, otherwise we get a new view.
                     $miview = $micontroller->getView($mItm->query['view'], $wsaOrgDocumentViewType, '', array('base_path' => $wsaJPATH_COMPONENT,'layout' => (($mItm->query['layout'] > ' ') ? $mItm->query['layout'] : 'default')));
 //                  TODO template override path is now of com_wsaonepage, can add that of $wsaOption before that.
 //					$miview->addTemplatePath(array(JPATH_THEMES . '/' . $app->getTemplate() . '/html/' . $wsaOption . '/' . $mItm->query['view']));
@@ -224,6 +224,7 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                     $wsaIsAlias = FALSE;
                     $mItm->bookmark  = (isset($wsaAliasBookmark)) ? $wsaAliasBookmark : NULL;
                 }
+                // clean up some properties that may be used in next menu-itm
                 if (isset($miview->intro_items)) {unset($miview->intro_items);}
                 if (isset($miview->lead_items)) {unset($miview->lead_items);}
                 if (isset($miview->link_items)) {unset($miview->link_items);}

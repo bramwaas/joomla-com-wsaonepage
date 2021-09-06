@@ -12,8 +12,10 @@ Admin component for com-wsaonepage
 * 
 
 ## Documentation
-* A simple MVC component to view the components that are selected by the onepage menu to be seen in one page from the wsaonpage template.
-* The components are passed as a array of menuitems with the necessary bookmarks from the menu to process in the view of this component.
+* A simple MVC component to view the components that are selected by the onepage component to be seen in one page menu from the wsaonpage template.
+* The components are passed as an array of menuitems with the text #op# in its note of the selected menu in the onepage component.
+* The component gives the displayed components the necessary bookmarks to refer in the menu to the start of them.
+* At the moment the template override directory is ...html/com_wsaonepage not ...html/<actual component>
 
 
 
