@@ -11,8 +11,6 @@ namespace WaasdorpSoekhan\Component\Wsaonepage\Site\Controller;
 \defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Controller\BaseController;
-use Joomla\CMS\Factory;
-
 
 /**
  * Wsaonepage Component Controller
