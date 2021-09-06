@@ -20,16 +20,7 @@ use Joomla\CMS\Factory;
  */
 class DisplayController extends BaseController {
     
-    public function display($cachable = false, $urlparams = array()) {        
-        $document = Factory::getDocument();
-        $viewName = $this->input->getCmd('view', 'login');
-        $viewFormat = $document->getType();
-        
-        $view = $this->getView($viewName, $viewFormat);
-        $view->setModel($this->getModel('Wsaonepage'), true);
-        
-        $view->document = $document;
-        $view->set('wsacontroller', $this);
-        $view->display();
-    }
+    public function display($cachable = false, $urlparams = array()) { 
+        parent::display(true, $urlparams); //true asks for caching
+     }
 }
