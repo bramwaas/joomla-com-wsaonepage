@@ -69,12 +69,10 @@ class HtmlView extends BaseHtmlView
     public function display($template = null) {
         // Assign data to the view
         $app=Factory::getApplication();
-        $user       = Factory::getUser();
-        $item  = $this->get('Item');
-        $this->item  = $item;
+        $this->user = Factory::getUser();
+        $this->item  = $this->get('Item');
         //	    $this->print = $app->input->getBool('print');
         $this->state = $this->get('State');
-        $this->user  = $user;
         $this->menuItems = $this->get('Menuitems');
         $this->modules = $this->get('Modulelist');
         

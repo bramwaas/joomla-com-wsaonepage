@@ -8,6 +8,7 @@
  * 20210901 0.8.4 Item->params ->getParams()
  * 20210819 adaptations for Joomla 4.0
  * 20200901 component modules at position-7 and 8 added
+ * 20210908 get cache again in old fashion (new fashion seems not to work) 
  */
 
 namespace WaasdorpSoekhan\Component\Wsaonepage\Site\Model;
@@ -228,7 +229,8 @@ class WsaonepageModel extends BaseDatabaseModel
 	    try
 	    {
 	        /** @var \Joomla\CMS\Cache\CacheController $cache */
-	        $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('com_modules', 'callback');
+//	        $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('com_modules', 'callback');
+	        $cache = Factory::getCache('com_wsaonepage', 'callback');
 	        
 	        $modules = $cache->get(array($db, 'loadObjectList'), array(), md5($cacheId), false);
 	    }
