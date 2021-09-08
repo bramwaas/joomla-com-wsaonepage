@@ -228,12 +228,9 @@ class WsaonepageModel extends BaseDatabaseModel
 	    
 	    try
 	    {
-	        /** @var \Joomla\CMS\Cache\CacheController $cache */
-//	        $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)->createCacheController('com_modules', 'callback');
-//	        $cache = Factory::getCache('com_wsaonepage', 'callback');
+	        /** @var \Joomla\CMS\Cache\Controller\CallbackController $cache */
 	        $cache = Factory::getContainer()->get(CacheControllerFactoryInterface::class)
 	        ->createCacheController('callback', ['defaultgroup' => 'com_modules']);
-	        
 	        $modules = $cache->get(array($db, 'loadObjectList'), array(), md5($cacheId), false);
 	    }
 	    catch (\RuntimeException $e)
