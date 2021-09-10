@@ -67,7 +67,7 @@ class Icon
 	{
 		$uri = Uri::getInstance();
 
-		$url = 'index.php?option=com_content&task=article.add&return=' . base64_encode($uri) . '&a_id=0&catid=' . $category->id;
+		$url = 'index.php?option=com_wsaonepage&task=wsaonepage.add&return=' . base64_encode($uri) . '&a_id=0&catid=' . $category->id;
 
 		$text = '';
 
@@ -76,7 +76,7 @@ class Icon
 			$text .= '<span class="icon-plus icon-fw" aria-hidden="true"></span>';
 		}
 
-		$text .= Text::_('COM_CONTENT_NEW_ARTICLE');
+		$text .= Text::_('COM_WSAONEPAGE_NEW_ONEPAGE');
 
 		// Add the button classes to the attribs array
 		if (isset($attribs['class']))

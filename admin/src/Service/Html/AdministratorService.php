@@ -21,7 +21,7 @@ use Joomla\CMS\Router\Route;
 use \PDO as ParameterType;
 
 /**
- * Content HTML helper
+ * wsaonepage HTML helper
  *
  * @since  3.0
  */
@@ -31,20 +31,20 @@ class AdministratorService
     /**
      * Render the list of associated items
      *
-     * @param   integer  $articleid  The article item id
+     * @param   integer  $id  The article item id
      *
      * @return  string  The language HTML
      *
      * @throws  \Exception
      * // TODO find out what is needed and replace function from com_content by a function for con_wsaonepage 
      */
-    public function association($articleid)
+    public function association($id)
     {
         // Defaults
         $html = '';
         
         // Get the associations
-        if ($associations = Associations::getAssociations('com_content', '#__content', 'com_content.item', $articleid))
+        if ($associations = Associations::getAssociations('com_wsaonepage', '#__wsaonepage', 'com_wsaonepage.item', $id))
         {
             foreach ($associations as $tag => $associated)
             {
@@ -64,12 +64,12 @@ class AdministratorService
                     $db->quoteName('l.title', 'language_title'),
                 ]
                 )
-                ->from($db->quoteName('#__content', 'c'))
+                ->from($db->quoteName('#__wsaonepage', 'c'))
                 ->join('LEFT', $db->quoteName('#__categories', 'cat'), $db->quoteName('cat.id') . ' = ' . $db->quoteName('c.catid'))
                 ->join('LEFT', $db->quoteName('#__languages', 'l'), $db->quoteName('c.language') . ' = ' . $db->quoteName('l.lang_code'))
                 ->whereIn($db->quoteName('c.id'), array_values($associations))
-                ->where($db->quoteName('c.id') . ' != :articleId')
-                ->bind(':articleId', $articleid, ParameterType::INTEGER);
+                ->where($db->quoteName('c.id') . ' != :Id')
+                ->bind(':Id', $id, ParameterType::INTEGER);
                 
                 $db->setQuery($query);
                 
@@ -92,13 +92,13 @@ class AdministratorService
                         if (in_array($item->lang_code, $content_languages))
                         {
                             $text    = $item->lang_code;
-                            $url     = Route::_('index.php?option=com_content&task=article.edit&id=' . (int) $item->id);
+                            $url     = Route::_('index.php?option=com_wsaonepage&task=edit&id=' . (int) $item->id);
                             $tooltip = '<strong>' . htmlspecialchars($item->language_title, ENT_QUOTES, 'UTF-8') . '</strong><br>'
                                 . htmlspecialchars($item->title, ENT_QUOTES, 'UTF-8') . '<br>' . Text::sprintf('JCATEGORY_SPRINTF', $item->category_title);
                                 $classes = 'badge bg-secondary';
                                 
                                 $item->link = '<a href="' . $url . '" class="' . $classes . '">' . $text . '</a>'
-                                    . '<div role="tooltip" id="tip-' . (int) $articleid . '-' . (int) $item->id . '">' . $tooltip . '</div>';
+                                    . '<div role="tooltip" id="tip-' . (int) $id . '-' . (int) $item->id . '">' . $tooltip . '</div>';
                         }
                         else
                         {
@@ -108,7 +108,7 @@ class AdministratorService
                     }
                 }
                 
-                $html = LayoutHelper::render('joomla.content.associations', $items);
+                $html = LayoutHelper::render('joomla.wsaonepage.associations', $items);
         }
         
         return $html;
