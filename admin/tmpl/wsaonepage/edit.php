@@ -92,10 +92,7 @@ $wa->getWebAssetManager()->enableAsset('choicesjs');
 			<div class="col-md-6">
 				<fieldset id="fieldset-metadata" class="options-form">
 					<legend><?php echo Text::_('JGLOBAL_FIELDSET_METADATA_OPTIONS'); ?></legend>
-				<?php // echo LayoutHelper::render('joomla.edit.metadata', $this); ?>
-    				<div>
-    					<?php echo $this->form->renderFieldset('metadata'); ?>
-    				</div>
+				<?php  echo LayoutHelper::render('joomla.edit.metadata', $this); ?>
 				</fieldset>
 			</div>
 		</div>
