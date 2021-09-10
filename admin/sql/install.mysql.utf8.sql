@@ -3,7 +3,8 @@
 -- v 0.0.11 added important Joomla fields like language and created. version not in line with https://docs.joomla.org/J3.x:Developing_an_MVC_Component any more, but in line with Component version
 -- v 0.2.01 added some default fields from #__content and chend some existing field in accordance with #__content (has no effect on existing table)
 -- v 0.7.9 attribs default '' until I know how to fill it from params.
--- v 0.7.19 metainfo default '' until I know how to fill it from params.
+-- v 0.7.10 metainfo default '' until I know how to fill it from params.
+-- v0.8.6 drop defaults of datetime fields. 
 --
 DROP TABLE IF EXISTS `#__wsaonepage`;
 
@@ -22,23 +23,23 @@ CREATE TABLE IF NOT EXISTS `#__wsaonepage` (
         `state` tinyint(3) NOT NULL DEFAULT 0,
 	`catid` int(10) unsigned NOT NULL DEFAULT 0,
 
-	`created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+	`created` datetime NOT NULL,
 
 	`created_by` int(10) unsigned NOT NULL DEFAULT 0,
 
 	`created_by_alias` varchar(255) NOT NULL DEFAULT '',
 
-  	`modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  	`modified` datetime NOT NULL,
 
   	`modified_by` int(10) unsigned NOT NULL DEFAULT 0,
 
   	`checked_out` int(10) unsigned NOT NULL DEFAULT 0,
 
-  	`checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  	`checked_out_time` datetime NOT NULL,
 
-  	`publish_up` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  	`publish_up` datetime NOT NULL,
 
-  	`publish_down` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  	`publish_down` datetime NOT NULL,
 
   	`attribs` varchar(5120) NOT NULL DEFAULT '',
 
