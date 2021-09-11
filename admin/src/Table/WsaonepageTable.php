@@ -34,8 +34,9 @@ class WsaonepageTable extends Table
 	function __construct(&$db) // TODO why &
 	{
 		parent::__construct('#__wsaonepage', 'id', $db);
+		$this->setColumnAlias('title', 'name');
 		
-		$this->created = Factory::getDate()->toSql();
+//		$this->created = Factory::getDate()->toSql();
 //		$this->setColumnAlias('published', 'state');
 		
 	
