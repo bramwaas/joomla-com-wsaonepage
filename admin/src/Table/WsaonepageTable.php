@@ -18,6 +18,8 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Registry\Registry;
+use Joomla\String\StringHelper;
+
 
 /**
  * WsaOnepage Table class
@@ -121,7 +123,7 @@ class WsaonepageTable extends Table
 	 *
 	 * @return  boolean  True on success, false on failure
 	 *
-	 * @see     \JTable::check
+	 * @see     Table::check
 	 * @since   1.5
 	 */
 	public function check()
@@ -139,7 +141,8 @@ class WsaonepageTable extends Table
 	    
 	    $this->default_con = (int) $this->default_con;
 	    
-	    if (\JFilterInput::checkAttribute(array('href', $this->webpage)))
+/*
+ 	    if (\JFilterInput::checkAttribute(array('href', $this->webpage)))
 	    {
 	        $this->setError(Text::_('COM_CONTACT_WARNING_PROVIDE_VALID_URL'));
 	        
@@ -153,7 +156,7 @@ class WsaonepageTable extends Table
 	        
 	        return false;
 	    }
-	    
+*/	    
 	    // Generate a valid alias
 	    $this->generateAlias();
 	    
