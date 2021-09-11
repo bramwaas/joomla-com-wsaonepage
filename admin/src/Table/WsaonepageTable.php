@@ -36,7 +36,6 @@ class WsaonepageTable extends Table
 	function __construct(&$db) // TODO why &
 	{
 		parent::__construct('#__wsaonepage', 'id', $db);
-		$this->setColumnAlias('title', 'name');
 		
 //		$this->created = Factory::getDate()->toSql();
 //		$this->setColumnAlias('published', 'state');
@@ -149,10 +148,10 @@ class WsaonepageTable extends Table
 	        return false;
 	    }
 	    
-	    // Check for valid name
-	    if (trim($this->name) == '')
+	    // Check for valid title
+	    if (trim($this->title) == '')
 	    {
-	        $this->setError(Text::_('COM_CONTACT_WARNING_PROVIDE_VALID_NAME'));
+	        $this->setError(Text::_('COM_WSAONEPAGE_WARNING_PROVIDE_VALID_TITLE'));
 	        
 	        return false;
 	    }
@@ -161,13 +160,13 @@ class WsaonepageTable extends Table
 	    $this->generateAlias();
 	    
 	    // Check for a valid category.
-	    if (!$this->catid = (int) $this->catid)
+/*	    if (!$this->catid = (int) $this->catid)
 	    {
 	        $this->setError(Text::_('JLIB_DATABASE_ERROR_CATEGORY_REQUIRED'));
 	        
 	        return false;
 	    }
-	    
+*/	    
 	    // Sanity check for user_id
 	    if (!$this->user_id)
 	    {
@@ -244,7 +243,7 @@ class WsaonepageTable extends Table
 	{
 	    if (empty($this->alias))
 	    {
-	        $this->alias = $this->name;
+	        $this->alias = $this->title;
 	    }
 	    
 	    $this->alias = ApplicationHelper::stringURLSafe($this->alias, $this->language);
