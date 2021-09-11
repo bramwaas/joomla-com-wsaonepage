@@ -5,6 +5,7 @@
 -- v 0.7.9 attribs default '' until I know how to fill it from params.
 -- v 0.7.10 metainfo default '' until I know how to fill it from params.
 -- v0.8.6 drop defaults of datetime fields. 
+-- v0.9.1 publish up and down NULL allowed.
 --
 DROP TABLE IF EXISTS `#__wsaonepage`;
 
@@ -37,9 +38,9 @@ CREATE TABLE IF NOT EXISTS `#__wsaonepage` (
 
   	`checked_out_time` datetime NOT NULL,
 
-  	`publish_up` datetime NOT NULL,
+  	`publish_up` datetime, 
 
-  	`publish_down` datetime NOT NULL,
+  	`publish_down` datetime, 
 
   	`attribs` varchar(5120) NOT NULL DEFAULT '',
 
