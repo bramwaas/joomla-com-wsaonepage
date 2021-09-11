@@ -55,7 +55,7 @@ $wa->getWebAssetManager()->enableAsset('choicesjs');
     method="post" name="adminForm" id="wsaonepage-form" class="form-validate">
 	<?php echo LayoutHelper::render('joomla.edit.title_alias', $this); ?>
     <div class="main-card">
-		<?php echo HTMLHelper::_('uitab.startTabSet', 'myTab', array('active' => 'details')); ?>
+		<?php echo HTMLHelper::_('uitab.startTabSet', 'myTab', ['active' => 'details', 'recall' => true, 'breakpoint' => 768]); ?>
 
 		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'details', Text::_('COM_WSAONEPAGE_DETAILS')); ?>
             <div class="row">

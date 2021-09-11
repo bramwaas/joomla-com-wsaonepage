@@ -3,18 +3,17 @@
 <!--  Form to update the component in Admin Component menu 
 changed 4-10-2020 after an example of banner.xml
 9-8-2021 J4 compared with contact.xml
-22-8-2021
+11-9-2021
 -->
 	<fieldset 
 	name="details"
-	addfieldprefix="WaasdorpSoekhan\Component\Wsaonepage\Administrator\Field"
 	label="COM_WSAONEPAGE_DETAILS"
 	>
 		<field
 				name="title"
 				type="text"
 				label="COM_WSAONEPAGE_TITLE_LABEL"
-				description="COM_WSAONEPAGE_TITLE_DESC"
+				hint="COM_WSAONEPAGE_TITLE_DESC"
 				size="40"
 				class="inputbox"
 				default=""
@@ -28,8 +27,9 @@ changed 4-10-2020 after an example of banner.xml
 				size="40" 
 				/>
 		<fieldset
-				name="wsaonepagedetails"
-				label="JGLOBAL_FIELDSET_DISPLAY_OPTIONS"
+			name="wsaonepagedetails"
+			addfieldprefix="WaasdorpSoekhan\Component\Wsaonepage\Administrator\Field"
+			label="JGLOBAL_FIELDSET_DISPLAY_OPTIONS"
 		>
 		<field
 			name="id"
@@ -40,21 +40,19 @@ changed 4-10-2020 after an example of banner.xml
 			readonly="true"
 			class="readonly"
 				/>
-<!-- trying a simple rule after example contact and helloworld joomla 3.2 -->				
 		<field
 				name="menutype"
 				type="wsamenutype"
 				label="COM_WSAONEPAGE_MENUTYPE_LABEL"
-				description="COM_WSAONEPAGE_MENUTYPE_DESC"
+				hint="COM_WSAONEPAGE_MENUTYPE_DESC"
 			filter="string"
-			validate="Wsamenutype"
 			required="true"
 				/>
 		<field
 				name="description"
 				type="text"
 				label="COM_WSAONEPAGE_DESCRIPTION_LABEL"
-				description="COM_WSAONEPAGE_DESCRIPTION_DESC"
+				hint="COM_WSAONEPAGE_DESCRIPTION_DESC"
 				size="256"
 				class="inputbox"
 				default=""
@@ -65,7 +63,6 @@ changed 4-10-2020 after an example of banner.xml
 				name="catid"
 				type="category"
 				label="JCATEGORY"
-				description="JCATEGORY"
 				extension="com_wsaonepage"
 				required="false"
 				class="inputbox"
@@ -87,14 +84,14 @@ changed 4-10-2020 after an example of banner.xml
 			class="advancedSelect"
 		/ -->
 	
-			<field
+		<field
 			name="state"
 			type="list"
 			label="JSTATUS"
-			description="COM_WSAONEPAGE_FIELD_STATE_DESC"
-			class="chzn-color-state"
+			class="form-select-color-state"
 			size="1"
 			default="1"
+			validate="options"
 			>
 			<option value="1">JPUBLISHED</option>
 			<option value="0">JUNPUBLISHED</option>
@@ -122,7 +119,7 @@ changed 4-10-2020 after an example of banner.xml
 			name="version_note"
 			type="text"
 			label="JGLOBAL_FIELD_VERSION_NOTE_LABEL"
-			description="JGLOBAL_FIELD_VERSION_NOTE_DESC"
+			hint="JGLOBAL_FIELD_VERSION_NOTE_DESC"
 			maxlength="255"
 			class="span12"
 			size="45"
@@ -150,7 +147,7 @@ changed 4-10-2020 after an example of banner.xml
 					name="show_category"
 					type="list"
 					label="COM_WSAONEPAGE_FIELD_SHOW_CATEGORY_LABEL"
-					description="COM_WSAONEPAGE_FIELD_SHOW_CATEGORY_DESC"
+					hint="COM_WSAONEPAGE_FIELD_SHOW_CATEGORY_DESC"
 					default=""
 			>
 				<option value="">JGLOBAL_USE_GLOBAL</option>
@@ -161,38 +158,48 @@ changed 4-10-2020 after an example of banner.xml
 	</fields>
 
 	<fieldset name="publish" label="COM_WSAONEPAGE_GROUP_LABEL_PUBLISHING_DETAILS">
-
+		<field
+			name="publish_up"
+			type="calendar"
+			label="COM_WSAONEPAGE_FIELD_PUBLISH_UP_LABEL"
+			translateformat="true"
+			showtime="true"
+			size="22"
+			filter="user_utc"
+		/>
+		<field
+			name="publish_down"
+			type="calendar"
+			label="COM_WSAONEPAGE_FIELD_PUBLISH_DOWN_LABEL"
+			translateformat="true"
+			showtime="true"
+			size="22"
+			filter="user_utc"
+		/>
 		<field
 			name="created"
 			type="calendar"
 			label="COM_WSAONEPAGE_FIELD_CREATED_LABEL"
-			description="COM_WSAONEPAGE_FIELD_CREATED_DESC"
 			size="22"
 			translateformat="true"
 			showtime="true"
 			filter="user_utc"
 		/>
-
 		<field
 			name="created_by"
 			type="user"
 			label="COM_WSAONEPAGE_FIELD_CREATED_BY_LABEL"
-			description="COM_WSAONEPAGE_FIELD_CREATED_BY_DESC"
 		/>
-
 		<field
 			name="created_by_alias"
 			type="text"
 			label="COM_WSAONEPAGE_FIELD_CREATED_BY_ALIAS_LABEL"
-			description="COM_WSAONEPAGE_FIELD_CREATED_BY_ALIAS_DESC"
 			size="20"
 		/>
-
 		<field
 			name="modified"
 			type="calendar"
 			label="JGLOBAL_FIELD_MODIFIED_LABEL"
-			description="COM_WSAONEPAGE_FIELD_MODIFIED_DESC"
 			class="readonly"
 			size="22"
 			readonly="true"
@@ -200,7 +207,6 @@ changed 4-10-2020 after an example of banner.xml
 			showtime="true"
 			filter="user_utc"
 		/>
-
 		<field
 			name="modified_by"
 			type="user"
@@ -210,38 +216,14 @@ changed 4-10-2020 after an example of banner.xml
 			readonly="true"
 			filter="unset"
 		/>
-
 		<field
 			name="version"
 			type="text"
 			label="COM_WSAONEPAGE_FIELD_VERSION_LABEL"
-			description="COM_WSAONEPAGE_FIELD_VERSION_DESC"
 			class="readonly"
 			size="6"
 			readonly="true"
 			filter="unset"
-		/>
-
-		<field
-			name="publish_up"
-			type="calendar"
-			label="COM_WSAONEPAGE_FIELD_PUBLISH_UP_LABEL"
-			description="COM_WSAONEPAGE_FIELD_PUBLISH_UP_DESC"
-			translateformat="true"
-			showtime="true"
-			size="22"
-			filter="user_utc"
-		/>
-
-		<field
-			name="publish_down"
-			type="calendar"
-			label="COM_WSAONEPAGE_FIELD_PUBLISH_DOWN_LABEL"
-			description="COM_WSAONEPAGE_FIELD_PUBLISH_DOWN_DESC"
-			translateformat="true"
-			showtime="true"
-			size="22"
-			filter="user_utc"
 		/>
 	</fieldset>
 	<fields name="metadata" label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
@@ -250,13 +232,14 @@ changed 4-10-2020 after an example of banner.xml
 				name="robots"
 				type="list"
 				label="JFIELD_METADATA_ROBOTS_LABEL"
-				description="JFIELD_METADATA_ROBOTS_DESC"
+				validate="options"
 				>
 				<option value="">JGLOBAL_USE_GLOBAL</option>
-				<option value="index, follow">JGLOBAL_INDEX_FOLLOW</option>
-				<option value="noindex, follow">JGLOBAL_NOINDEX_FOLLOW</option>
-				<option value="index, nofollow">JGLOBAL_INDEX_NOFOLLOW</option>
-				<option value="noindex, nofollow">JGLOBAL_NOINDEX_NOFOLLOW</option>
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="index, follow" />
+				<option value="noindex, follow" />
+				<option value="index, nofollow" />
+				<option value="noindex, nofollow" />
 			</field>
 
 			<field 
@@ -269,12 +252,9 @@ changed 4-10-2020 after an example of banner.xml
 
 			<field 
 				name="rights" 
-				type="textarea" 
+				type="text" 
 				label="JFIELD_META_RIGHTS_LABEL"
-				description="JFIELD_META_RIGHTS_DESC" 
-				filter="string"
-				cols="30" 
-				rows="2" 
+				size="20"
 			/>
 
 		<!-- TODO from article but probably not  applicable here
@@ -293,6 +273,15 @@ changed 4-10-2020 after an example of banner.xml
 			description="COM_WSAONEPAGE_FIELD_METAKEYWORDS_DESC"
 			rows="3"
 			cols="30"
+		/>
+		<field
+			name="metadesc"
+			type="textarea"
+			label="JFIELD_META_DESCRIPTION_LABEL"
+			rows="3"
+			cols="30"
+			maxlength="160"
+			charcounter="true"
 		/>
 
 	</fieldset>
