@@ -30,13 +30,13 @@
 
 use Joomla\CMS\Factory;   // this is the same as use Joomla\CMS\Factory as Factory
 // use Joomla\CMS\Helper\ModuleHelper;
-use Joomla\Registry\Registry; // for new Registry en params object
 use Joomla\CMS\Form\Form;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Factory\MVCFactory;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Registry\Registry; // for new Registry en params object
 
 /*
  * secure variables of app page and page component
@@ -193,7 +193,7 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 }
                 if (count($this->modules[$mItm->id]['position-8']))
                 {
-                    echo '<aside class="col-12 col-md">', PHP_EOL;
+                    echo '<aside class="position-8 col-12 col-md">', PHP_EOL;
                     foreach ($this->modules[$mItm->id]['position-8'] as $module)
                     {
                         echo $renderer->render($module, array('style' => 'none'));
@@ -209,7 +209,7 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 echo '</div>', PHP_EOL;
                 if (count($this->modules[$mItm->id]['position-7']))
                 {
-                    echo '<aside class="col-12 col-md">', PHP_EOL;
+                    echo '<aside class="position-7 col-12 col-md">', PHP_EOL;
                     foreach ($this->modules[$mItm->id]['position-7'] as $module)
                     {
                         echo $renderer->render($module, array('style' => 'none'));

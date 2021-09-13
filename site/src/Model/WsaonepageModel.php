@@ -9,6 +9,7 @@
  * 20210819 adaptations for Joomla 4.0
  * 20200901 component modules at position-7 and 8 added
  * 20210908 get cache renewed from getList Modulehelper
+ * 20210913 modules published up dowm rplece is nulldate by IS NULL
  */
 
 namespace WaasdorpSoekhan\Component\Wsaonepage\Site\Model;
@@ -198,15 +199,15 @@ class WsaonepageModel extends BaseDatabaseModel
 	    ->join('LEFT', '#__extensions AS e ON e.element = m.module AND e.client_id = m.client_id')
 	    ->where('e.enabled = 1');
 	    
-	    $date = Factory::getDate();
-	    $now = $date->toSql();
-	    $nullDate = $db->getNullDate();
-	    $query->where('(m.publish_up = ' . $db->quote($nullDate) . ' OR m.publish_up <= ' . $db->quote($now) . ')')
-	    ->where('(m.publish_down = ' . $db->quote($nullDate) . ' OR m.publish_down >= ' . $db->quote($now) . ')')
+	    $now = Factory::getDate()->toSql();
+	    $nullDate = $db->getNullDate(); //TODO null date verwijderen als J3 niet meer gebruikt wordt
+	    $query->where('(m.publish_up IS NULL OR m.publish_up = ' . $db->quote($nullDate) . ' OR m.publish_up <= '. $db->quote($now) .')')
+	    ->where('(m.publish_down IS NULL OR m.publish_down = ' . $db->quote($nullDate) . ' OR m.publish_down >= '. $db->quote($now) .')')
 	    ->where('m.access IN (' . $groups . ')')
 	    ->where('m.client_id = ' . $clientId)
 	    ->where('m.position IN (' . $this->positions . ')')
-	    ->where('(mm.menuid IN (' . $idlist . ') OR mm.menuid <= 0)');
+	    ->where('(mm.menuid IN (' . $idlist . ') OR mm.menuid <= 0)')
+	    ;
 	    
 	    // Filter by language
 	    if ($app->isClient('site') && $app->getLanguageFilter())
