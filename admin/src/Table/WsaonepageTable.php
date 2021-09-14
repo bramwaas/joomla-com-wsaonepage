@@ -16,6 +16,7 @@ use Joomla\CMS\Application\ApplicationHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Table\Table;
+use Joomla\CMS\Versioning\VersionableTableInterface;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Registry\Registry;
 use Joomla\String\StringHelper;
@@ -26,7 +27,7 @@ use Joomla\String\StringHelper;
  *
  * @since  0.0.1
  */
-class WsaonepageTable extends Table
+class WsaonepageTable extends Table implements VersionableTableInterface
 {
 	/**
 	 * Constructor
