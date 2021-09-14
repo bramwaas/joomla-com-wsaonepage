@@ -6,7 +6,7 @@
 -- v 0.7.10 metainfo default '' until I know how to fill it from params.
 -- v0.8.6 drop defaults of datetime fields. 
 -- v0.9.1 publish up and down NULL allowed.
--- v0.9.2 fields state = published and attribs removed
+-- v0.9.2 fields state = published and attribs removed `checked_out_time` NULL allowed
 --
 DROP TABLE IF EXISTS `#__wsaonepage`;
 
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `#__wsaonepage` (
   	`modified` datetime NOT NULL,
   	`modified_by` int(10) unsigned NOT NULL DEFAULT 0,
   	`checked_out` int(10) unsigned NOT NULL DEFAULT 0,
-  	`checked_out_time` datetime NOT NULL,
+  	`checked_out_time` datetime,
   	`publish_up` datetime, 
   	`publish_down` datetime, 
   	`version` int(10) unsigned NOT NULL DEFAULT 1 COMMENT 'Number of revisions',
