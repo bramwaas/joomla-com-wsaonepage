@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `#__wsaonepage` (
 	`created_by_alias` varchar(255) NOT NULL DEFAULT '',
   	`modified` datetime NOT NULL,
   	`modified_by` int(10) unsigned NOT NULL DEFAULT 0,
-  	`checked_out` int(10) unsigned NOT NULL DEFAULT 0,
+  	`checked_out` int(10) unsigned,
   	`checked_out_time` datetime,
   	`publish_up` datetime, 
   	`publish_down` datetime, 

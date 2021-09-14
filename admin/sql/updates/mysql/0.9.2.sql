@@ -5,3 +5,4 @@
 ALTER TABLE `#__wsaonepage` DROP COLUMN `attribs`;
 ALTER TABLE `#__wsaonepage` DROP COLUMN `state`;
 ALTER TABLE `#__wsaonepage` MODIFY `checked_out_time` datetime;
+ALTER TABLE `#__wsaonepage` MODIFY `checked_out` int(10) unsigned;
