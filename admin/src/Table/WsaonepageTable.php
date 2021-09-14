@@ -5,6 +5,7 @@
  *
  * @copyright   Copyright (C) 2020 - 2021 AHC Waasdorp. All rights reserved.
  * @license     GNU General Public License version 3 or later; see LICENSE.txt
+ * 20210914     several changes after com_tags.TagTable
  */
 
 namespace WaasdorpSoekhan\Component\Wsaonepage\Administrator\Table;
@@ -18,7 +19,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Versioning\VersionableTableInterface;
 use Joomla\Database\DatabaseDriver;
-use Joomla\Registry\Registry;
 use Joomla\String\StringHelper;
 
 
@@ -29,37 +29,32 @@ use Joomla\String\StringHelper;
  */
 class WsaonepageTable extends Table implements VersionableTableInterface
 {
+    /**
+     * An array of key names to be json encoded in the bind function (replaces overload bind function)
+     *
+     * @var    array
+     * @since  4.0.0 (0.9.2)
+     */
+    protected $_jsonEncode = ['params', 'metadata', 'urls', 'images'];
+    
+    /**
+     * Indicates that columns fully support the NULL value in the database
+     *
+     * @var    boolean
+     * @since  4.0.0 (0.9.2)
+     */
+    protected $_supportNullValue = true;
+       
 	/**
 	 * Constructor
 	 *
-	 * @param   DatabaseDriver  &$db  A database connector object
+	 * @param   DatabaseDriver  $db  A database connector object
 	 */
-	function __construct(&$db) // TODO why &
+	function __construct($db) // TODO why &db
 	{
+	    $this->typeAlias = 'com_wsaonepage.wsaonepage';
 		parent::__construct('#__wsaonepage', 'id', $db);
-		
-//		$this->created = Factory::getDate()->toSql();
-//		$this->setColumnAlias('published', 'state');
-		
 	
-	}
-	/**
-	 * Overloaded bind function
-	 *
-	 * @param       array           named array
-	 * @return      null|string     null is operation was satisfactory, otherwise returns an error
-	 * @see Table:bind
-	 * @since 1.5
-	 */
-	public function bind($array, $ignore = '')
-	{
-	    if (isset($array['params']) && is_array($array['params']))
-	    {
-	        // Convert the params field to a string.
-	        $registry = new Registry($array['params']);
-	        $array['params'] = (string) $registry;
-	    }
-	    return parent::bind($array, $ignore);
 	}
 	/**
 	 * Stores a wsaonepage.
@@ -199,6 +194,10 @@ class WsaonepageTable extends Table implements VersionableTableInterface
 	    {
 	        $this->metadesc = '';
 	    }
+	    if (empty($this->hits))
+	    {
+	        $this->hits = 0;
+	    }
 	    
 	    if (empty($this->params))
 	    {
@@ -257,7 +256,6 @@ class WsaonepageTable extends Table implements VersionableTableInterface
 	    return $this->alias;
 	}
 	
-	
 	/**
 	 * Get the type alias for the history table
 	 *
@@ -269,7 +267,6 @@ class WsaonepageTable extends Table implements VersionableTableInterface
 	{
 	    return $this->typeAlias;
 	}
-	
 	
 }
 
