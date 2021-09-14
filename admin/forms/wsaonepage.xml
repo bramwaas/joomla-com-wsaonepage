@@ -85,7 +85,7 @@ changed 4-10-2020 after an example of banner.xml
 		/ -->
 	
 		<field
-			name="state"
+			name="published"
 			type="list"
 			label="JSTATUS"
 			class="form-select-color-state"
