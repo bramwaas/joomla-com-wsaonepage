@@ -13,6 +13,7 @@ namespace WaasdorpSoekhan\Component\Wsaonepage\Administrator\View\Wsaonepage;
 \defined('_JEXEC') or die;
 
 //use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 //use Joomla\CMS\Helper\ContentHelper;
@@ -134,6 +135,13 @@ class HtmlView extends BaseHtmlView
 //            }
             
             ToolbarHelper::cancel('wsaonepage.cancel');
+            if (ComponentHelper::isEnabled('com_contenthistory') && $this->state->params->get('save_history', 0)
+                //&& $canDo->get('core.edit')
+                )
+            {
+                ToolbarHelper::versions('com_wsaonepage.wsaonepage', $this->item->id);
+            }
+            
         }
         else //(!$isNew)
         {

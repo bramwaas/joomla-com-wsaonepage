@@ -32,6 +32,13 @@ class WsaonepageModel extends AdminModel
      * @since  4.0.0
      */
     protected $formName = 'wsaonepage';
+    /**
+     * The type alias for this content type.
+     *
+     * @var    string
+     * @since  0.9.3 (joomla 3.2)
+     */
+    public $typeAlias = 'com_wsaonepage.wsaonepage';
     
     /**
      * Method to get a table object, load it if necessary.

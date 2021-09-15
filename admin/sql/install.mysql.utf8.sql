@@ -7,6 +7,7 @@
 -- v0.8.6 drop defaults of datetime fields. 
 -- v0.9.1 publish up and down NULL allowed.
 -- v0.9.2 fields state = published and attribs removed `checked_out_time` NULL allowed
+-- v0.9.3 insert record for com_contenthistory
 --
 DROP TABLE IF EXISTS `#__wsaonepage`;
 
@@ -54,4 +55,15 @@ CREATE TABLE IF NOT EXISTS `#__wsaonepage` (
 	DEFAULT CHARSET =utf8mb4
 	DEFAULT COLLATE=utf8mb4_unicode_ci;
       CREATE UNIQUE INDEX `aliasindex` ON `#__wsaonepage` (`alias`, `catid`); -- use after alias is filled ok
-
+--
+-- info for com_contenthistory 
+--
+INSERT INTO `#__content_types` (`type_id`, `type_title`, `type_alias`, `table`, `rules`, `field_mappings`, `router`, `content_history_options`) 
+VALUES
+(null, 
+'Wsaonepage', 
+'com_wsaonepage.wsaonepage', 
+'{"special":{"dbtable":"#__wsaonepage","key":"id","type":"Wsaonepage","prefix":"WsaonepageTable"}}', 
+'', '', '', '',
+'{"formFile":"administrator\\/components\\/com_joomprosubs\\/models\\/forms\\/subscription.xml", "hideFields":["checked_out","checked_out_time","params","language"], "ignoreChanges":["modified_by", "modified", "checked_out", "checked_out_time"], "convertToInt":["publish_up", "publish_down"], "displayLookup":[{"sourceColumn":"catid","targetTable":"#__categories","targetColumn":"id","displayColumn":"title"},{"sourceColumn":"group_id","targetTable":"#__usergroups","targetColumn":"id","displayColumn":"title"},{"sourceColumn":"created_by","targetTable":"#__users","targetColumn":"id","displayColumn":"name"},{"sourceColumn":"access","targetTable":"#__viewlevels","targetColumn":"id","displayColumn":"title"},{"sourceColumn":"modified_by","targetTable":"#__users","targetColumn":"id","displayColumn":"name"} ]}'
+);
