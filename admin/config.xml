@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
 	<fieldset
-		name="configuration"
+		name="component"
 		label="COM_WSAONEPAGE_CONFIG_SETTINGS_LABEL"
 		description="COM_WSAONEPAGE_CONFIG_SETTINGS_DESC"
 	>
@@ -18,7 +18,7 @@
 	</fieldset>
 	<fieldset
 		name="wsaonepage"
-		label="COM_WSAONEPAGE_FIELDSET_CONFIG_BANNER_OPTIONS_LABEL"
+		label="COM_WSAONEPAGE_FIELDSET_CONFIG_WSAONEPAGE_OPTIONS_LABEL"
 		>
 
 		<field
@@ -37,7 +37,7 @@
 			type="number"
 			label="JGLOBAL_HISTORY_LIMIT_OPTIONS_LABEL"
 			filter="integer"
-			default="10"
+			default="5"
 			showon="save_history:1"
 		/>
 

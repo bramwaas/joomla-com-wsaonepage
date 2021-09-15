@@ -54,6 +54,7 @@ class WsaonepageTable extends Table implements VersionableTableInterface
 	{
 	    $this->typeAlias = 'com_wsaonepage.wsaonepage';
 		parent::__construct('#__wsaonepage', 'id', $db);
+//		JObserverMapper::addObserverClassToClass('TableObserverContenthistory', 'WsaonepageTable', array('typeAlias' => 'com_wsaonepage.wsaonepage'));
 	
 	}
 	/**
