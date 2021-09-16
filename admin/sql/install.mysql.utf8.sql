@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `#__wsaonepage` (
   	`metadata` text NOT NULL DEFAULT '',
 	`language`  CHAR(7)  NOT NULL DEFAULT '*',
   	`xreference` varchar(50) NOT NULL DEFAULT '' COMMENT 'A reference to enable linkages to external data sets.',
-	`published` tinyint(4) NOT NULL DEFAULT '1'  COMMENT 'State of the record in some other components state',
+	`published` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'State of the record in some other components state',
 	`params`   VARCHAR(1024) NOT NULL DEFAULT '' COMMENT 'params for this component in some other components attribs',
 	`image`   VARCHAR(1024) NOT NULL DEFAULT '', 
 	PRIMARY KEY (`id`),
