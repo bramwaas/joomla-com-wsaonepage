@@ -18,7 +18,7 @@
 	</fieldset>
 	<fieldset
 		name="wsaonepage"
-		label="COM_WSAONEPAGE_FIELDSET_CONFIG_WSAONEPAGE_OPTIONS_LABEL"
+		label="COM_WSAONEPAGE_CONTENT_HISTORY_LABEL"
 		>
 
 		<field
