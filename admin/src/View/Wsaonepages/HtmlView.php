@@ -103,7 +103,7 @@ class HtmlView extends BaseHtmlView {
         ->text('JTOOLBAR_EMPTY_TRASH') // JTRASH JACTION_DELETE
         ->message('JGLOBAL_CONFIRM_DELETE')
         ->listCheck(true);
-        $toolbar->preferences('com_wsaonepages');
+        $toolbar->preferences('com_wsaonepage');
         
         
  
