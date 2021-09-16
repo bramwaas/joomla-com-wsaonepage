@@ -36,6 +36,7 @@
 		to copy FROM in the package to install therefore files copied
 		in this section are copied from /site/ in the package -->
  	<files folder="site/">
+		<filename>index.html</filename>
 		<folder>src</folder>
 		<folder>tmpl</folder>
 	</files>
@@ -59,6 +60,9 @@
 			to copy FROM in the package to install therefore files copied
 			in this section are copied from /admin/ in the package -->
 		<files folder="admin/">
+			<filename>access.xml</filename>
+			<filename>config.xml</filename>
+			<filename>index.html</filename>
             <folder>forms</folder>
             <folder>language</folder>
             <folder>services</folder>
