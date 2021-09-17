@@ -61,7 +61,7 @@ $wa->getWebAssetManager()->enableAsset('choicesjs');
 
 		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'details', Text::_('COM_WSAONEPAGE_DETAILS')); ?>
             <div class="row">
-                <div class="col-lg-9">
+                <div class="col-lg-8">
 					<fieldset class="control-group">
 					<legend class="visually-hidden">Details</legend>
 					<div class="control-label">
@@ -74,7 +74,7 @@ $wa->getWebAssetManager()->enableAsset('choicesjs');
 					<?php echo $this->form->getInput('description'); ?>
 					</fieldset>
                 </div>
-				<div class="col-lg-3">
+				<div class="col-lg-4">
 					<?php echo LayoutHelper::render('joomla.edit.global', $this); ?>
 				</div>
             </div>
