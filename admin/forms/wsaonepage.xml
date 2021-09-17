@@ -3,34 +3,8 @@
 <!--  Form to update the component in Admin Component menu 
 changed 4-10-2020 after an example of banner.xml
 9-8-2021 J4 compared with contact.xml
-11-9-2021
+17-9-2021 made more simple after example con_tags.
 -->
-	<fieldset 
-	name="details"
-	label="COM_WSAONEPAGE_DETAILS"
-	>
-		<field
-				name="title"
-				type="text"
-				label="COM_WSAONEPAGE_TITLE_LABEL"
-				hint="COM_WSAONEPAGE_TITLE_DESC"
-				size="40"
-				class="inputbox"
-				default=""
-				/>
-		<field 
-				name="alias" 
-				type="text" 
-				label="JFIELD_ALIAS_LABEL"
-				description="JFIELD_ALIAS_DESC"
-				hint="JFIELD_ALIAS_PLACEHOLDER"
-				size="40" 
-				/>
-		<fieldset
-			name="wsaonepagedetails"
-			addfieldprefix="WaasdorpSoekhan\Component\Wsaonepage\Administrator\Field"
-			label="JGLOBAL_FIELDSET_DISPLAY_OPTIONS"
-		>
 		<field
 			name="id"
 			type="number"
@@ -41,13 +15,12 @@ changed 4-10-2020 after an example of banner.xml
 			class="readonly"
 				/>
 		<field
-				name="menutype"
-				type="wsamenutype"
-				label="COM_WSAONEPAGE_MENUTYPE_LABEL"
-				hint="COM_WSAONEPAGE_MENUTYPE_DESC"
-			filter="string"
-			required="true"
-				/>
+				name="title"
+				type="text"
+				label="JGLOBAL_TITLE"
+				size="40"
+				required="true"
+				/> 
 		<field
 				name="description"
 				type="text"
@@ -57,33 +30,6 @@ changed 4-10-2020 after an example of banner.xml
 				class="inputbox"
 				default=""
 				/>
-		
-	</fieldset>
-			<field
-				name="catid"
-				type="category"
-				label="JCATEGORY"
-				extension="com_wsaonepage"
-				required="false"
-				class="inputbox"
-				default="0"
-				>
-				 <option value="0">JOPTION_SELECT_CATEGORY</option>
-				 <option value="1">1</option>
-		</field>
-		
-		<!-- from article but there within fieldset TODO for later -->
-		<!--  field 
-			name="catid"
-			type="categoryedit"
-			label="JCATEGORY"
-			extension="com_wsaonepage"
-			addfieldprefix="Joomla\Component\Categories\Administrator\Field"
-			required="true"
-			default=""
-			class="advancedSelect"
-		/ -->
-	
 		<field
 			name="published"
 			type="list"
@@ -98,6 +44,156 @@ changed 4-10-2020 after an example of banner.xml
 			<option value="2">JARCHIVED</option>
 			<option value="-2">JTRASHED</option>
 		</field>
+		<field
+			name="publish_up"
+			type="calendar"
+			label="COM_WSAONEPAGE_FIELD_PUBLISH_UP_LABEL"
+			translateformat="true"
+			showtime="true"
+			size="22"
+			filter="user_utc"
+		/>
+		<field
+			name="publish_down"
+			type="calendar"
+			label="COM_WSAONEPAGE_FIELD_PUBLISH_DOWN_LABEL"
+			translateformat="true"
+			showtime="true"
+			size="22"
+			filter="user_utc"
+		/>
+		<field
+			name="checked_out"
+			type="hidden"
+			filter="unset"
+		/>
+		<field
+			name="checked_out_time"
+			type="hidden"
+			filter="unset"
+		/>
+		<field
+			name="version"
+			type="text"
+			label="COM_WSAONEPAGE_FIELD_VERSION_LABEL"
+			class="readonly"
+			size="6"
+			readonly="true"
+			filter="unset"
+		/>
+		<field
+			name="metadesc"
+			type="textarea"
+			label="JFIELD_META_DESCRIPTION_LABEL"
+			rows="3"
+			cols="40"
+			maxlength="160"
+			charcounter="true"
+		/>
+		<field
+			name="metakey"
+			type="textarea"
+			label="JFIELD_META_KEYWORDS_LABEL"
+			rows="3"
+			cols="40"
+		/>
+		<field 
+			name="alias" 
+			type="text" 
+			label="JFIELD_ALIAS_LABEL"
+			description="JFIELD_ALIAS_DESC"
+			hint="JFIELD_ALIAS_PLACEHOLDER"
+			size="40" 
+		/>
+		<field
+			name="created_by"
+			type="user"
+			label="JGLOBAL_FIELD_CREATED_BY_LABEL"
+			validate="UserId"
+		/>
+		<field
+			name="created_by_alias"
+			type="text"
+			label="JGLOBAL_FIELD_CREATED_BY_ALIAS_LABEL"
+			size="20"
+		/>
+		<field
+			name="created"
+			type="calendar"
+			label="JGLOBAL_CREATED_DATE"
+			class="readonly"
+			translateformat="true"
+			showtime="true"
+			filter="user_utc"
+		/>
+		<field
+			name="modified_by"
+			type="user"
+			label="JGLOBAL_FIELD_MODIFIED_BY_LABEL"
+			class="readonly"
+			readonly="true"
+			filter="unset"
+			validate="UserId"
+		/>
+		<field
+			name="modified"
+			type="calendar"
+			label="JGLOBAL_FIELD_MODIFIED_LABEL"
+			class="readonly"
+			readonly="true"
+			translateformat="true"
+			showtime="true"
+			filter="user_utc"
+		/>
+		<field
+			name="language" 
+			type="contentlanguage" 
+			label="JFIELD_LANGUAGE_LABEL"
+			description="COM_WSAONEPAGE_FIELD_LANGUAGE_DESC"
+			>
+			<option value="*">JALL</option>
+		</field>
+		<field name="version_note"
+			type="text"
+			label="JGLOBAL_FIELD_VERSION_NOTE_LABEL"
+			description="JGLOBAL_FIELD_VERSION_NOTE_DESC"
+			class="inputbox" size="255"
+			labelclass="control-label"
+		/>
+
+
+
+	<fieldset 
+	name="details"
+	label="COM_WSAONEPAGE_DETAILS"
+	>
+		<fieldset
+			name="wsaonepagedetails"
+			label="JGLOBAL_FIELDSET_DISPLAY_OPTIONS"
+		>
+		<field
+			name="menutype"
+			addfieldprefix="WaasdorpSoekhan\Component\Wsaonepage\Administrator\Field"
+			type="wsamenutype"
+			label="COM_WSAONEPAGE_MENUTYPE_LABEL"
+			hint="COM_WSAONEPAGE_MENUTYPE_DESC"
+			filter="string"
+			required="true"
+		/>
+		
+			<!-- field
+				name="catid"
+				type="category"
+				label="JCATEGORY"
+				extension="com_wsaonepage"
+				required="false"
+				class="inputbox"
+				default="0"
+				>
+				 <option value="0">JOPTION_SELECT_CATEGORY</option>
+				 <option value="1">1</option>
+		</field -->
+	
 
 		<!-- field
 			name="ordering"
@@ -106,33 +202,22 @@ changed 4-10-2020 after an example of banner.xml
 			description="JFIELD_ORDERING_DESC"
 			table="#__wsaonepage"
 		/ -->
+		</fieldset>
 
-		<field
-				name="language" 
-				type="contentlanguage" 
-				label="JFIELD_LANGUAGE_LABEL"
-				description="COM_WSAONEPAGE_FIELD_LANGUAGE_DESC"
-				>
-				<option value="*">JALL</option>
-		</field>
-		<field
-			name="version_note"
-			type="text"
-			label="JGLOBAL_FIELD_VERSION_NOTE_LABEL"
-			hint="JGLOBAL_FIELD_VERSION_NOTE_DESC"
-			maxlength="255"
-			class="span12"
-			size="45"
-			labelclass="control-label"
-		/>
 		</fieldset>
 	
 
-	<fields name="params">
 		<fieldset
-				name="params"
-				label="JGLOBAL_FIELDSET_DISPLAY_OPTIONS"
+				name="basic"
+				label="COM_WSAONEPAGE_BASIC_FIELDSET_LABEL"
 		>
+		<fieldset
+				name="options"
+				label="COM_WSAONEPAGE_BASIC_FIELDSET_LABEL"
+		>
+			<fields name="params"
+					label="JGLOBAL_FIELDSET_DISPLAY_OPTIONS"
+	>
 				<field
 					name="show_title"
 					type="list"
@@ -154,95 +239,10 @@ changed 4-10-2020 after an example of banner.xml
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
 			</field>
-		</fieldset>
-	</fields>
-
-	<fieldset name="publish" label="COM_WSAONEPAGE_GROUP_LABEL_PUBLISHING_DETAILS">
-		<field
-			name="publish_up"
-			type="calendar"
-			label="COM_WSAONEPAGE_FIELD_PUBLISH_UP_LABEL"
-			translateformat="true"
-			showtime="true"
-			size="22"
-			filter="user_utc"
-		/>
-		<field
-			name="publish_down"
-			type="calendar"
-			label="COM_WSAONEPAGE_FIELD_PUBLISH_DOWN_LABEL"
-			translateformat="true"
-			showtime="true"
-			size="22"
-			filter="user_utc"
-		/>
-		<field
-			name="created"
-			type="calendar"
-			label="COM_WSAONEPAGE_FIELD_CREATED_LABEL"
-			size="22"
-			translateformat="true"
-			showtime="true"
-			filter="user_utc"
-		/>
-		<field
-			name="created_by"
-			type="user"
-			label="COM_WSAONEPAGE_FIELD_CREATED_BY_LABEL"
-		/>
-		<field
-			name="created_by_alias"
-			type="text"
-			label="COM_WSAONEPAGE_FIELD_CREATED_BY_ALIAS_LABEL"
-			size="20"
-		/>
-		<field
-			name="modified"
-			type="calendar"
-			label="JGLOBAL_FIELD_MODIFIED_LABEL"
-			class="readonly"
-			size="22"
-			readonly="true"
-			translateformat="true"
-			showtime="true"
-			filter="user_utc"
-		/>
-		<field
-			name="modified_by"
-			type="user"
-			label="JGLOBAL_FIELD_MODIFIED_BY_LABEL"
-			class="readonly"
-			readonly="true"
-			filter="unset"
-		/>
-		<field
-			name="version"
-			type="text"
-			label="COM_WSAONEPAGE_FIELD_VERSION_LABEL"
-			class="readonly"
-			size="6"
-			readonly="true"
-			filter="unset"
-		/>
-		<field name="version_note"
-			type="text"
-			label="JGLOBAL_FIELD_VERSION_NOTE_LABEL"
-			description="JGLOBAL_FIELD_VERSION_NOTE_DESC"
-			class="inputbox" size="45"
-			labelclass="control-label"
-		/>
-		<field
-		name="checked_out"
-		type="hidden"
-		filter="unset"
-	/>
-
-	<field
-		name="checked_out_time"
-		type="hidden"
-		filter="unset"
-	/>
+		</fields>
 	</fieldset>
+	</fieldset>
+
 	<fields name="metadata" label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
 		<fieldset name="jmetadata" label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
 			<field 
@@ -283,27 +283,10 @@ changed 4-10-2020 after an example of banner.xml
 				size="20" 
 			/> -->
 
-		<field
-			name="metakey"
-			type="textarea"
-			label="JFIELD_META_KEYWORDS_LABEL"
-			description="COM_WSAONEPAGE_FIELD_METAKEYWORDS_DESC"
-			rows="3"
-			cols="30"
-		/>
-		<field
-			name="metadesc"
-			type="textarea"
-			label="JFIELD_META_DESCRIPTION_LABEL"
-			rows="3"
-			cols="30"
-			maxlength="160"
-			charcounter="true"
-		/>
 
 	</fieldset>
 	</fields>
-		<fieldset
+		<!-- fieldset
 			name="accesscontrol"
 			label="COM_WSAONEPAGE_FIELDSET_RULES"
 	>
@@ -322,5 +305,5 @@ changed 4-10-2020 after an example of banner.xml
 				component="com_wsaonepage"
 				section="message"
 				/>
-    </fieldset>
+    </fieldset -->
 </form>
