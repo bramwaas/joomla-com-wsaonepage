@@ -12,7 +12,6 @@ namespace WaasdorpSoekhan\Component\Wsaonepage\Administrator\View\Wsaonepage;
 
 \defined('_JEXEC') or die;
 
-//use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
