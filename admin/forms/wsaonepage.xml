@@ -37,6 +37,7 @@ changed 4-10-2020 after an example of banner.xml
 		filter="JComponentHelper::filterText"
 		buttons="true"
 		hide="readmore,pagebreak"
+		rows="3"
 	/>
 	<field
 		name="published"
