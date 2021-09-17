@@ -62,11 +62,15 @@ $wa->getWebAssetManager()->enableAsset('choicesjs');
 		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'details', Text::_('COM_WSAONEPAGE_DETAILS')); ?>
             <div class="row">
                 <div class="col-lg-9">
-					<fieldset class="form-vertical">
+					<fieldset class="control-group">
 					<legend class="visually-hidden">Details</legend>
+					<div class="control-label">
 					<?php echo $this->form->getLabel('menutype'); ?>
+					</div>
 					<?php echo $this->form->getInput('menutype'); ?>
+					<div class="control-label">
 					<?php echo $this->form->getLabel('description'); ?>
+					</div>
 					<?php echo $this->form->getInput('description'); ?>
 					</fieldset>
                 </div>
