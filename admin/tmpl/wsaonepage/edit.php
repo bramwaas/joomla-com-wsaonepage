@@ -6,6 +6,7 @@
   * @copyright   Copyright (C) 2005 - 2021 A.H.C. Waasdorp. All rights reserved.
  * @license     GNU General Public License version 3 or later; see LICENSE.txt
  * 11-8-2021 changed after similar changes J3.5 to J4 from com_banner and com_contact.
+ * 17-9-2021 changed after simlifying the forma after example of com_tags.
  */
 // 
 // No direct access
@@ -31,7 +32,7 @@ $wa->useScript('keepalive')
     ->useScript('form.validate');
 
 // Fieldsets to not automatically render by /layouts/joomla/edit/params.php
-$this->ignore_fieldsets = ['details', 'item_associations', 'jmetadata'];
+$this->ignore_fieldsets = ['jmetadata', 'details','item_associations'];
 $this->useCoreUI = true;
     
     
@@ -54,13 +55,20 @@ $wa->getWebAssetManager()->enableAsset('choicesjs');
 <form action="<?php echo Route::_('index.php?option=com_wsaonepage&layout=edit&id=' . (int) $this->item->id); ?>"
     method="post" name="adminForm" id="wsaonepage-form" class="form-validate">
 	<?php echo LayoutHelper::render('joomla.edit.title_alias', $this); ?>
+	
     <div class="main-card">
 		<?php echo HTMLHelper::_('uitab.startTabSet', 'myTab', ['active' => 'details', 'recall' => true, 'breakpoint' => 768]); ?>
 
 		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'details', Text::_('COM_WSAONEPAGE_DETAILS')); ?>
             <div class="row">
                 <div class="col-lg-9">
-					<?php echo $this->form->renderFieldset('wsaonepagedetails'); ?>
+					<fieldset class="form-vertical">
+					<legend class="visually-hidden">Details</legend>
+					<?php echo $this->form->getLabel('menutype'); ?>
+					<?php echo $this->form->getInput('menutype'); ?>
+					<?php echo $this->form->getLabel('description'); ?>
+					<?php echo $this->form->getInput('description'); ?>
+					</fieldset>
                 </div>
 				<div class="col-lg-3">
 					<?php echo LayoutHelper::render('joomla.edit.global', $this); ?>
@@ -68,28 +76,17 @@ $wa->getWebAssetManager()->enableAsset('choicesjs');
             </div>
 		<?php echo HTMLHelper::_('uitab.endTab'); ?>
 
-		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'params', Text::_('COM_WSAONEPAGE_GROUP_LABEL_WSAONEPAGE_DETAILS')); ?>
-			<fieldset id="fieldset-params" class="options-form">
-				<legend><?php echo Text::_('COM_WSAONEPAGE_GROUP_LABEL_WSAONEPAGE_DETAILS'); ?></legend>
-				<div>
-				<?php echo $this->form->renderFieldset('params'); ?>
-				</div>
-			</fieldset>
-		<?php echo HTMLHelper::_('uitab.endTab'); ?>
-		
-				<?php /* might ever replace params but is to chaotic for now attribs default ''
-				* echo LayoutHelper::render('joomla.edit.params', $this); */ ?>
-		
-		
+		<?php echo LayoutHelper::render('joomla.edit.params', $this); ?>
+
 		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'publishing', Text::_('JGLOBAL_FIELDSET_PUBLISHING')); ?>
 		<div class="row">
-			<div class="col-md-6">
+			<div class="col-12 col-lg-6">
 				<fieldset id="fieldset-publishingdata" class="options-form">
 					<legend><?php echo Text::_('JGLOBAL_FIELDSET_PUBLISHING'); ?></legend>
 				<?php echo LayoutHelper::render('joomla.edit.publishingdata', $this); ?>
 				</fieldset>
 			</div>
-			<div class="col-md-6">
+			<div class="col-12 col-lg-6">
 				<fieldset id="fieldset-metadata" class="options-form">
 					<legend><?php echo Text::_('JGLOBAL_FIELDSET_METADATA_OPTIONS'); ?></legend>
 				<?php  echo LayoutHelper::render('joomla.edit.metadata', $this); ?>
@@ -102,6 +99,6 @@ $wa->getWebAssetManager()->enableAsset('choicesjs');
 
 
     </div>
-    <input type="hidden" name="task" value="wsaonepage.edit" />
+    <input type="hidden" name="task" value="" />
     <?php echo HTMLHelper::_('form.token'); ?>
 </form>
