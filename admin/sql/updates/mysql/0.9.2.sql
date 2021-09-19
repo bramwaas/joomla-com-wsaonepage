@@ -19,4 +19,4 @@ ALTER TABLE `#__wsaonepage` MODIFY `checked_out` int(10) unsigned;
 ALTER TABLE `#__wsaonepage` DROP INDEX IF EXISTS `idx_published`;
 ALTER TABLE `#__wsaonepage` ADD INDEX `idx_published` (`published`);
 ALTER TABLE `#__wsaonepage` DROP INDEX IF EXISTS `idx_alias`;
-ALTER TABLE `#__wsaonepage` ADD UNIQUE KEY `idx_alias` (`alias`(191));
+ALTER TABLE `#__wsaonepage` ADD UNIQUE INDEX `idx_alias` (`alias`(191));
