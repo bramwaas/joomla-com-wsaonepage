@@ -5,7 +5,7 @@
  *
  * @copyright   Copyright (C) 2020 - 2021 AHC Waasdorp. All rights reserved.
  * @license     GNU General Public License version 3 or later; see LICENSE.txt
- * 20210914     several changes after com_tags.TagTable
+ * 20210919     several changes after com_tags.TagTable
  */
 
 namespace WaasdorpSoekhan\Component\Wsaonepage\Administrator\Table;
@@ -105,7 +105,7 @@ class WsaonepageTable extends Table implements VersionableTableInterface
 	    // Verify that the alias is unique
 	    $table = Table::getInstance('WsaonepageTable', __NAMESPACE__ . '\\', array('dbo' => $this->getDbo()));
 	    
-	    if ($table->load(array('alias' => $this->alias, 'catid' => $this->catid)) && ($table->id != $this->id || $this->id == 0))
+	    if ($table->load(array('alias' => $this->alias)) && ($table->id != $this->id || $this->id == 0))
 	    {
 	        $this->setError(Text::_('COM_WSAONEPAGE_ERROR_UNIQUE_ALIAS'));
 	        
@@ -144,7 +144,7 @@ class WsaonepageTable extends Table implements VersionableTableInterface
 	        
 	        return false;
 	    }
-	    
+*/	 	    
 	    // Check for valid title
 	    if (trim($this->title) == '')
 	    {
@@ -152,18 +152,10 @@ class WsaonepageTable extends Table implements VersionableTableInterface
 	        
 	        return false;
 	    }
-*/	    
+   
 	    // Generate a valid alias
 	    $this->generateAlias();
 	    
-	    // Check for a valid category.
-/*	    if (!$this->catid = (int) $this->catid)
-	    {
-	        $this->setError(Text::_('JLIB_DATABASE_ERROR_CATEGORY_REQUIRED'));
-	        
-	        return false;
-	    }
-*/	    
 	    // Sanity check for user_id
 	    if (!$this->user_id)
 	    {

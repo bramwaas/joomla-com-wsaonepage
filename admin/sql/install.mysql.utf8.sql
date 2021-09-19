@@ -19,7 +19,6 @@ CREATE TABLE IF NOT EXISTS `#__wsaonepage` (
   	`alias` varchar(400) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
 	`menutype` VARCHAR(25) NOT NULL,
 	`description` VARCHAR(255) NOT NULL DEFAULT '',
-	`catid` int(10) unsigned NOT NULL DEFAULT 0,
 	`created` datetime NOT NULL,
 	`created_by` int(10) unsigned NOT NULL DEFAULT 0,
 	`created_by_alias` varchar(255) NOT NULL DEFAULT '',
@@ -37,25 +36,20 @@ CREATE TABLE IF NOT EXISTS `#__wsaonepage` (
   	`hits` int(10) unsigned NOT NULL DEFAULT 0,
   	`metadata` text NOT NULL DEFAULT '',
 	`language`  CHAR(7)  NOT NULL DEFAULT '*',
-  	`xreference` varchar(50) NOT NULL DEFAULT '' COMMENT 'A reference to enable linkages to external data sets.',
 	`published` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'State of the record in some other components state',
 	`params`   VARCHAR(1024) NOT NULL DEFAULT '' COMMENT 'params for this component in some other components attribs',
 	`image`   VARCHAR(1024) NOT NULL DEFAULT '', 
 	PRIMARY KEY (`id`),
-  	KEY `idx_alias` (`alias`(191)),
+  	UNIQUE KEY `idx_alias` (`alias`(191)),
   	KEY `idx_access` (`access`),
-  	KEY `idx_catid` (`catid`),
   	KEY `idx_checkout` (`checked_out`),
   	KEY `idx_createdby` (`created_by`),
   	KEY `idx_language` (`language`),
   	KEY `idx_published` (`published`),
-  	KEY `idx_xreference` (`xreference`)
-
 )
 	ENGINE =InnoDB
 	DEFAULT CHARSET =utf8mb4
 	DEFAULT COLLATE=utf8mb4_unicode_ci;
-      CREATE UNIQUE INDEX `aliasindex` ON `#__wsaonepage` (`alias`, `catid`); -- use after alias is filled ok
 --
 -- info for com_contenthistory 
 --

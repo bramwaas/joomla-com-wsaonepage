@@ -49,6 +49,22 @@ class HtmlView extends BaseHtmlView
      * @since  0.6.1
      */
     protected $state;
+
+    /**
+     * Flag if an association exists
+     *
+     * @var  boolean
+     */
+    protected $assoc;
+    
+    /**
+     * The actions the user is authorised to perform
+     *
+     *  @var    object
+     * @since  4.0.0
+     */
+    protected $canDo;
+    
     
     /**
      * Display the main "Wsaonepage" view

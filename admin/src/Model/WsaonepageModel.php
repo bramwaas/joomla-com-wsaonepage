@@ -5,17 +5,15 @@
  *
  * @copyright   Copyright (C) 2005 - 2021 A.H.C. Waasdorp. All rights reserved.
  * @license     GNU General Public License version 3 or later; see LICENSE.txt
- * 8-8-2021
+ * 19-9-2021
  */
 namespace WaasdorpSoekhan\Component\Wsaonepage\Administrator\Model;
 // No direct access to this file
 \defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Form\Form;
-use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
-use Joomla\CMS\Table\Table;
+use Joomla\CMS\Versioning\VersionableModelTrait;
 use Joomla\Registry\Registry;
 
 /**
@@ -25,6 +23,7 @@ use Joomla\Registry\Registry;
  */
 class WsaonepageModel extends AdminModel
 {
+    use VersionableModelTrait;
     /**
      * Name of the form
      *
@@ -39,6 +38,25 @@ class WsaonepageModel extends AdminModel
      * @since  0.9.3 (joomla 3.2)
      */
     public $typeAlias = 'com_wsaonepage.wsaonepage';
+
+    /**
+     * Method to test whether a record can be deleted.
+     *
+     * @param   object  $record  A record object.
+     *
+     * @return  boolean  True if allowed to delete the record. Defaults to the permission set in the component.
+     *
+     * @since   3.1
+     */
+    protected function canDelete($record)
+    {
+        if (empty($record->id) || $record->published != -2)
+        {
+            return false;
+        }
+        
+        return parent::canDelete($record);
+    }
     
     /**
      * Method to get a table object, load it if necessary.

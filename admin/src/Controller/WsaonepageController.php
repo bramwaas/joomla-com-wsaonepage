@@ -10,6 +10,8 @@ namespace WaasdorpSoekhan\Component\Wsaonepage\Administrator\Controller;
 // No direct access to this file
 \defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\MVC\Controller\FormController;
+use Joomla\CMS\Versioning\VersionableControllerTrait;
+
 
 /**
  * Wsaonepage Controller
@@ -20,4 +22,35 @@ use Joomla\CMS\MVC\Controller\FormController;
  */
 class WsaonepageController extends FormController
 {
+    use VersionableControllerTrait;
+    /**
+     * Method to check if you can add a new record.
+     *
+     * @param   array  $data  An array of input data.
+     *
+     * @return  boolean
+     *
+     * @since   3.1
+     */
+    protected function allowAdd($data = array())
+    {
+        return $this->app->getIdentity()->authorise('core.create', 'com_wsaonepage');
+    }
+    
+    /**
+     * Method to check if you can edit a record.
+     *
+     * @param   array   $data  An array of input data.
+     * @param   string  $key   The name of the key for the primary key.
+     *
+     * @return  boolean
+     *
+     * @since   3.1
+     */
+    protected function allowEdit($data = array(), $key = 'id')
+    {
+        // Since there is no asset tracking and no categories, revert to the component permissions.
+        return parent::allowEdit($data, $key);
+    }
+    
 }

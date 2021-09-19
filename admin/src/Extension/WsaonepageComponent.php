@@ -12,15 +12,11 @@ namespace WaasdorpSoekhan\Component\Wsaonepage\Administrator\Extension;
 
 \defined('JPATH_PLATFORM') or die;
 
-//use Joomla\CMS\Categories\CategoryServiceInterface;
-//use Joomla\CMS\Categories\CategoryServiceTrait;
 use Joomla\CMS\Component\Router\RouterServiceInterface;
 use Joomla\CMS\Component\Router\RouterServiceTrait;
 use Joomla\CMS\Extension\BootableExtensionInterface;
 use Joomla\CMS\Extension\MVCComponent;
 use Joomla\CMS\HTML\HTMLRegistryAwareTrait;
-//use Joomla\CMS\Tag\TagServiceInterface;
-//use Joomla\CMS\Tag\TagServiceTrait;
 //use WaasdorpSoekhan\Component\Wsaonepage\Administrator\Service\Html\AdministratorService;
 use Psr\Container\ContainerInterface;  // TODO find a way to solve this eclipse error
 
