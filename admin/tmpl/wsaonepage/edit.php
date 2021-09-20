@@ -6,7 +6,7 @@
   * @copyright   Copyright (C) 2005 - 2021 A.H.C. Waasdorp. All rights reserved.
  * @license     GNU General Public License version 3 or later; see LICENSE.txt
  * 11-8-2021 changed after similar changes J3.5 to J4 from com_banner and com_contact.
- * 17-9-2021 changed after simlifying the forma after example of com_tags.
+ * 17-9-2021 changed after simlpifying the form after example of com_tags.
  */
 // 
 // No direct access
