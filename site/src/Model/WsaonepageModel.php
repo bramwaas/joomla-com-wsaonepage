@@ -101,7 +101,6 @@ class WsaonepageModel extends BaseDatabaseModel
 	        $query = $db->getQuery(true);
 	        $query->select('h.id, h.asset_id, h.created, h.created_by, h.title, h.alias, h.language, h.description, h.menutype, h.description, h.published, h.params, c.title as category')
 	        ->from('#__wsaonepage as h')
-	        ->leftJoin('#__categories as c ON h.catid=c.id')
 	        ->where('h.id=' . (int)$id);
 	        
 	        if (Multilanguage::isEnabled())
