@@ -99,7 +99,7 @@ class WsaonepageModel extends BaseDatabaseModel
 	        $id    = $this->getState('wsaonepage.id');
 	        $db    = $this->getDbo();
 	        $query = $db->getQuery(true);
-	        $query->select('h.id, h.asset_id, h.created, h.created_by, h.title, h.alias, h.language, h.description, h.menutype, h.description, h.published, h.params, c.title as category')
+	        $query->select('h.id, h.asset_id, h.created, h.created_by, h.title, h.alias, h.language, h.description, h.menutype, h.description, h.published, h.params')
 	        ->from('#__wsaonepage as h')
 	        ->where('h.id=' . (int)$id);
 	        
