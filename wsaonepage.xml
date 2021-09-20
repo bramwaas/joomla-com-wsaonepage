@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="4.0" method="upgrade">
-<!-- 2021-08-06 start  adjustments for Joomla 4 to begin with namespaces for this component's classes-->
+<!-- 2021-09-20 start  adjustments for Joomla 4 to begin with namespaces for this component's classes-->
   <compatibility>
     <include>
-      <versions from="3.9.0" to="4.99.99" />
+      <versions from="3.10.0" to="4.99.99" />
     </include>
   </compatibility>
 	<name>com_wsaonepage</name>
@@ -15,7 +15,7 @@
 	<copyright>A.H.C. Waasdorp, Amsterdam 2020 - 2021</copyright>
     <license>GPL v3</license>
 	<!--  The version string is recorded in the components table -->
-	<version>0.9.4</version>
+	<version>0.10.0</version>
 	<!-- The description is optional and defaults to the name -->
 	<description>COM_WSAONEPAGE_DESCRIPTION</description>
     <!-- This is the PHP namespace under which the extension's
@@ -37,6 +37,15 @@
 		in this section are copied from /site/ in the package -->
  	<files folder="site/">
 		<filename>index.html</filename>
+			<!-- for Joomla 3.10 from v 0.3.0 -->
+			<filename>controller.php</filename>
+			<filename>router.php</filename>
+			<filename>wsaonepage.php</filename>
+            <folder>controllers</folder>
+            <folder>helpers</folder>
+            <folder>models</folder>
+            <folder>views</folder>
+			<!-- end for Joomla 3.10 -->
 		<folder>src</folder>
 		<folder>tmpl</folder>
 	</files>
