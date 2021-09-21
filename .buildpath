@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<buildpath>
+	<buildpathentry combineaccessrules="false" kind="prj" path="/database"/>
+	<buildpathentry combineaccessrules="false" kind="prj" path="/di"/>
+	<buildpathentry combineaccessrules="false" kind="prj" path="/registry"/>
+	<buildpathentry kind="src" path=""/>
+	<buildpathentry combineaccessrules="false" kind="prj" path="/string"/>
+	<buildpathentry kind="con" path="org.eclipse.php.core.LANGUAGE"/>
+	<buildpathentry combineaccessrules="false" kind="prj" path="/utilities"/>
+	<buildpathentry combineaccessrules="false" kind="prj" path="/joomla-cms"/>
+</buildpath>

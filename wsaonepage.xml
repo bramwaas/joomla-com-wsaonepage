@@ -1,94 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="component" version="3.0" method="upgrade">
+<extension type="component" version="4.0" method="upgrade">
+<!-- 2021-09-20 start  adjustments for Joomla 4 to begin with namespaces for this component's classes-->
   <compatibility>
     <include>
-      <versions from="3.9.0" to="3.99.99" />
-      <!--  versions from="4.0.0" to="4.99.99" / -->
+      <versions from="3.10.0" to="4.99.99" />
     </include>
   </compatibility>
-	<name>COM_WSAONEPAGE</name>
+	<name>com_wsaonepage</name>
 	<!-- The following elements are optional and free of formatting constraints. -->
 	<creationDate>14 Oktober 2020</creationDate>
 	<author>A.H.C. Waasdorp</author>
 	<authorEmail>bram@waasdorpsoekhan.nl</authorEmail>
 	<authorUrl>https://www.waasdorpsoekhan.nl</authorUrl>
-	<copyright>A.H.C. Waasdorp, Amsterdam 2020 - 2020</copyright>
+	<copyright>A.H.C. Waasdorp, Amsterdam 2020 - 2021</copyright>
+    <license>GPL v3</license>
 	<!--  The version string is recorded in the components table -->
-	<version>0.3.0</version>
+	<version>0.10.0</version>
 	<!-- The description is optional and defaults to the name -->
 	<description>COM_WSAONEPAGE_DESCRIPTION</description>
+    <!-- This is the PHP namespace under which the extension's
+    code is organised. It should follow this format:
+    
+    Vendor\Component\ComponentName
 
-	<install> <!-- Runs on install -->
-		<sql>
-			<file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
-		</sql>
-	</install>
-	<uninstall> <!-- Runs on uninstall -->
-		<sql>
-			<file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
-		</sql>
-	</uninstall>
-	<update> <!-- Runs on update; New since J2.5 -->
-		<schemas>
-			<schemapath type="mysql">sql/updates/mysql</schemapath>
-		</schemas>
-	</update>
+    "Vendor" can be your company or your own name
+    
+    The "ComponentName" section MUST match the name used 
+    everywhere else for your component. Whatever the name of 
+    this XML file is, the namespace must match (ignoring CamelCase). 
+    -->
+    <namespace path="src/">WaasdorpSoekhan\Component\Wsaonepage</namespace>
 
 	<!-- Site Main File Copy Section -->
 	<!-- Note the folder attribute: This attribute describes the folder
 		to copy FROM in the package to install therefore files copied
 		in this section are copied from /site/ in the package -->
-	<files folder="site">
-		<filename>controller.php</filename>
+ 	<files folder="site/">
 		<filename>index.html</filename>
-		<filename>wsaonepage.php</filename>
-		<folder>controllers</folder>
-		<folder>models</folder>
-		<folder>views</folder>		
+			<!-- for Joomla 3.10 from v 0.3.0 -->
+			<filename>controller.php</filename>
+			<filename>router.php</filename>
+			<filename>wsaonepage.php</filename>
+            <folder>controllers</folder>
+            <folder>helpers</folder>
+            <folder>models</folder>
+            <folder>views</folder>
+			<!-- end for Joomla 3.10 -->
+		<folder>src</folder>
+		<folder>tmpl</folder>
 	</files>
-	<languages folder="site/language">
+	<languages folder="site/language/">
 		<language tag="en-GB">en-GB/en-GB.com_wsaonepage.ini</language>
 	</languages>
+
+
+	<administration>
+		<!-- Administration Component Menu Section -->
+		<menu   img="../media/com_wsaonepage/images/Tux-16x16.png"><![CDATA[COM_WSAONEPAGE_MENU]]></menu>
+		<submenu>
+			<!-- Note that all & must be escaped to &amp; for the file to be valid
+				XML and be parsed by the installer
+			-->
+			<menu link="option=com_wsaonepage" img="class:content"
+				alt="Wsaonepage/Wsaonepage"><![CDATA[COM_WSAONEPAGE_SUBMENU]]></menu>
+		</submenu>
+		<!-- Administration Main File Copy Section -->
+		<!-- Note the folder attribute: This attribute describes the folder
+			to copy FROM in the package to install therefore files copied
+			in this section are copied from /admin/ in the package -->
+		<files folder="admin/">
+
+			<filename>access.xml</filename>
+			<filename>config.xml</filename>
+			<filename>index.html</filename>
+			<!-- for Joomla 3.10 from v 0.3.0 -->
+			<filename>controller.php</filename>
+			<filename>wsaonepage.php</filename>
+            <folder>controllers</folder>
+            <folder>models</folder>
+            <folder>tables</folder>
+            <folder>views</folder>
+			<!-- end for Joomla 3.10 -->
+            <folder>forms</folder>
+            <folder>language</folder>
+            <folder>services</folder>
+            <folder>sql</folder>
+            <folder>src</folder>
+            <folder>tmpl</folder>
+		</files>
+		<languages folder="admin/language/">
+			<language tag="en-GB">en-GB/en-GB.com_wsaonepage.ini</language>
+			<language tag="en-GB">en-GB/en-GB.com_wsaonepage.sys.ini</language>
+		</languages>
+	</administration>
+
+ 	<install><!-- Runs on install -->
+ 		<sql>
+			<file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+		</sql>
+	</install>
+	<uninstall><!-- Runs on uninstall -->
+ 		<sql>
+			<file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+		</sql>
+	</uninstall>
+	<update><!-- Runs on update; New since J2.5 -->
+ 		<schemas>
+			<schemapath type="mysql">sql/updates/mysql</schemapath>
+		</schemas>
+	</update>
+
 	<media destination="com_wsaonepage" folder="media">
 		<filename>index.html</filename>
 		<folder>images</folder>
 	</media>
 
 
-	<administration>
-		<!-- Administration Component Menu Section -->
-		<menu   img="../media/com_wsaonepage/images/Tux-16x16.png">COM_WSAONEPAGE_MENU</menu>
-		<submenu>
-			<!-- Note that all & must be escaped to &amp; for the file to be valid
-				XML and be parsed by the installer
-			-->
-			<menu link='option=com_wsaonepage' img="class:content"
-				alt="WsaOnePage/WsaOnePage">COM_WSAONEPAGE_MENU</menu>
-		</submenu>
-		<!-- Administration Main File Copy Section -->
-		<!-- Note the folder attribute: This attribute describes the folder
-			to copy FROM in the package to install therefore files copied
-			in this section are copied from /admin/ in the package -->
-		<files folder="admin">
-			<!-- Admin Main File Copy Section -->
-			<filename>controller.php</filename>
-			<filename>index.html</filename>
-			<filename>wsaonepage.php</filename>
-			<!-- controllers files section -->
-			<folder>controllers</folder>
-			<!-- SQL files section -->
-			<folder>sql</folder>
-			<!-- tables files section -->
-			<folder>tables</folder>
-			<!-- models files section -->
-			<folder>models</folder>
-			<!-- views files section -->
-			<folder>views</folder>
-		</files>
-		<languages folder="admin/language">
-			<language tag="en-GB">en-GB/en-GB.com_wsaonepage.ini</language>
-			<language tag="en-GB">en-GB/en-GB.com_wsaonepage.sys.ini</language>
-		</languages>
-	</administration>
 
 </extension>

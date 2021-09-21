@@ -3,40 +3,82 @@
  * @package     Joomla.Administrator
  * @subpackage  com_wsaonepage
  *
- * @copyright   Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * 28-9-2020
- * 21-9-2021
+ * @copyright   Copyright (C) 2005 - 2021 A.H.C. Waasdorp. All rights reserved.
+ * @license     GNU General Public License version 3 or later; see LICENSE.txt
+ * 19-9-2021
  */
-
+namespace WaasdorpSoekhan\Component\Wsaonepage\Administrator\Model;
 // No direct access to this file
-defined('_JEXEC') or die('Restricted access');
+\defined('_JEXEC') or die('Restricted access');
+
+use Joomla\CMS\Factory;
+use Joomla\CMS\MVC\Model\AdminModel;
+use Joomla\CMS\Versioning\VersionableModelTrait;
+use Joomla\Registry\Registry;
 
 /**
- * WsaOnePage Model
+ * Wsaonepage Model
  *
  * @since  0.0.1
  */
-class WsaOnePageModelWsaOnePage extends JModelAdmin
+class WsaonepageModel extends AdminModel
 {
+    use VersionableModelTrait;
     /**
-     * Method to get a table object, load it if necessary.
+     * Name of the form
      *
-     * @param   string  $type    The table name. Optional.
-     * @param   string  $prefix  The class prefix. Optional.
-     * @param   array   $config  Configuration array for model. Optional.
-     *
-     * @return  JTable  A JTable object
-     *
-     * @since   1.6
+     * @var string
+     * @since  4.0.0
      */
-    public function getTable($type = 'WsaOnePage', $prefix = 'WsaOnePageTable', $config = array())
+    protected $formName = 'wsaonepage';
+    /**
+     * The type alias for this content type.
+     *
+     * @var    string
+     * @since  0.9.3 (joomla 3.2)
+     */
+    public $typeAlias = 'com_wsaonepage.wsaonepage';
+
+    /**
+     * Method to test whether a record can be deleted.
+     *
+     * @param   object  $record  A record object.
+     *
+     * @return  boolean  True if allowed to delete the record. Defaults to the permission set in the component.
+     *
+     * @since   3.1
+     */
+    protected function canDelete($record)
     {
-        return JTable::getInstance($type, $prefix, $config);
+        if (empty($record->id) || $record->published != -2)
+        {
+            return false;
+        }
+        
+        return parent::canDelete($record);
     }
     
     /**
-     * Method to get the record form. suffix 3 to separate form joomla 4 form
+     * Method to get a table object, load it if necessary.
+     *
+     * @param   string  $name    The table name. Optional.
+     * @param   string  $prefix  The class prefix. Optional.
+     * @param   array   $config  Configuration array for model. Optional.
+     *
+     * @return  Table  A Table object
+     * TODO probably unnecessary
+     * @since   1.6
+     */
+    /*
+    public function getTable($name = 'Wsaonepage', $prefix = 'Administrator', $config = array())
+    {
+        return $this->_createTable($name, $prefix, $config);
+       
+    }
+    */
+    
+    /**
+     * Method to get the record form.
      *
      * @param   array    $data      Data for the form.
      * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
@@ -50,7 +92,7 @@ class WsaOnePageModelWsaOnePage extends JModelAdmin
         // Get the form.
         $form = $this->loadForm(
             'com_wsaonepage.wsaonepage',
-            'wsaonepage3',
+            'wsaonepage',
             array(
                 'control' => 'jform',
                 'load_data' => $loadData
@@ -80,7 +122,7 @@ class WsaOnePageModelWsaOnePage extends JModelAdmin
             $form->setFieldAttribute('ordering', 'disabled', 'true');
             $form->setFieldAttribute('publish_up', 'disabled', 'true');
             $form->setFieldAttribute('publish_down', 'disabled', 'true');
-            $form->setFieldAttribute('state', 'disabled', 'true');
+            $form->setFieldAttribute('published', 'disabled', 'true');
             $form->setFieldAttribute('sticky', 'disabled', 'true');
             
             // Disable fields while saving.
@@ -88,7 +130,7 @@ class WsaOnePageModelWsaOnePage extends JModelAdmin
             $form->setFieldAttribute('ordering', 'filter', 'unset');
             $form->setFieldAttribute('publish_up', 'filter', 'unset');
             $form->setFieldAttribute('publish_down', 'filter', 'unset');
-            $form->setFieldAttribute('state', 'filter', 'unset');
+            $form->setFieldAttribute('published', 'filter', 'unset');
             $form->setFieldAttribute('sticky', 'filter', 'unset');
         }
         
@@ -107,7 +149,7 @@ class WsaOnePageModelWsaOnePage extends JModelAdmin
     protected function loadFormData()
     {
         // Check the session for previously entered form data.
-        $data = JFactory::getApplication()->getUserState(
+        $data = Factory::getApplication()->getUserState(
             'com_wsaonepage.edit.wsaonepage.data',
             array()
             );
@@ -115,35 +157,6 @@ class WsaOnePageModelWsaOnePage extends JModelAdmin
         if (empty($data))
         {
             $data = $this->getItem();
-            /* TODO is from banners.php is this a good idea ?
-             // Prime some default values.
-             if ($this->getState('banner.id') == 0)
-             {
-             $filters     = (array) $app->getUserState('com_banners.banners.filter');
-             $filterCatId = isset($filters['category_id']) ? $filters['category_id'] : null;
-             
-             $data->set('catid', $app->input->getInt('catid', $filterCatId));
-             }
-             */
-            /* TODO or the same from article
-            // Pre-select some filters (Status, Category, Language, Access) in edit form if those have been selected in Article Manager: Articles
-			if ($this->getState('article.id') == 0)
-			{
-				$filters = (array) $app->getUserState('com_content.articles.filter');
-				$data->set(
-					'state',
-					$app->input->getInt(
-						'state',
-						((isset($filters['published']) && $filters['published'] !== '') ? $filters['published'] : null)
-					)
-				);
-				$data->set('catid', $app->input->getInt('catid', (!empty($filters['category_id']) ? $filters['category_id'] : null)));
-				$data->set('language', $app->input->getString('language', (!empty($filters['language']) ? $filters['language'] : null)));
-				$data->set('access',
-					$app->input->getInt('access', (!empty($filters['access']) ? $filters['access'] : JFactory::getConfig()->get('access')))
-				);
-			}
-             */
             
         }
         // If there are params fieldsets in the form it will fail with a registry object
@@ -151,8 +164,6 @@ class WsaOnePageModelWsaOnePage extends JModelAdmin
         {
             $data->params = $data->params->toArray();
         }
-        
-        
         return $data;
     }
 }

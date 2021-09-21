@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+<!-- Form to choose the component in the menu manager -->
+	<layout title="COM_WSAONEPAGE_VIEW_DEFAULT_TITLE" >
+		<message><![CDATA[COM_WSAONEPAGE_VIEW_DEFAULT_DESC]]></message>
+	</layout>
+
+	<fields name="request"
+			addfieldprefix="WaasdorpSoekhan\Component\Wsaonepage\Administrator\Field"
+	>
+		<fieldset name="request">
+			<field
+					name="id"
+					type="wsaonepage"
+					label="COM_WSAONEPAGE_FIELD_SELECT_LABEL" 
+					description="COM_WSAONEPAGE_FIELD_SELECT_DESC"
+					/>
+		</fieldset>
+	</fields>
+
+</metadata>
