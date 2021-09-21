@@ -4,7 +4,7 @@
 		<field
 			name="search"
 			type="text"
-			label="COM_BANNERS_SEARCH_IN_TITLE"
+			label="COM_WSAONEPAGE_SEARCH_IN_TITLE"
 			hint="JSEARCH_FILTER"
 			class="js-stools-search-string"
 		/>
@@ -38,8 +38,8 @@
 			default="title ASC"
 			>
 			<option value="">JGLOBAL_SORT_BY</option>
-			<option value="title ASC">COM_WSAONEPAGE_ORDERING_ASC</option>
-			<option value="title DESC">COM_WSAONEPAGE_ORDERING_DESC</option>
+			<option value="title ASC">COM_WSAONEPAGE_TITLE_ASC</option>
+			<option value="title DESC">COM_WSAONEPAGE_TITLE_DESC</option>
 			<option value="id ASC">JGRID_HEADING_ID_ASC</option>
 			<option value="id DESC">JGRID_HEADING_ID_DESC</option>
 			<option value="published ASC">COM_WSAONEPAGE_PUBLISHED_ASC</option>
