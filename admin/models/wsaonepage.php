@@ -6,6 +6,7 @@
  * @copyright   Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * 28-9-2020
+ * 21-9-2021
  */
 
 // No direct access to this file
@@ -35,7 +36,7 @@ class WsaOnePageModelWsaOnePage extends JModelAdmin
     }
     
     /**
-     * Method to get the record form.
+     * Method to get the record form. suffix 3 to separate form joomla 4 form
      *
      * @param   array    $data      Data for the form.
      * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
@@ -49,7 +50,7 @@ class WsaOnePageModelWsaOnePage extends JModelAdmin
         // Get the form.
         $form = $this->loadForm(
             'com_wsaonepage.wsaonepage',
-            'wsaonepage',
+            'wsaonepage3',
             array(
                 'control' => 'jform',
                 'load_data' => $loadData
