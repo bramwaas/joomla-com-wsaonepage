@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `#__wsaonepage` (
 	`params`   VARCHAR(1024) NOT NULL DEFAULT '' COMMENT 'params for this component in some other components attribs',
 	`image`   VARCHAR(1024) NOT NULL DEFAULT '', 
 	PRIMARY KEY (`id`),
-  	UNIQUE KEY `idx_alias` (`alias`(191)),
+  	UNIQUE KEY `idx_alias` (`alias`),
   	KEY `idx_access` (`access`),
   	KEY `idx_checkout` (`checked_out`),
   	KEY `idx_createdby` (`created_by`),
