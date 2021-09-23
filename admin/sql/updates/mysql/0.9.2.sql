@@ -9,7 +9,7 @@ ALTER TABLE `#__wsaonepage` ALTER `metadata` SET DEFAULT '';
 ALTER TABLE `#__wsaonepage` ALTER `created` DROP DEFAULT;
 ALTER TABLE `#__wsaonepage` ALTER `modified` DROP DEFAULT;
 ALTER TABLE `#__wsaonepage` DROP COLUMN IF EXISTS `attribs`;
-ALTER TABLE `#__wsaonepage` DROP COLUMN IF EXISTS `catid`;
+--ALTER TABLE `#__wsaonepage` DROP COLUMN IF EXISTS `catid`; -- FK ???
 ALTER TABLE `#__wsaonepage` DROP COLUMN IF EXISTS `state`; -- also removes index
 ALTER TABLE `#__wsaonepage` DROP COLUMN IF EXISTS `xreference`;
 ALTER TABLE `#__wsaonepage` MODIFY `publish_up` datetime;
@@ -19,4 +19,4 @@ ALTER TABLE `#__wsaonepage` MODIFY `checked_out` int(10) unsigned;
 ALTER TABLE `#__wsaonepage` DROP INDEX IF EXISTS `idx_published`;
 ALTER TABLE `#__wsaonepage` ADD INDEX `idx_published` (`published`);
 ALTER TABLE `#__wsaonepage` DROP INDEX IF EXISTS `idx_alias`;
-ALTER TABLE `#__wsaonepage` ADD UNIQUE INDEX `idx_alias` (`alias`(191));
+ALTER TABLE `#__wsaonepage` ADD UNIQUE INDEX `idx_alias` (`alias`);
