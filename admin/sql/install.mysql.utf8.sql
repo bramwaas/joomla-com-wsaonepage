@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `#__wsaonepage` (
   	KEY `idx_checkout` (`checked_out`),
   	KEY `idx_createdby` (`created_by`),
   	KEY `idx_language` (`language`),
-  	KEY `idx_published` (`published`),
+  	KEY `idx_published` (`published`)
 )
 	ENGINE =InnoDB
 	DEFAULT CHARSET =utf8mb4
