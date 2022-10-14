@@ -179,8 +179,8 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                  */
                 echo '<section id="', $mItm->bookmark, '" class="row section component " >', PHP_EOL;
                 // Find modules for Aside and Adjusting content width according to that
-                $countpos7 = (isset($this->modules) && is_array($this->modules[$mItm->id]['position-7']) && $this->modules[$mItm->id]['position-7']);
-                $countpos8 = (isset($this->modules) && is_array($this->modules[$mItm->id]['position-8']) && $this->modules[$mItm->id]['position-8']);
+                $countpos7 = (isset($this->modules) && isset($this->modules[$mItm->id]['position-7']) && is_array($this->modules[$mItm->id]['position-7']) && $this->modules[$mItm->id]['position-7']);
+                $countpos8 = (isset($this->modules) && isset($this->modules[$mItm->id]['position-8']) && is_array($this->modules[$mItm->id]['position-8']) && $this->modules[$mItm->id]['position-8']);
                 if ($countpos7 && $countpos8)
                 {
                     $spanc = "col-md-6 " ;
