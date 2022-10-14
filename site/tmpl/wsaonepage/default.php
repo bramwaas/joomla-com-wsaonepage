@@ -167,11 +167,11 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 // for non-standard components an other composition of namespace is needed but for now ok.
                 if (!isset($this->mifactories[$wsaComponent])) {$this->mifactories[$wsaComponent] = new MVCFactory('Joomla\\Component\\' . $wsaComponent);};
                 // 0.8.4 always use 'DisplayController' in stead of $mItm->query['view']
-                $micontroller = $this->mifactories[$wsaComponent]->createController('Display', 'Site', array('base_path' => $wsaJPATH_COMPONENT,'layout' => (($mItm->query['layout'] > ' ') ? $mItm->query['layout'] : 'default')),$app, $app->getInput());
+                $micontroller = $this->mifactories[$wsaComponent]->createController('Display', 'Site', array('base_path' => $wsaJPATH_COMPONENT,'layout' => ((isset($mItm->query['layout']) && $mItm->query['layout'] > ' ') ? $mItm->query['layout'] : 'default')),$app, $app->getInput());
                 if (isset($micontroller)) {
 					// get the view before display to add the templatepath for the menu item component in stead of com_wsaonepage, and to clean-up some properties after display.
 					// first 3 parameters must exactly match (even in case) that of the statement in the controller, otherwise we get a new view.
-                    $miview = $micontroller->getView($mItm->query['view'], $wsaOrgDocumentViewType, '', array('base_path' => $wsaJPATH_COMPONENT,'layout' => (($mItm->query['layout'] > ' ') ? $mItm->query['layout'] : 'default')));
+                    $miview = $micontroller->getView($mItm->query['view'], $wsaOrgDocumentViewType, '', array('base_path' => $wsaJPATH_COMPONENT,'layout' => ((isset($mItm->query['layout']) && $mItm->query['layout'] > ' ') ? $mItm->query['layout'] : 'default')));
 //                  TODO template override path is now of com_wsaonepage, can add that of $wsaOption before that.
 //					$miview->addTemplatePath(array(JPATH_THEMES . '/' . $app->getTemplate() . '/html/' . $wsaOption . '/' . $mItm->query['view']));
                 /*
