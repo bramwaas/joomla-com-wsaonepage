@@ -21,7 +21,7 @@
  *              filling tha active one from the menu-item and restoring it after use.
  *             Because we work in J4 with new objects with namespaces we also need less adjustments for paths.
  *             Cleaned up most code that was needed for the old method.
- * 20221008 added isset an is_array to count(modules) because php 8 gives an error when modules is not array or countable object.            
+ * 20221008 added isset and is_array to count(modules) because php 8 gives an error when modules is not array or countable object.            
  */
 // namespace WaasdorpSoekhan\Component\Wsaonepage\Site\View\Wsaonepage;
 // part of WaasdorpSoekhan\Component\Wsaonepage\Site\View\Wsaonepage\HtmlView
