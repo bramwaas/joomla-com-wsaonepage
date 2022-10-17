@@ -185,11 +185,13 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                  */
                 echo '<section id="', $mItm->bookmark, '" class="row section component " >', PHP_EOL;
                 // Find modules for Aside and Adjusting content width according to that
-                if (count($this->modules[$mItm->id]['position-7']) && count($this->modules[$mItm->id]['position-8']))
+                $countpos7 = (isset($this->modules) && is_array($this->modules[$mItm->id]['position-7']) && $this->modules[$mItm->id]['position-7']);
+                $countpos8 = (isset($this->modules) && is_array($this->modules[$mItm->id]['position-8']) && $this->modules[$mItm->id]['position-8']);
+                if ($countpos7 && $countpos8)
                 {
                     $spanc = "col-md-6 " ;
                 }
-                elseif (!count($this->modules[$mItm->id]['position-7']) && !count($this->modules[$mItm->id]['position-8']))
+                elseif (!$countpos7 && !$countpos8)
                 
                 {
                     $spanc = "";
@@ -198,9 +200,9 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 {
                     $spanc = "col-md-8 ";
                 }
-                if (count($this->modules[$mItm->id]['position-8']))
+                if ($countpos8)
                 {
-                    echo '<aside class="col-12 col-md">', PHP_EOL;
+                    echo '<aside class="position-8 col-12 col-md">', PHP_EOL;
                     foreach ($this->modules[$mItm->id]['position-8'] as $module)
                     {
                         echo $renderer->render($module, array('style' => 'none'));
@@ -215,7 +217,7 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                  * closing html (section) for this menuitem
                  */
                 echo '</div>', PHP_EOL;
-                if (count($this->modules[$mItm->id]['position-7']))
+                if ($countpos7)
                 {
                     echo '<aside class="col-12 col-md">', PHP_EOL;
                     foreach ($this->modules[$mItm->id]['position-7'] as $module)

@@ -3,7 +3,7 @@
  * @package     Joomla.Site
  * @subpackage  com_wsaonepage
  *
- * @copyright   Copyright (C) 2020 - 2021 AHC Waasdorp. All rights reserved.
+ * @copyright   Copyright (C) 2020 - 2022 AHC Waasdorp. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  *  Modifications:
  * 20200803: first use of MenuItems to display components in component area. Copied from  menuoverride wsaonepagebs4.php in template wsaonepage (working theeir only correct in a content component here also not working correct yet.
@@ -21,6 +21,7 @@
  *              filling tha active one from the menu-item and restoring it after use.
  *             Because we work in J4 with new objects with namespaces we also need less adjustments for paths.
  *             Cleaned up most code that was needed for the old method.
+ * 20221008 added isset and is_array to count(modules) because php 8 gives an error when modules is not array or countable object.            
  */
 // namespace WaasdorpSoekhan\Component\Wsaonepage\Site\View\Wsaonepage;
 // part of WaasdorpSoekhan\Component\Wsaonepage\Site\View\Wsaonepage\HtmlView
@@ -166,11 +167,11 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 // for non-standard components an other composition of namespace is needed but for now ok.
                 if (!isset($this->mifactories[$wsaComponent])) {$this->mifactories[$wsaComponent] = new MVCFactory('Joomla\\Component\\' . $wsaComponent);};
                 // 0.8.4 always use 'DisplayController' in stead of $mItm->query['view']
-                $micontroller = $this->mifactories[$wsaComponent]->createController('Display', 'Site', array('base_path' => $wsaJPATH_COMPONENT,'layout' => (($mItm->query['layout'] > ' ') ? $mItm->query['layout'] : 'default')),$app, $app->getInput());
+                $micontroller = $this->mifactories[$wsaComponent]->createController('Display', 'Site', array('base_path' => $wsaJPATH_COMPONENT,'layout' => ((isset($mItm->query['layout']) && $mItm->query['layout'] > ' ') ? $mItm->query['layout'] : 'default')),$app, $app->getInput());
                 if (isset($micontroller)) {
 					// get the view before display to add the templatepath for the menu item component in stead of com_wsaonepage, and to clean-up some properties after display.
 					// first 3 parameters must exactly match (even in case) that of the statement in the controller, otherwise we get a new view.
-                    $miview = $micontroller->getView($mItm->query['view'], $wsaOrgDocumentViewType, '', array('base_path' => $wsaJPATH_COMPONENT,'layout' => (($mItm->query['layout'] > ' ') ? $mItm->query['layout'] : 'default')));
+                    $miview = $micontroller->getView($mItm->query['view'], $wsaOrgDocumentViewType, '', array('base_path' => $wsaJPATH_COMPONENT,'layout' => ((isset($mItm->query['layout']) && $mItm->query['layout'] > ' ') ? $mItm->query['layout'] : 'default')));
 //                  TODO template override path is now of com_wsaonepage, can add that of $wsaOption before that.
 //					$miview->addTemplatePath(array(JPATH_THEMES . '/' . $app->getTemplate() . '/html/' . $wsaOption . '/' . $mItm->query['view']));
                 /*
@@ -178,11 +179,13 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                  */
                 echo '<section id="', $mItm->bookmark, '" class="row section component " >', PHP_EOL;
                 // Find modules for Aside and Adjusting content width according to that
-                if (count($this->modules[$mItm->id]['position-7']) && count($this->modules[$mItm->id]['position-8']))
+                $countpos7 = (isset($this->modules) && isset($this->modules[$mItm->id]['position-7']) && is_array($this->modules[$mItm->id]['position-7']) && $this->modules[$mItm->id]['position-7']);
+                $countpos8 = (isset($this->modules) && isset($this->modules[$mItm->id]['position-8']) && is_array($this->modules[$mItm->id]['position-8']) && $this->modules[$mItm->id]['position-8']);
+                if ($countpos7 && $countpos8)
                 {
                     $spanc = "col-md-6 " ;
                 }
-                elseif (!count($this->modules[$mItm->id]['position-7']) && !count($this->modules[$mItm->id]['position-8']))
+                elseif (!$countpos7 && !$countpos8)
                 
                 {
                     $spanc = "";
@@ -191,7 +194,7 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 {
                     $spanc = "col-md-8 ";
                 }
-                if (count($this->modules[$mItm->id]['position-8']))
+                if ($countpos8)
                 {
                     echo '<aside class="position-8 col-12 col-md">', PHP_EOL;
                     foreach ($this->modules[$mItm->id]['position-8'] as $module)
@@ -207,7 +210,7 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                  * closing html (section) for this menuitem
                  */
                 echo '</div>', PHP_EOL;
-                if (count($this->modules[$mItm->id]['position-7']))
+                if ($countpos7)
                 {
                     echo '<aside class="position-7 col-12 col-md">', PHP_EOL;
                     foreach ($this->modules[$mItm->id]['position-7'] as $module)

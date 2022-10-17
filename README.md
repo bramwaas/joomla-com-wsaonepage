@@ -25,6 +25,7 @@ This project is licensed under the [GNU GPL], version 3 or later.
 2018&thinsp;&ndash;&thinsp;2021 &copy; [Bram Waasdorp](http://www.waasdorpsoekhan.nl).
 
 ## Changelog
+* 1.0.1 Solved warnings in php 8
 * 0.10.0 20210920 Tagged as version 0.10.0 Most parts work 3.9 code copied back to let it also work on Joomla 3.10
 * 0.8 20210823 Admin ready for the time being, 3.9 code deleted from admin
 * 0.7 20210819 All errors that Eclipse sees resolved
