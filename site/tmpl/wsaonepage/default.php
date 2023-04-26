@@ -3,7 +3,7 @@
  * @package     Joomla.Site
  * @subpackage  com_wsaonepage
  *
- * @copyright   Copyright (C) 2020 - 2022 AHC Waasdorp. All rights reserved.
+ * @copyright   Copyright (C) 2020 - 2023 AHC Waasdorp. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  *  Modifications:
  * 20200803: first use of MenuItems to display components in component area. Copied from  menuoverride wsaonepagebs4.php in template wsaonepage (working theeir only correct in a content component here also not working correct yet.
@@ -125,6 +125,13 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 $wsaJPATH_COMPONENT = JPATH_BASE . '/components/' . $wsaOption;
                 $wsaJPATH_COMPONENT_SITE = JPATH_SITE . '/components/' . $wsaOption;
                 $wsaJPATH_COMPONENT_ADMINISTRATOR = JPATH_ADMINISTRATOR . '/components/' . $wsaOption;
+                 if (stripos($wsaOption, 'tag') !== false) {
+//TODO tags not working yet
+                     echo '<!-- tags not working yet', ' -->' , PHP_EOL; 
+                    continue;
+                }
+                 
+                 
                  // replace input values by values from menuitem query
                 foreach ($wsaOrgActiveMenuItem->query as $tmpKey => $tmpVal) {
                     $app->input->set($tmpKey, NULL);
