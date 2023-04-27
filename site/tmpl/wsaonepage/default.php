@@ -171,8 +171,9 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
 //TODO tags not working yet
                      echo '<!-- tags not working yet', ' -->' , PHP_EOL;
 					if (isset($this->mifactories[$wsaComponent])) {
-						echo '<!-- tags component  <![CDATA[' , PHP_EOL;
-                        print_r($this->mifactories[$wsaComponent]);
+						$xxclassname = 'Joomla\\Component\\' . $wsaComponent . '\\Site\\Controller\\DisplayController';
+						echo '<!-- tags component classname: ' , $xxclassname , ' bestaat:' , class_exists($xxclassname),  '<![CDATA[' , PHP_EOL;
+//                        print_r($this->mifactories[$wsaComponent]);
 						echo ' ]]> -->', PHP_EOL;
 					} else 	echo '<!-- tags component  niet gevonden -->' , PHP_EOL;
 
