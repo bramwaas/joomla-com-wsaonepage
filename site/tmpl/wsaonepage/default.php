@@ -21,7 +21,7 @@
  *              filling tha active one from the menu-item and restoring it after use.
  *             Because we work in J4 with new objects with namespaces we also need less adjustments for paths.
  *             Cleaned up most code that was needed for the old method.
- * 20221008 added isset and is_array to count(modules) because php 8 gives an error when modules is not array or countable object.            
+ * 20221008 added isset and is_array to count(modules) because php 8 gives an error when modules is not array or countable object.
  */
 // namespace WaasdorpSoekhan\Component\Wsaonepage\Site\View\Wsaonepage;
 // part of WaasdorpSoekhan\Component\Wsaonepage\Site\View\Wsaonepage\HtmlView
@@ -125,13 +125,6 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 $wsaJPATH_COMPONENT = JPATH_BASE . '/components/' . $wsaOption;
                 $wsaJPATH_COMPONENT_SITE = JPATH_SITE . '/components/' . $wsaOption;
                 $wsaJPATH_COMPONENT_ADMINISTRATOR = JPATH_ADMINISTRATOR . '/components/' . $wsaOption;
-                 if (stripos($wsaOption, 'tag') !== false) {
-//TODO tags not working yet
-                     echo '<!-- tags not working yet', ' -->' , PHP_EOL; 
-                    continue;
-                }
-                 
-                 
                  // replace input values by values from menuitem query
                 foreach ($wsaOrgActiveMenuItem->query as $tmpKey => $tmpVal) {
                     $app->input->set($tmpKey, NULL);
@@ -174,6 +167,19 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 // for non-standard components an other composition of namespace is needed but for now ok.
                 if (!isset($this->mifactories[$wsaComponent])) {$this->mifactories[$wsaComponent] = new MVCFactory('Joomla\\Component\\' . $wsaComponent);};
                 // 0.8.4 always use 'DisplayController' in stead of $mItm->query['view']
+                 if (stripos($wsaOption, 'tag') !== false) {
+//TODO tags not working yet
+                     echo '<!-- tags not working yet', ' -->' , PHP_EOL;
+					if (isset($this->mifactories[$wsaComponent])) {
+						echo '<!-- tags component  <![CDATA[' , PHP_EOL;
+                        print_r($this->mifactories[$wsaComponent]);
+						echo ' ]]> -->', PHP_EOL;
+					} else 	echo '<!-- tags component  niet gevonden -->' , PHP_EOL;
+
+                    continue;
+                }
+                 
+                 
                 $micontroller = $this->mifactories[$wsaComponent]->createController('Display', 'Site', array('base_path' => $wsaJPATH_COMPONENT,'layout' => ((isset($mItm->query['layout']) && $mItm->query['layout'] > ' ') ? $mItm->query['layout'] : 'default')),$app, $app->getInput());
                 if (isset($micontroller)) {
 					// get the view before display to add the templatepath for the menu item component in stead of com_wsaonepage, and to clean-up some properties after display.
