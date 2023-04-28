@@ -175,7 +175,7 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
 						echo '<!-- tags : ' . '<![CDATA[' , PHP_EOL;
 						try {
 
-                       print_r($micontroller->getName());
+                       print_r($micontroller->getView($mItm->query['view'],$wsaOrgDocumentViewType, ''));
 						} //catch exception
 						catch(Exception $e) {
 							echo 'Message: ' .$e->getMessage();
