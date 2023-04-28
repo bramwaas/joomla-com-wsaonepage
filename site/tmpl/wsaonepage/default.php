@@ -174,25 +174,6 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
 					// get the view before display to add the templatepath for the menu item component in stead of com_wsaonepage, and to clean-up some properties after display.
 					// first 3 parameters must exactly match (even in case) that of the statement in the controller, otherwise we get a new view.
                     $miview = $micontroller->getView($mItm->query['view'], $wsaOrgDocumentViewType, '', array('base_path' => $wsaJPATH_COMPONENT,'layout' => ((isset($mItm->query['layout']) && $mItm->query['layout'] > ' ') ? $mItm->query['layout'] : 'default')));
-                 if (stripos($wsaOption, 'tag') !== false) {
-//TODO tags not working yet
-                     echo '<!-- debugging tags not working yet', ' -->' , PHP_EOL;
-					if (isset($micontroller)) {
-						echo '<!-- tags : ' . '<![CDATA[' , PHP_EOL;
-						try {
-
-                       print_r($miview);
-						} //catch exception
-						catch(Exception $e) {
-							echo 'Message: ' .$e->getMessage();
-						}
-						echo ' ]]> -->', PHP_EOL;
-					} else 	echo '<!-- tags component  niet gevonden -->' , PHP_EOL;
-
-                    continue;
-                }
-                 
-                 
 //                  TODO template override path is now of com_wsaonepage, can add that of $wsaOption before that.
 //					$miview->addTemplatePath(array(JPATH_THEMES . '/' . $app->getTemplate() . '/html/' . $wsaOption . '/' . $mItm->query['view']));
                 /*
@@ -226,6 +207,25 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 }
                 echo '<div class="col-12 ', $spanc, '" >', PHP_EOL;
                 // end section header html
+                 if (stripos($wsaOption, 'tag') !== false) {
+//TODO tags not working yet
+                     echo '<!-- debugging tags not working yet', ' -->' , PHP_EOL;
+					if (isset($micontroller)) {
+						echo '<!-- tags : ' . '<![CDATA[' , PHP_EOL;
+						try {
+
+//                       print_r($miview);
+						} //catch exception
+						catch(Exception $e) {
+							echo 'Message: ' .$e->getMessage();
+						}
+						echo ' ]]> -->', PHP_EOL;
+					} else 	echo '<!-- tags component  niet gevonden -->' , PHP_EOL;
+
+                    continue;
+                }
+                 
+                 
                 $micontroller->display();
                 /*
                  * closing html (section) for this menuitem
