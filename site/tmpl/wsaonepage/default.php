@@ -151,13 +151,15 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 echo '<!-- Start with menuid =', $mItm->id, ' option :', $mItm->query['option'], ' <![CDATA[';
                 //              print_r(ModuleHelper::getModuleList());
                 echo ' ]]> -->', PHP_EOL;
-               // add helper file include path for this component. from default article
-                if ($mItm->query['option'] == 'com_content') {
-                    HTMLHelper::addIncludePath($wsaJPATH_COMPONENT . '/helpers'); 
-                }
-                if ($mItm->query['option'] == 'com_contact') {
-                    // add formpaths relative to variable active component path
-                   Form::addFormPath($wsaJPATH_COMPONENT . '/forms');
+               // option specific actions
+                switch($mItm->query['option']){
+                    case 'com_content':
+                        HTMLHelper::addIncludePath($wsaJPATH_COMPONENT . '/helpers');
+                        break;
+                    case 'com_contact':
+                        Form::addFormPath($wsaJPATH_COMPONENT . '/forms');
+                        break;
+                    default:
                 }
                 // from newsfeeds.php
                 Table::addIncludePath($wsaJPATH_COMPONENT_ADMINISTRATOR . '/tables');
