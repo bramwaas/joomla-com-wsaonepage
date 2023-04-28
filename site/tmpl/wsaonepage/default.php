@@ -21,7 +21,7 @@
  *              filling tha active one from the menu-item and restoring it after use.
  *             Because we work in J4 with new objects with namespaces we also need less adjustments for paths.
  *             Cleaned up most code that was needed for the old method.
- * 20221008 added isset and is_array to count(modules) because php 8 gives an error when modules is not array or countable object.            
+ * 20221008 added isset and is_array to count(modules) because php 8 gives an error when modules is not array or countable object.
  */
 // namespace WaasdorpSoekhan\Component\Wsaonepage\Site\View\Wsaonepage;
 // part of WaasdorpSoekhan\Component\Wsaonepage\Site\View\Wsaonepage\HtmlView
@@ -168,14 +168,18 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 if (!isset($this->mifactories[$wsaComponent])) {$this->mifactories[$wsaComponent] = new MVCFactory('Joomla\\Component\\' . $wsaComponent);};
                 // 0.8.4 always use 'DisplayController' in stead of $mItm->query['view']
                 $micontroller = $this->mifactories[$wsaComponent]->createController('Display', 'Site', array('base_path' => $wsaJPATH_COMPONENT,'layout' => ((isset($mItm->query['layout']) && $mItm->query['layout'] > ' ') ? $mItm->query['layout'] : 'default')),$app, $app->getInput());
+                if (isset($micontroller)) {
+					// get the view before display to add the templatepath for the menu item component in stead of com_wsaonepage, and to clean-up some properties after display.
+					// first 3 parameters must exactly match (even in case) that of the statement in the controller, otherwise we get a new view.
+                    $miview = $micontroller->getView($mItm->query['view'], $wsaOrgDocumentViewType, '', array('base_path' => $wsaJPATH_COMPONENT,'layout' => ((isset($mItm->query['layout']) && $mItm->query['layout'] > ' ') ? $mItm->query['layout'] : 'default')));
                  if (stripos($wsaOption, 'tag') !== false) {
 //TODO tags not working yet
-                     echo '<!-- tags not working yet', ' -->' , PHP_EOL;
+                     echo '<!-- debugging tags not working yet', ' -->' , PHP_EOL;
 					if (isset($micontroller)) {
 						echo '<!-- tags : ' . '<![CDATA[' , PHP_EOL;
 						try {
 
-                       print_r($micontroller->getView($mItm->query['view'],$wsaOrgDocumentViewType, ''));
+                       print_r($miview);
 						} //catch exception
 						catch(Exception $e) {
 							echo 'Message: ' .$e->getMessage();
@@ -187,10 +191,6 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 }
                  
                  
-                if (isset($micontroller)) {
-					// get the view before display to add the templatepath for the menu item component in stead of com_wsaonepage, and to clean-up some properties after display.
-					// first 3 parameters must exactly match (even in case) that of the statement in the controller, otherwise we get a new view.
-                    $miview = $micontroller->getView($mItm->query['view'], $wsaOrgDocumentViewType, '', array('base_path' => $wsaJPATH_COMPONENT,'layout' => ((isset($mItm->query['layout']) && $mItm->query['layout'] > ' ') ? $mItm->query['layout'] : 'default')));
 //                  TODO template override path is now of com_wsaonepage, can add that of $wsaOption before that.
 //					$miview->addTemplatePath(array(JPATH_THEMES . '/' . $app->getTemplate() . '/html/' . $wsaOption . '/' . $mItm->query['view']));
                 /*
