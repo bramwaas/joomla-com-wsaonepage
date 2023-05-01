@@ -207,23 +207,26 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 }
                 echo '<div class="col-12 ', $spanc, '" >', PHP_EOL;
                 // end section header html
-                 if (stripos($wsaOption, 'tag') !== false) {
-//TODO tags not working yet
-                     echo '<!-- debugging tags not working yet', ' -->' , PHP_EOL;
-					if (isset($micontroller)) {
-						echo '<!-- tags : ' . '<![CDATA[' , PHP_EOL;
-						try {
+//                  if (stripos($wsaOption, 'tag') !== false) {
+// //TODO tags not working yet
+//                 issue located at
+//                 $wa->useScript('com_tags.tag-default');
+//                 in tmpl/default_items.php
+//                      echo '<!-- debugging tags not working yet', ' -->' , PHP_EOL;
+// 					if (isset($micontroller)) {
+// 						echo '<!-- tags : ' . '<![CDATA[' , PHP_EOL;
+// 						try {
 
-//                       print_r($miview);
-						} //catch exception
-						catch(Exception $e) {
-							echo 'Message: ' .$e->getMessage();
-						}
-						echo ' ]]> -->', PHP_EOL;
-					} else 	echo '<!-- tags component  niet gevonden -->' , PHP_EOL;
+// //                       print_r($miview);
+// 						} //catch exception
+// 						catch(Exception $e) {
+// 							echo 'Message: ' .$e->getMessage();
+// 						}
+// 						echo ' ]]> -->', PHP_EOL;
+// 					} else 	echo '<!-- tags component  niet gevonden -->' , PHP_EOL;
 
-                    continue;
-                }
+//                     continue;
+//                 }
                  
                  
                 $micontroller->display();
