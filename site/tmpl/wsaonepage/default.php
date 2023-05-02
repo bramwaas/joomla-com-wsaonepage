@@ -22,7 +22,8 @@
  *             Because we work in J4 with new objects with namespaces we also need less adjustments for paths.
  *             Cleaned up most code that was needed for the old method.
  * 20221008 added isset and is_array to count(modules) because php 8 gives an error when modules is not array or countable object.
- * 20230502 added com_tags.tag-default web-asset script.
+ * 20230502 added com_tags.tag-default web-asset script. And removed code here the presence of joomla.asset.json with
+ *          in media/com_wsaonepage reference to a com_tags.tag-default web-asset script is sufficient.
  */
 // namespace WaasdorpSoekhan\Component\Wsaonepage\Site\View\Wsaonepage;
 // part of WaasdorpSoekhan\Component\Wsaonepage\Site\View\Wsaonepage\HtmlView
@@ -43,15 +44,10 @@ use Joomla\Registry\Registry; // for new Registry en params object
 /*
  * secure variables of app page and page component
  */
-//$joomlaverge4 = (version_compare(JVERSION, '4.0', '>='));
 $app = Factory::getApplication();
 $document = $app->getDocument();
 $renderer = $document->loadRenderer('module');
 $sitename = $app->get('sitename');
-//if ($joomlaverge4) { // J4 code stylesheets and javascript addStyleSheet etc for J4
-//    $wa  = $document->getWebAssetManager();
-//    $wa->useScript('com_tags.tag-default');
-//}
 
 $wsaOrgAppParams = clone $app->getParams();
 //$wsaOrgInput = clone $app->input;
