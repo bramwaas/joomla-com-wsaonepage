@@ -112,6 +112,7 @@
 
 	<media destination="com_wsaonepage" folder="media">
 		<filename>index.html</filename>
+		<filename>joomla.asset.json</filename>
 		<folder>images</folder>
 		<folder>js</folder>
 	</media>
