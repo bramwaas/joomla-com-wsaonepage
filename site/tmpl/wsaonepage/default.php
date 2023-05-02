@@ -43,18 +43,15 @@ use Joomla\Registry\Registry; // for new Registry en params object
 /*
  * secure variables of app page and page component
  */
-$joomlaverge4 = (version_compare(JVERSION, '4.0', '>='));
+//$joomlaverge4 = (version_compare(JVERSION, '4.0', '>='));
 $app = Factory::getApplication();
 $document = $app->getDocument();
 $renderer = $document->loadRenderer('module');
 $sitename = $app->get('sitename');
-$asset_dir =  "media/com_wsaonepage/";
-if ($joomlaverge4) { // J4 code stylesheets and javascript addStyleSheet etc for J4
-    $wa  = $document->getWebAssetManager();
-    $wa->useScript('com_tags.tag-default');
-    
-}
-
+//if ($joomlaverge4) { // J4 code stylesheets and javascript addStyleSheet etc for J4
+//    $wa  = $document->getWebAssetManager();
+//    $wa->useScript('com_tags.tag-default');
+//}
 
 $wsaOrgAppParams = clone $app->getParams();
 //$wsaOrgInput = clone $app->input;
