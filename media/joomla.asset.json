@@ -7,6 +7,7 @@
   "assets": [
     {
       "name": "com_tags.tag-default",
+      "description": "Used in com_tags tmp/Default_items",
       "type": "script",
       "uri": "com_tags/tag-default.min.js",
       "dependencies": [

@@ -5,7 +5,7 @@ Joomla component to display several components on one page
 Admin component for com-wsaonepage 
 
 ## Component Features
-* view the components prepared by menumodule in template wsaonepage in one component
+* view the components prepared by menumodule in template wsaonepage in one component (so on one page)  
 *
 
 ## Installation
@@ -25,6 +25,7 @@ This project is licensed under the [GNU GPL], version 3 or later.
 2018&thinsp;&ndash;&thinsp;2021 &copy; [Bram Waasdorp](http://www.waasdorpsoekhan.nl).
 
 ## Changelog
+* 1.1.0 20230502 Solved issue with tags in J4by adding joomla.asset.json
 * 1.0.1 Solved warnings in php 8
 * 0.10.0 20210920 Tagged as version 0.10.0 Most parts work 3.9 code copied back to let it also work on Joomla 3.10
 * 0.8 20210823 Admin ready for the time being, 3.9 code deleted from admin

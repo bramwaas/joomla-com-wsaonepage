@@ -58,11 +58,6 @@ $wsaOrgRouterVars = $wsaSiteRouter->getVars();
 $wsaIsAlias = FALSE;
 $wsaAliasBookmark = NULL;
 $params  = $this->item->params;
-//echo '<!-- Start default.php <![CDATA[', PHP_EOL;
-//    print_r($this->item);
-//           print_r($document);
-//echo ' ]]> -->', PHP_EOL;
-
 
 $wsaOrgDocumentVars['title'] = $document->getTitle();
 $wsaOrgDocumentVars['description'] = $document->getDescription();
@@ -151,9 +146,9 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                     $app->getParams()->remove($tmpKey);
                 }
                 $app->getParams()->merge($wsaComponentParams);
-                echo '<!-- Start with menuid =', $mItm->id, ' option :', $mItm->query['option'], ' <![CDATA[';
-                //              print_r(ModuleHelper::getModuleList());
-                echo ' ]]> -->', PHP_EOL;
+//                echo '<!-- Start with menuid =', $mItm->id, ' option :', $mItm->query['option'], ' <![CDATA[';
+//                print_r(ModuleHelper::getModuleList());
+//                echo ' ]]> -->', PHP_EOL;
                // option specific actions
                 switch($mItm->query['option']){
                     case 'com_content':
@@ -191,7 +186,6 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                     $spanc = "col-md-6 " ;
                 }
                 elseif (!$countpos7 && !$countpos8)
-                
                 {
                     $spanc = "";
                 }
@@ -210,28 +204,6 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                 }
                 echo '<div class="col-12 ', $spanc, '" >', PHP_EOL;
                 // end section header html
-//                  if (stripos($wsaOption, 'tag') !== false) {
-// //TODO tags not working yet
-//                 issue located at
-//                 $wa->useScript('com_tags.tag-default');
-//                 in tmpl/default_items.php
-//                      echo '<!-- debugging tags not working yet', ' -->' , PHP_EOL;
-// 					if (isset($micontroller)) {
-// 						echo '<!-- tags : ' . '<![CDATA[' , PHP_EOL;
-// 						try {
-
-// //                       print_r($miview);
-// 						} //catch exception
-// 						catch(Exception $e) {
-// 							echo 'Message: ' .$e->getMessage();
-// 						}
-// 						echo ' ]]> -->', PHP_EOL;
-// 					} else 	echo '<!-- tags component  niet gevonden -->' , PHP_EOL;
-
-//                     continue;
-//                 }
-                 
-                 
                 $micontroller->display();
                 /*
                  * closing html (section) for this menuitem
@@ -313,6 +285,6 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
     $document->setMetaData('og:site_name', $sitename, 'property');
     
 
-echo '<!-- einde onepage sections uit menu -->' . PHP_EOL;
+echo '<!-- end onepage sections from menu -->' . PHP_EOL;
 
 ?>
