@@ -3,7 +3,7 @@
  * @package     Joomla.Site
  * @subpackage  com_wsaonepage
  *
- * @copyright   Copyright (C) 2021 A.H.C. Waasdorp. All rights reserved.
+ * @copyright   Copyright (C) 2021 -2023 A.H.C. Waasdorp. All rights reserved.
  * @license     GNU General Public License version 3; see LICENSE
  */
 
@@ -55,11 +55,7 @@ class HtmlView extends BaseHtmlView
      * @var    Joomla\CMS\MVC\Factory\MVCFactory[]
      */
     protected $mifactories = array();
-    
-    
-    
-    
-
+ 
     /**
      * Display the wsaonepage view
      *
@@ -69,7 +65,7 @@ class HtmlView extends BaseHtmlView
     public function display($template = null) {
         // Assign data to the view
         $app=Factory::getApplication();
-        $this->user = Factory::getUser();
+        $this->user = $app->getIdentity();
         $this->item  = $this->get('Item');
         //	    $this->print = $app->input->getBool('print');
         $this->state = $this->get('State');

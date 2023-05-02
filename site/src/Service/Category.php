@@ -3,7 +3,7 @@
  * @package     Joomla.Site
  * @subpackage  com_wsaonepage
  *
- * @copyright   Copyright (C) 2021 A.H.C. Waasdorp. All rights reserved.
+ * @copyright   Copyright (C) 2021 - 2023 A.H.C. Waasdorp. All rights reserved.
  * @license     GNU General Public License version 3 or later; see LICENSE.txt
  */
 

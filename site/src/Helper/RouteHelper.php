@@ -27,8 +27,8 @@ class RouteHelper
 			return null;
 		}
         
-		$lang = Factory::getLanguage()->getTag();
 		$app  = Factory::getApplication();
+		$lang = $app->getLanguage()->getTag();
 		$sitemenu= $app->getMenu();
 		$thismenuitem = $sitemenu->getActive();
 

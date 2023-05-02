@@ -3,7 +3,7 @@
  * @package     Joomla.Site
  * @subpackage  com_wsaonepage
  *
- * @copyright   Copyright (C) 2020 - 2022 AHC Waasdorp. All rights reserved.
+ * @copyright   Copyright (C) 2020 - 2023 AHC Waasdorp. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  *  Modifications:
  * 20200803: first use of MenuItems to display components in component area. Copied from  menuoverride wsaonepagebs4.php in template wsaonepage (working theeir only correct in a content component here also not working correct yet.
@@ -21,7 +21,9 @@
  *              filling tha active one from the menu-item and restoring it after use.
  *             Because we work in J4 with new objects with namespaces we also need less adjustments for paths.
  *             Cleaned up most code that was needed for the old method.
- * 20221008 added isset and is_array to count(modules) because php 8 gives an error when modules is not array or countable object.            
+ * 20221008 added isset and is_array to count(modules) because php 8 gives an error when modules is not array or countable object.
+ * 20230502 added com_tags.tag-default web-asset script. And removed code here the presence of joomla.asset.json with
+ *          in media/com_wsaonepage reference to a com_tags.tag-default web-asset script is sufficient.
  */
 // namespace WaasdorpSoekhan\Component\Wsaonepage\Site\View\Wsaonepage;
 // part of WaasdorpSoekhan\Component\Wsaonepage\Site\View\Wsaonepage\HtmlView
@@ -46,6 +48,7 @@ $app = Factory::getApplication();
 $document = $app->getDocument();
 $renderer = $document->loadRenderer('module');
 $sitename = $app->get('sitename');
+
 $wsaOrgAppParams = clone $app->getParams();
 //$wsaOrgInput = clone $app->input;
 $wsaOrgActiveMenuItem = $app->getMenu()->getActive();
@@ -55,11 +58,6 @@ $wsaOrgRouterVars = $wsaSiteRouter->getVars();
 $wsaIsAlias = FALSE;
 $wsaAliasBookmark = NULL;
 $params  = $this->item->params;
-//echo '<!-- Start default.php <![CDATA[', PHP_EOL;
-//    print_r($this->item);
-//           print_r($document);
-//echo ' ]]> -->', PHP_EOL;
-
 
 $wsaOrgDocumentVars['title'] = $document->getTitle();
 $wsaOrgDocumentVars['description'] = $document->getDescription();
@@ -148,16 +146,18 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                     $app->getParams()->remove($tmpKey);
                 }
                 $app->getParams()->merge($wsaComponentParams);
-                echo '<!-- Start with menuid =', $mItm->id, ' option :', $mItm->query['option'], ' <![CDATA[';
-                //              print_r(ModuleHelper::getModuleList());
-                echo ' ]]> -->', PHP_EOL;
-               // add helper file include path for this component. from default article
-                if ($mItm->query['option'] == 'com_content') {
-                    HTMLHelper::addIncludePath($wsaJPATH_COMPONENT . '/helpers'); 
-                }
-                if ($mItm->query['option'] == 'com_contact') {
-                    // add formpaths relative to variable active component path
-                   Form::addFormPath($wsaJPATH_COMPONENT . '/forms');
+//                echo '<!-- Start with menuid =', $mItm->id, ' option :', $mItm->query['option'], ' <![CDATA[';
+//                print_r(ModuleHelper::getModuleList());
+//                echo ' ]]> -->', PHP_EOL;
+               // option specific actions
+                switch($mItm->query['option']){
+                    case 'com_content':
+                        HTMLHelper::addIncludePath($wsaJPATH_COMPONENT . '/helpers');
+                        break;
+                    case 'com_contact':
+                        Form::addFormPath($wsaJPATH_COMPONENT . '/forms');
+                        break;
+                    default:
                 }
                 // from newsfeeds.php
                 Table::addIncludePath($wsaJPATH_COMPONENT_ADMINISTRATOR . '/tables');
@@ -186,7 +186,6 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                     $spanc = "col-md-6 " ;
                 }
                 elseif (!$countpos7 && !$countpos8)
-                
                 {
                     $spanc = "";
                 }
@@ -286,6 +285,6 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
     $document->setMetaData('og:site_name', $sitename, 'property');
     
 
-echo '<!-- einde onepage sections uit menu -->' . PHP_EOL;
+echo '<!-- end onepage sections from menu -->' . PHP_EOL;
 
 ?>

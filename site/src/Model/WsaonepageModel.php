@@ -3,7 +3,7 @@
  * @package     Joomla.Site
  * @subpackage  com_wsaonepage
  *
- * @copyright   Copyright (C) 2020 - 2021 AHC Waasdorp. All rights reserved.
+ * @copyright   Copyright (C) 2020 - 2023 AHC Waasdorp. All rights reserved.
  * @license     GNU General Public License version 3 or later; see LICENSE.txt
  * 20210901 0.8.4 Item->params ->getParams()
  * 20210819 adaptations for Joomla 4.0
@@ -97,7 +97,7 @@ class WsaonepageModel extends BaseDatabaseModel
 	    if (!isset($this->item))
 	    {
 	        $id    = $this->getState('wsaonepage.id');
-	        $db    = $this->getDbo();
+	        $db    = $this->getDatabase();
 	        $query = $db->getQuery(true);
 	        $query->select('h.id, h.asset_id, h.created, h.created_by, h.title, h.alias, h.language, h.description, h.menutype, h.description, h.published, h.params')
 	        ->from('#__wsaonepage as h')
