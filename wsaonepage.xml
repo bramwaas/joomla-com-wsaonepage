@@ -113,6 +113,7 @@
 	<media destination="com_wsaonepage" folder="media">
 		<filename>index.html</filename>
 		<folder>images</folder>
+		<folder>js</folder>
 	</media>
 
 
