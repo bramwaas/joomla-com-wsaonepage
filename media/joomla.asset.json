@@ -2,19 +2,9 @@
   "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
   "name": "com_wsonepage",
   "version": "1.1.0",
-  "description": "This file contains details of the override assets used by com_wsaonepage, a Joomla site component.",
+  "description": "This file contains details of assets used by com_wsaonepage or sub-components, a Joomla site component.",
   "license": "GPL-2.0-or-later",
   "assets": [
-    {
-      "name": "com_tags.tag-defaultx",
-      "description": "The file that causes troubles in the tags component",
-      "type": "script",
-      "uri": "com_wsaonepage/tag-default-es5.js",
-      "version": "1.1.0",
-      "attributes" : {
-        "defer": true
-      }
-     },
     {
       "name": "com_tags.tag-default",
       "type": "script",
