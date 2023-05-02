@@ -1,4 +1,4 @@
-(e=>{
+/* (e=>{
     const t = ()=>{
         const t = e.getElementById("adminForm");
         e.getElementById("filter-search").value = "",
@@ -13,3 +13,4 @@
     e.addEventListener("DOMContentLoaded", n)
 }
 )(document);
+*/
