@@ -24,6 +24,7 @@
  * 20221008 added isset and is_array to count(modules) because php 8 gives an error when modules is not array or countable object.
  * 20230502 added com_tags.tag-default web-asset script. And removed code here the presence of joomla.asset.json with
  *          in media/com_wsaonepage reference to a com_tags.tag-default web-asset script is sufficient.
+ * 20230508 improved determination of menu-item params
  */
 // namespace WaasdorpSoekhan\Component\Wsaonepage\Site\View\Wsaonepage;
 // part of WaasdorpSoekhan\Component\Wsaonepage\Site\View\Wsaonepage\HtmlView
@@ -58,7 +59,7 @@ $wsaOrgRouterVars = $wsaSiteRouter->getVars();
 $wsaIsAlias = FALSE;
 $wsaAliasBookmark = NULL;
 $params  = $this->item->params;
-
+$wsaOrgparams = $params;
 $wsaOrgDocumentVars['title'] = $document->getTitle();
 $wsaOrgDocumentVars['description'] = $document->getDescription();
 $wsaOrgDocumentMetaName['title'] = $document->getMetaData('title') ?: $wsaOrgDocumentVars['title'] ;
@@ -136,10 +137,10 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                     'Itemid' => $mItm->id,
                     'option' => $mItm->query['option']
                 ));
-                // find component params
+                // find component params for this menuItem
                 $wsaComponentParams = $app->getParams($mItm->query['option']);
                 // find menu params and merge with component params (menu params overwrite component params if both are available) and replace app params
-                $wsaMenuParams = new Registry($app->getParams());
+                $wsaMenuParams = new Registry($mItm->getParams());
                 $wsaComponentParams->merge($wsaMenuParams);
                 $tmp = $app->getParams()->flatten();
                 foreach ($tmp as $tmpKey => $tmpVal) {
@@ -258,12 +259,13 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
     /*
      * end list of sections.
      */
-    // restore $app->params()
+    // restore $app->params() and item params
     $tmp = $app->getParams()->flatten();
     foreach ($tmp as $tmpKey => $tmpVal) {
         $app->getParams()->remove($tmpKey);
     }
     $app->getParams()->merge($wsaOrgAppParams);
+	$params = $wsaOrgparams;
     // restore Document
     $document->setTitle($wsaOrgDocumentVars['title']);
     $document->setDescription($wsaOrgDocumentVars['description']);
