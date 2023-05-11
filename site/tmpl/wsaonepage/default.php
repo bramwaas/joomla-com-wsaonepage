@@ -56,6 +56,10 @@ $wsaOrgActiveMenuItem = $app->getMenu()->getActive();
 $wsaOrgDocumentViewType = $document->getType(); // = html is always ok
 $wsaSiteRouter = $app->getRouter('site');
 $wsaOrgRouterVars = $wsaSiteRouter->getVars();
+$reflectionClass = new \ReflectionClass('Joomla\CMS\Router\Router');
+$reflectionProperty = $reflectionClass->getProperty('cache');
+$reflectionProperty->setAccessible(true); // only required prior to PHP 8.1.0
+$wsaOrgRouterCache = $reflectionProperty->getValue($wsaSiteRouter);
 $wsaIsAlias = FALSE;
 $wsaAliasBookmark = NULL;
 $params  = $this->item->params;
@@ -132,11 +136,9 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
                     $app->input->set($tmpKey, $tmpVal);
                 }
                 $app->getMenu()->setActive($mItm->id > 0 ? $mItm->id : $wsaOrgActiveMenuItem->id);
-                // set Router vars to values of this menuitem
-                $wsaSiteRouter->setVars(array(
-                    'Itemid' => $mItm->id,
-                    'option' => $mItm->query['option']
-                ));
+                // empty Router cache and set vars to query values of this menuitem
+                $reflectionProperty->setValue($wsaSiteRouter, array());
+                $wsaSiteRouter->setVars($mItm->query, false);
                 // find component params for this menuItem
                 $wsaComponentParams = $app->getParams($mItm->query['option']);
                 // find menu params and merge with component params (menu params overwrite component params if both are available) and replace app params
@@ -276,8 +278,9 @@ foreach ($this->menuItems as $i => &$mItm) { // note pointer used, so that chang
         $app->getMenu()->setActive($wsaOrgActiveMenuItem->id);
         echo '<!-- herstelde actief menu id :', $app->getMenu()->getActive()->id, ' -->';
     }
-    // restore Router vars
-    $wsaSiteRouter->setVars($wsaOrgRouterVars);
+    // restore Router cache vars
+    $reflectionProperty->setValue($wsaSiteRouter, $wsaOrgRouterCache);
+    $wsaSiteRouter->setVars($wsaOrgRouterVars, false);
     // restore pathway (breadcrumb)
     $pathway->setPathway($wsaOrgPathway);
     // set defaults fore some open graph  meta properties TODO maybe not the best place
