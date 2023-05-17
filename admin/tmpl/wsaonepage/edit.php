@@ -3,12 +3,14 @@
  * @package     Joomla.Administrator
  * @subpackage  com_wsaonepage
  *
-  * @copyright   Copyright (C) 2005 - 2021 A.H.C. Waasdorp. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2021 A.H.C. Waasdorp. All rights reserved.
  * @license     GNU General Public License version 3 or later; see LICENSE.txt
+ * included in class  WaasdorpSoekhan\Component\Wsaonepage\Administrator\View\Wsaonepage\HtmlView
  * 11-8-2021 changed after similar changes J3.5 to J4 from com_banner and com_contact.
  * 17-9-2021 changed after simlpifying the form after example of com_tags.
+ * 17-5-2023 changes work after changing xml name in forms (and WsaonpageModel.php) to wsaonepage_4edit.xml
  */
-// 
+//
 // No direct access
 \defined('_JEXEC') or die('Restricted access');
 
@@ -18,38 +20,24 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 
-// JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html'); seems not to be necessary in J4 
+
 /**
  *  @var WaasdorpSoekhan\Component\Wsaonepage\Administrator\View\Wsaonepage\HtmlView; $this
  *  The class where this template is part of
  */
 
-/** @var Joomla\CMS\WebAsset\WebAssetManager $wa 
+/** @var Joomla\CMS\WebAsset\WebAssetManager $wa
  * seems to be used from J4 Beta1 29-6-2021 eg in com_banner replacing HTMLHelper::_('behavior.formvalidator'); HTMLHelper::_('behavior.keepalive') etc.;
  * */
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('keepalive')
-    ->useScript('form.validate');
+->useScript('form.validate');
 
 // Fieldsets to not automatically render by /layouts/joomla/edit/params.php
 $this->ignore_fieldsets = ['jmetadata', 'details','item_associations'];
 $this->useCoreUI = true;
-    
-    
 
-// TODO formbehavior.chosen changed in  ->enableAsset('choicesjs') at the moment unclear what happens to the arguments text::script ... ?
-/* not found in com_banner looking for an other example incom_contact remove without replacement so replacement starred out
-    HTMLHelper::_('formbehavior.chosen', '#jform_catid', null, array('disable_search_threshold' => 0 ));
-    HTMLHelper::_('formbehavior.chosen', 'select');
- */
- /*   
-    Text::script('JGLOBAL_SELECT_NO_RESULTS_MATCH');
-    Text::script('JGLOBAL_SELECT_PRESS_TO_SELECT');
-  
-$wa->getWebAssetManager()->enableAsset('choicesjs');
-    HTMLHelper::_('webcomponent', 'system/webcomponents/joomla-field-fancy-select.min.js', ['version' => 'auto', 'relative' => true]);
- */   
-    
+
 
 ?>
 <form action="<?php echo Route::_('index.php?option=com_wsaonepage&layout=edit&id=' . (int) $this->item->id); ?>"
@@ -78,13 +66,13 @@ $wa->getWebAssetManager()->enableAsset('choicesjs');
 					</div>
 					</fieldset>
                 </div>
-				<div class="col-lg-4">
+				<div class="col-lg-4" data-class=" <?php echo get_class($this); ?>   ">
 					<?php echo LayoutHelper::render('joomla.edit.global', $this); ?>
 				</div>
             </div>
 		<?php echo HTMLHelper::_('uitab.endTab'); ?>
 
-		<?php echo LayoutHelper::render('joomla.edit.params', $this); ?>
+		<?php  echo LayoutHelper::render('joomla.edit.params', $this);   ?>
 
 		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'publishing', Text::_('JGLOBAL_FIELDSET_PUBLISHING')); ?>
 		<div class="row">
