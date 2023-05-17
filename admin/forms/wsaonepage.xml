@@ -4,6 +4,7 @@
 changed 4-10-2020 after an example of banner.xml
 9-8-2021 J4 compared with contact.xml
 17-9-2021 made more simple after example con_tags.
+17-5-2023 changed name so that it is not overrulled by J3 version in models/form
 -->
 	<field
 		name="id"
