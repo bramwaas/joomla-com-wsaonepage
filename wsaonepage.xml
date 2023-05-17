@@ -8,14 +8,14 @@
   </compatibility>
 	<name>com_wsaonepage</name>
 	<!-- The following elements are optional and free of formatting constraints. -->
-	<creationDate>02-05-2023</creationDate>
+	<creationDate>17-05-2023</creationDate>
 	<author>A.H.C. Waasdorp</author>
 	<authorEmail>bram@waasdorpsoekhan.nl</authorEmail>
 	<authorUrl>https://www.waasdorpsoekhan.nl</authorUrl>
 	<copyright>A.H.C. Waasdorp, Amsterdam 2020 - 2023</copyright>
     <license>GPL v3</license>
 	<!--  The version string is recorded in the components table -->
-	<version>1.1.0</version>
+	<version>1.1.1</version>
 	<!-- The description is optional and defaults to the name -->
 	<description>COM_WSAONEPAGE_DESCRIPTION</description>
     <!-- This is the PHP namespace under which the extension's

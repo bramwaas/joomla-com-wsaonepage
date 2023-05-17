@@ -92,7 +92,7 @@ class WsaonepageModel extends AdminModel
         // Get the form.
         $form = $this->loadForm(
             'com_wsaonepage.wsaonepage',
-            'wsaonepage',
+            'wsaonepage_4edit',
             array(
                 'control' => 'jform',
                 'load_data' => $loadData
