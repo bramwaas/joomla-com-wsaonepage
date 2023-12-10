@@ -92,7 +92,7 @@ $canEditOwn= TRUE; // TODO for later use
             						</td>
             						<td class="text-center small d-none d-md-table-cell">
                     					<?php if ($canEdit || $canEditOwn) : ?>
-    									<a href="<?php echo $link; ?>" title="<?php echo Text::_('JACTION_EDIT'); ?> <?php echo $this->escape($i); ?>">
+    									<a href="<?php echo $link; ?>" title="<?php echo Text::_('JACTION_EDIT'); ?> <?php echo $this->escape($row->title); ?>">
     										<?php echo $this->escape($row->title); ?></a>
     									<?php else : ?>
     										<span title="<?php echo Text::sprintf('JFIELD_ALIAS_LABEL', $this->escape($row->alias)); ?>"><?php echo $this->escape($row->title); ?></span>
