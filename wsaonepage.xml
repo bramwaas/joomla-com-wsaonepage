@@ -62,7 +62,7 @@
 			<!-- Note that all & must be escaped to &amp; for the file to be valid
 				XML and be parsed by the installer
 			-->
-			<menu link="option=com_wsaonepage" img="class:content"
+			<menu link="option=com_wsaonepage" 
 				alt="Wsaonepage/Wsaonepage"><![CDATA[COM_WSAONEPAGE_SUBMENU]]></menu>
 		</submenu>
 		<!-- Administration Main File Copy Section -->
