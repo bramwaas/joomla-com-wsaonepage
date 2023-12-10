@@ -208,7 +208,7 @@ class HtmlView extends BaseHtmlView
     *
     * @since   J 4.4.0 public part of AbstractView and param $document
     */
-   public function setDocument(Document $document = NULL)
+   public function setDocument(Document $document = NULL): void
     {
         $isNew = ($this->item->id < 1);
         if (is_null($document))  $document = Factory::getApplication()->getDocument();
