@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="4.0" method="upgrade">
 <!-- 2021-09-20 start  adjustments for Joomla 4 to begin with namespaces for this component's classes-->
+<!-- 2023-12-10 start  adjustments for Joomla 4.4 and 5  -->
   <compatibility>
     <include>
-      <versions from="3.10.0" to="4.99.99" />
+      <versions from="3.10.0" to="5.99.99" />
     </include>
   </compatibility>
 	<name>com_wsaonepage</name>
 	<!-- The following elements are optional and free of formatting constraints. -->
-	<creationDate>17-05-2023</creationDate>
+	<creationDate>10-12-2023</creationDate>
 	<author>A.H.C. Waasdorp</author>
 	<authorEmail>bram@waasdorpsoekhan.nl</authorEmail>
 	<authorUrl>https://www.waasdorpsoekhan.nl</authorUrl>
 	<copyright>A.H.C. Waasdorp, Amsterdam 2020 - 2023</copyright>
     <license>GPL v3</license>
 	<!--  The version string is recorded in the components table -->
-	<version>1.1.1</version>
+	<version>1.1.2</version>
 	<!-- The description is optional and defaults to the name -->
 	<description>COM_WSAONEPAGE_DESCRIPTION</description>
     <!-- This is the PHP namespace under which the extension's
@@ -61,7 +62,7 @@
 			<!-- Note that all & must be escaped to &amp; for the file to be valid
 				XML and be parsed by the installer
 			-->
-			<menu link="option=com_wsaonepage" img="class:content"
+			<menu link="option=com_wsaonepage" 
 				alt="Wsaonepage/Wsaonepage"><![CDATA[COM_WSAONEPAGE_SUBMENU]]></menu>
 		</submenu>
 		<!-- Administration Main File Copy Section -->

@@ -3,9 +3,11 @@
  * @package     Joomla.Administrator
  * @subpackage  com_wsaonepage
  *
- * @copyright   Copyright (C) 2021 A.H.C. Waasdorp. All rights reserved.
+ * @copyright   Copyright (C) 2021 - 2024 A.H.C. Waasdorp. All rights reserved.
  * @license     GNU General Public License version 3; see LICENSE
- * 16-8-2021
+ * 20231210 since   J 4.4.0 setDocument is part of AbstractView and public.
+ * 10-12-2023
+ * 
  */
 
 namespace WaasdorpSoekhan\Component\Wsaonepage\Administrator\View\Wsaonepage;
@@ -13,6 +15,7 @@ namespace WaasdorpSoekhan\Component\Wsaonepage\Administrator\View\Wsaonepage;
 \defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Document\Document;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 //use Joomla\CMS\Helper\ContentHelper;
@@ -196,16 +199,20 @@ class HtmlView extends BaseHtmlView
         }
         
    }
-    /**
-     * Method to set up the document properties
-     *
-     * @return void
-     */
-    protected function setDocument()
+   /**
+    * Set the document to use.
+    *
+    * @param   Document  $document  The document to use
+    *
+    * @return  void
+    *
+    * @since   J 4.4.0 public part of AbstractView and param $document
+    */
+   public function setDocument(Document $document = NULL): void
     {
-        $isNew = ($this->item->id < 1);
-        $document = Factory::getDocument();
-        $document->setTitle($isNew ? Text::_('COM_WSAONEPAGE_WSAONEPAGE_CREATING') :
+        if (is_null($document))  $document = Factory::getApplication()->getDocument();
+        $this->document = $document;
+        $document->setTitle(empty($this->item) ? Text::_('COM_WSAONEPAGE_WSAONEPAGE_CREATING') :
             Text::_('COM_WSAONEPAGE_WSAONEPAGE_EDITING'));
     }
     

@@ -5,11 +5,13 @@
  *
  * @copyright   Copyright (C) 2021 A.H.C. Waasdorp. All rights reserved.
  * @license     GNU General Public License version 3; see LICENSE
+ * 20231210 since   J 4.4.0 setDocument is part of AbstractView and public. 
  */
 namespace WaasdorpSoekhan\Component\Wsaonepage\Administrator\View\Wsaonepages;
 
 \defined('_JEXEC') or die;
 
+use Joomla\CMS\Document\Document;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Language\Multilanguage;
@@ -89,7 +91,7 @@ class HtmlView extends BaseHtmlView {
         // Hide Joomla Administrator Main menu TODO seems not a good idea because there is no other option to close this screen
         //	    $input->set('hidemainmenu', true);
         
-        $isNew = ($this->item->id == 0);
+       // $isNew = ($this->item->id == 0); gives warning if there is no item, but is never used.
 
         // Get the toolbar object instance
         $toolbar = Toolbar::getInstance('toolbar');
@@ -179,9 +181,20 @@ class HtmlView extends BaseHtmlView {
             'a.id'           => Text::_('JGRID_HEADING_ID'),
             //	        'a.featured'     => JText::_('JFEATURED')
         );
-    }protected function setDocument()
+    }
+    /**
+     * Set the document to use.
+     *
+     * @param   Document  $document  The document to use
+     *
+     * @return  void
+     *
+     * @since   J 4.4.0 public part of AbstractView and param $document 
+     */
+    public function setDocument(Document $document = NULL) : void
     {
-        $document = Factory::getDocument();
+        if (is_null($document))  $document = Factory::getApplication()->getDocument();
+        $this->document = $document;
         $document->setTitle(Text::_('COM_WSAONEPAGE_ADMINISTRATION'));
     }
     
