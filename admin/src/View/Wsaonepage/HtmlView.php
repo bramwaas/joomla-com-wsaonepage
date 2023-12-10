@@ -210,10 +210,9 @@ class HtmlView extends BaseHtmlView
     */
    public function setDocument(Document $document = NULL): void
     {
-        $isNew = ($this->item->id < 1);
         if (is_null($document))  $document = Factory::getApplication()->getDocument();
         $this->document = $document;
-        $document->setTitle($isNew ? Text::_('COM_WSAONEPAGE_WSAONEPAGE_CREATING') :
+        $document->setTitle(empty($this->item) ? Text::_('COM_WSAONEPAGE_WSAONEPAGE_CREATING') :
             Text::_('COM_WSAONEPAGE_WSAONEPAGE_EDITING'));
     }
     
