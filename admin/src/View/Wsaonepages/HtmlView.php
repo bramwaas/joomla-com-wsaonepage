@@ -91,7 +91,7 @@ class HtmlView extends BaseHtmlView {
         // Hide Joomla Administrator Main menu TODO seems not a good idea because there is no other option to close this screen
         //	    $input->set('hidemainmenu', true);
         
-        $isNew = ($this->item->id == 0);
+       // $isNew = ($this->item->id == 0); gives warning if there is no item, but is never used.
 
         // Get the toolbar object instance
         $toolbar = Toolbar::getInstance('toolbar');
